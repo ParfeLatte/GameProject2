@@ -576,12 +576,12 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 1.5
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &1821945171
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -677,11 +677,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5efe98ba447099d40971d78f2d890a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 4
-  movetime: 0
-  stoptime: 0
+  Maxhealth: 0
+  health: 0
+  damage: 0
+  MoveSpeed: 0
+  isDead: 0
+  Dir: 1
+  LastDir: 0
+  JumpForce: 10
+  JumpTime: 1.4
+  MaxJump: 0
+  h: 0
   isDash: 0
   isMove: 0
+  isJump: 0
 --- !u!1 &1881689885
 GameObject:
   m_ObjectHideFlags: 0
