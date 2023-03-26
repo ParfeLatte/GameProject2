@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - enemy
+  - Wall
+  - Floor
+  - Sailing
   layers:
   - Default
   - TransparentFX
