@@ -13,7 +13,7 @@ public class Player : LivingEntity
     public bool isMove;//움직였는지 체크
     public bool isJump;//점프했는지 체크
 
-    Rigidbody2D PR;//플레이어 리지드바디
+    private Rigidbody2D PR;//플레이어 리지드바디
 
     void Awake()
     {

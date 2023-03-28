@@ -2,19 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monster : MonoBehaviour
+public class Monster : LivingEntity
 {
     //public GameObject small;//범위 15의 콜라이더 영역
     //public GameObject Big;//범위 30의 콜라이더 영역
     public GameObject Player;//거리측정용
 
     public int SleepState;//현재 수면상태 0:깊은수면, 1:중간수면, 2:얕은수면, 3:기상!!!
+
     public float moveTimeOne;//플레이어가 얼마나 걸었는지 확인
     public float moveTimeTwo;//플레이어가 얼마나 걸었는지 확인
     public float CheckTime;//범위 안에 들어온 시간
     public float Dist;//몬스터와 플레이어 사이 거리
+    public float Dir;//이동방향
+    
     
     public Vector3 lastPlayerPosition;//
+
+    private Rigidbody2D MR;
 
     public Player player;//플레이어 코드
 
@@ -23,15 +28,19 @@ public class Monster : MonoBehaviour
 
     void Awake()
     {
+        MR = GetComponent<Rigidbody2D>();
         SleepState = 0;
+        SetStatus(100, 100, 4);
     }
 
     // Update is called once per frame
     void Update()
     {
         Dist = Mathf.Abs(Player.transform.position.x - gameObject.transform.position.x);//플레이어와 몬스터 사이 거리
+        Vector3 curPos = transform.position;//현재위치
         
-        if (Dist <= 30)
+
+        if (Dist <= 30 && SleepState != 3)
         {
             if(SleepState == 0)
             {
@@ -53,7 +62,19 @@ public class Monster : MonoBehaviour
             AreaCheck(SleepState);//수면검사!
         }
 
-
+        if(SleepState == 3)
+        {
+            if(player.transform.position.x - gameObject.transform.position.x >= 0)
+            {
+                Dir = 1;
+            }
+            else
+            {
+                Dir = -1;
+            }
+            Vector3 NextPos = new Vector3(Dir, 0, 0) * MaxSpeed * Time.deltaTime;
+            transform.position = curPos + NextPos;
+        }
        
     }
 
