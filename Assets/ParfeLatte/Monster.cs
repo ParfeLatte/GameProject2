@@ -20,6 +20,8 @@ public class Monster : LivingEntity
     public Vector3 lastPlayerPosition;//
 
     private Rigidbody2D MR;
+    private Animator animator;
+    private SpriteRenderer MonsterRenderer;
 
     public Player player;//ÇÃ·¹ÀÌ¾î ÄÚµå
 
@@ -29,8 +31,10 @@ public class Monster : LivingEntity
     void Awake()
     {
         MR = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        MonsterRenderer = GetComponent<SpriteRenderer>();
         SleepState = 0;
-        SetStatus(100, 100, 4);
+        SetStatus(100, 100, 4.5f);
     }
 
     // Update is called once per frame
@@ -67,11 +71,15 @@ public class Monster : LivingEntity
             if(player.transform.position.x - gameObject.transform.position.x >= 0)
             {
                 Dir = 1;
+                MonsterRenderer.flipX = false;
             }
             else
             {
                 Dir = -1;
+                MonsterRenderer.flipX = true;
             }
+
+
             Vector3 NextPos = new Vector3(Dir, 0, 0) * MaxSpeed * Time.deltaTime;
             transform.position = curPos + NextPos;
         }
@@ -83,17 +91,17 @@ public class Monster : LivingEntity
         lastPlayerPosition = Player.transform.position;
 
         yield return new WaitForSeconds(0.1f);
-        Debug.Log("°Ë»çÇÕ´Ï´Ù.");
+        //Debug.Log("°Ë»çÇÕ´Ï´Ù.");
         if (lastPlayerPosition == Player.transform.position)
         {
-            Debug.Log("¸ØÃè½À´Ï´Ù.");
+            //Debug.Log("¸ØÃè½À´Ï´Ù.");
             moveTimeOne = 0;
             moveTimeTwo = 0;
             isPlayerStop = true;
         }//¸Ø­ŸÀ¸¹Ç·Î °Ë»çÇÏ´ø ½Ã°£µé ÃÊ±âÈ­
         else
         {
-            Debug.Log("°è¼Ó ¿òÁ÷ÀÌ´Â ÁßÀÔ´Ï´Ù.");
+            //Debug.Log("°è¼Ó ¿òÁ÷ÀÌ´Â ÁßÀÔ´Ï´Ù.");
         }//°è¼Ó ¿òÁ÷ÀÓÀ» È®ÀÎ
     }//¸ØÃè´ÂÁö¸¦ È®ÀÎÇÔ 0.4ÃÊ°£ ¿òÁ÷ÀÌÁö ¾Ê¾Æ¾ß ¸ØÃá°É·Î ÀÓ½ÃÆÇÁ¤ 
     
@@ -108,6 +116,8 @@ public class Monster : LivingEntity
                     {
                         SleepState = 1;
                         moveTimeOne = 0;
+                        animator.SetInteger("SleepState", 1);
+                        Debug.Log("Áß°£¼ö¸é »óÅÂ·Î µé¾î°©´Ï´Ù.");
                     }
                 }//°Å¸®°¡ 30¾È¿¡ µé¾î¿À¸é Ã¼Å©(±íÀº¼ö¸é»óÅÂ)
                 break;
@@ -117,10 +127,14 @@ public class Monster : LivingEntity
                     if (moveTimeTwo >= 0.8)
                     {
                         SleepState = 2;
+                        animator.SetInteger("SleepState", 2);
+                        Debug.Log("¾èÀº¼ö¸é »óÅÂ·Î µé¾î°©´Ï´Ù.");
                     }
                     else if(isPlayerStop)
                     {
                         SleepState = 0;
+                        animator.SetInteger("SleepState", 0);
+                        Debug.Log("±íÀº ¼ö¸é »óÅÂ·Î µ¹¾Æ°©´Ï´Ù.");
                     }
                 }//Áß°£¼ö¸é »óÅÂÀÌ°í 15¾È¿¡¼­ 0.8ÃÊ°£ ¿òÁ÷¿´³ª?
                 break;
@@ -130,10 +144,14 @@ public class Monster : LivingEntity
                     if (player.GetMoveCheck())
                     {
                         SleepState = 3;
+                        animator.SetInteger("SleepState", 3);
+                        Debug.Log("±ú¾î³µ½À´Ï´Ù.");
                     }
                     else
                     {
                         SleepState = 1;
+                        animator.SetInteger("SleepState", 1);
+                        Debug.Log("Áß°£ ¼ö¸é »óÅÂ·Î µ¹¾Æ°©´Ï´Ù.");
                     }
                 }//¾èÀº ¼ö¸é »óÅÂ ÀÌ »óÅÂ¿¡ ÇÃ·¹ÀÌ¾î°¡ °ÉÀ¸¸é ¹Ù·Î ±â»ó
                 break;
@@ -145,6 +163,8 @@ public class Monster : LivingEntity
         if (player.GetDashCheck() == true)
         {
             SleepState = 3;
+            animator.SetInteger("SleepState", 3);
+            Debug.Log("±ú¾î³µ½À´Ï´Ù.");
         }
     }//ÇÃ·¹ÀÌ¾î°¡ ´ë½¬Çß´ÂÁö Ã¼Å©ÇÔ
 }

@@ -14,10 +14,12 @@ public class Player : LivingEntity
     public bool isJump;//점프했는지 체크
 
     private Rigidbody2D PR;//플레이어 리지드바디
+    private SpriteRenderer PlayerRenderer;
 
     void Awake()
     {
         PR = GetComponent<Rigidbody2D>();
+        PlayerRenderer = GetComponent<SpriteRenderer>();
         SetStatus(100, 100, 4);
         Health = MaxHealth;
     }
@@ -57,6 +59,15 @@ public class Player : LivingEntity
             {
                 h = 0;
             }
+        }
+
+        if(h == 1)
+        {
+            PlayerRenderer.flipX = false;
+        }
+        if(h == -1)
+        {
+            PlayerRenderer.flipX = true;
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isDash) { 
