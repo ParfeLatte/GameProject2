@@ -55,6 +55,4 @@ public class LivingEntity : MonoBehaviour
         //사운드
         //사망시에 진행할 이벤트
     }
-
-    
 }

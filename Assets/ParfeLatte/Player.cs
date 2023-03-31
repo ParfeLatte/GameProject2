@@ -8,26 +8,31 @@ public class Player : LivingEntity
     public float stoptime;
     public float JumpForce;
     public float Dir;//이동방향(대쉬나 점프시에 방향 못바꾸게함)
-
-    private float ChargeTime;//공격 차징시간
-    private float h;//GeTAxisRaw로 받는 값
-    private Vector3 curPos;//현재 위치
-    private Vector3 dirVec;//바라보는 방향
+    public float h;//GeTAxisRaw로 받는 값
 
     public bool isDash;//대쉬했는지 체크
     public bool isMove;//움직였는지 체크
     public bool isJump;//점프했는지 체크
 
+    //public PlayerAttack Attack;
+    public PlayerAttack Attack;
+
     private GameObject Enemy;
+
 
     private Rigidbody2D PR;//플레이어 리지드바디
     private SpriteRenderer PlayerRenderer;
+
+    private float ChargeTime;//공격 차징시간
+    private Vector3 curPos;//현재 위치
+    private Vector3 dirVec;//바라보는 방향
+
 
     void Awake()
     {
         PR = GetComponent<Rigidbody2D>();
         PlayerRenderer = GetComponent<SpriteRenderer>();
-        SetStatus(100, 20, 4);
+        SetStatus(100, 15, 4);
         Health = MaxHealth;
     }
 
@@ -51,26 +56,15 @@ public class Player : LivingEntity
         Jump();//점프
         Dash();//대쉬
         Move();//이동
+        AttackCheck();//공격
+    }
 
-
-        Debug.DrawRay(PR.position, dirVec * 10f, new Color(0, 1, 0));
-        //RaycastHit2D rayHit = Physics2D.Raycast(PR.position, dirVec, 1.2f, LayerMask.GetMask("Enemy"));
-        //if(rayHit.collider != null)
-        //{
-        //    LivingEntity enemy = rayHit.collider.GetComponent<Monster>();
-        //    enemy.damaged(50);
-        //    Enemy = rayHit.collider.gameObject;
-        //    Debug.Log("몬스터가 사정거리내에 있음");
-        //}
-        //else
-        //{
-        //    Enemy = null;
-        //    Debug.Log("사정거리내에 아무도 없음");
-        //}
-
+    private void AttackCheck()
+    {
         if (Input.GetKey(KeyCode.J))
         {
             ChargeTime += Time.deltaTime;
+            //차징 애니메이숀
             Debug.Log("공격 차징중");
         }
         if (Input.GetKeyUp(KeyCode.J))
@@ -78,42 +72,18 @@ public class Player : LivingEntity
             if (ChargeTime <= 0.5f)
             {
                 Debug.Log("기본 공격");
-                damage = 20;
+                Attack.GetAttack(damage);
+                //기본공격 모션
             }
             else if (ChargeTime >= 1.0f)
             {
                 Debug.Log("강화 공격");
-                damage = 40;
+                Attack.GetAttack(damage * 2.0f);
+                //강공 모션
             }
             ChargeTime = 0;
-
-            //if (Enemy != null)
-            //{
-            //    Debug.Log("Hit!");
-            //}
-
-
-            RaycastHit2D rayHit = Physics2D.Raycast(PR.position, dirVec, 10.0f, LayerMask.GetMask("Enemy"));
-            if (rayHit.collider != null)
-            {
-                LivingEntity enemy = rayHit.collider.GetComponent<Monster>();
-                Enemy = rayHit.collider.gameObject;
-                Debug.Log("몬스터가 사정거리내에 있음");
-                if(Enemy != null)
-                {
-                    enemy.damaged(damage);
-                }
-                Debug.Log("Hit!");
-            }
-            else
-            {
-                Enemy = null;
-                Debug.Log("사정거리내에 아무도 없음");
-                Debug.Log("Miss!");
-            }
         }
-
-    }
+    }//공격 체크, 공격버튼을 누르고 있으면 차징함!
 
     private void flipSpr()
     {
@@ -121,6 +91,7 @@ public class Player : LivingEntity
             if (h == 1)
             {
                 PlayerRenderer.flipX = false;//오른쪽을 바라보도록
+                
             }
             else if (h == -1)
             {
