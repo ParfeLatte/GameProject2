@@ -5,7 +5,7 @@ using UnityEngine;
 public class LivingEntity : MonoBehaviour
 {
     protected float MaxHealth;//최대체력
-    protected float Health;//현재체력
+    public float Health;//현재체력
     protected float damage;//공격시 가하는 데미지
     protected float MaxSpeed;//이동속도
 

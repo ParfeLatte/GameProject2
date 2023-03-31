@@ -9,9 +9,16 @@ public class Player : LivingEntity
     public float JumpForce;
     public float Dir;//이동방향(대쉬나 점프시에 방향 못바꾸게함)
 
+    private float ChargeTime;//공격 차징시간
+    private float h;//GeTAxisRaw로 받는 값
+    private Vector3 curPos;//현재 위치
+    private Vector3 dirVec;//바라보는 방향
+
     public bool isDash;//대쉬했는지 체크
     public bool isMove;//움직였는지 체크
     public bool isJump;//점프했는지 체크
+
+    private GameObject Enemy;
 
     private Rigidbody2D PR;//플레이어 리지드바디
     private SpriteRenderer PlayerRenderer;
@@ -20,57 +27,143 @@ public class Player : LivingEntity
     {
         PR = GetComponent<Rigidbody2D>();
         PlayerRenderer = GetComponent<SpriteRenderer>();
-        SetStatus(100, 100, 4);
+        SetStatus(100, 20, 4);
         Health = MaxHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        Vector3 curPos = transform.position;//현재위치
-        
-
+        h = Input.GetAxisRaw("Horizontal");
+        curPos = transform.position;//현재위치
         if(h != 0 && !isDash && !isJump)
         {
             Dir = h;
+            dirVec = new Vector3(h, 0f, 0f);
             isMove = true;
         }
         else if(h == 0)
         {
             isMove = false;
+        }//움직이는지 확인함
+        
+        flipSpr();//좌우반전
+        Jump();//점프
+        Dash();//대쉬
+        Move();//이동
+
+
+        Debug.DrawRay(PR.position, dirVec * 10f, new Color(0, 1, 0));
+        //RaycastHit2D rayHit = Physics2D.Raycast(PR.position, dirVec, 1.2f, LayerMask.GetMask("Enemy"));
+        //if(rayHit.collider != null)
+        //{
+        //    LivingEntity enemy = rayHit.collider.GetComponent<Monster>();
+        //    enemy.damaged(50);
+        //    Enemy = rayHit.collider.gameObject;
+        //    Debug.Log("몬스터가 사정거리내에 있음");
+        //}
+        //else
+        //{
+        //    Enemy = null;
+        //    Debug.Log("사정거리내에 아무도 없음");
+        //}
+
+        if (Input.GetKey(KeyCode.J))
+        {
+            ChargeTime += Time.deltaTime;
+            Debug.Log("공격 차징중");
+        }
+        if (Input.GetKeyUp(KeyCode.J))
+        {
+            if (ChargeTime <= 0.5f)
+            {
+                Debug.Log("기본 공격");
+                damage = 20;
+            }
+            else if (ChargeTime >= 1.0f)
+            {
+                Debug.Log("강화 공격");
+                damage = 40;
+            }
+            ChargeTime = 0;
+
+            //if (Enemy != null)
+            //{
+            //    Debug.Log("Hit!");
+            //}
+
+
+            RaycastHit2D rayHit = Physics2D.Raycast(PR.position, dirVec, 10.0f, LayerMask.GetMask("Enemy"));
+            if (rayHit.collider != null)
+            {
+                LivingEntity enemy = rayHit.collider.GetComponent<Monster>();
+                Enemy = rayHit.collider.gameObject;
+                Debug.Log("몬스터가 사정거리내에 있음");
+                if(Enemy != null)
+                {
+                    enemy.damaged(damage);
+                }
+                Debug.Log("Hit!");
+            }
+            else
+            {
+                Enemy = null;
+                Debug.Log("사정거리내에 아무도 없음");
+                Debug.Log("Miss!");
+            }
         }
 
-        if(Input.GetKeyDown(KeyCode.Space) && !isJump)
+    }
+
+    private void flipSpr()
+    {
+        if (!isDash && !isJump) {
+            if (h == 1)
+            {
+                PlayerRenderer.flipX = false;//오른쪽을 바라보도록
+            }
+            else if (h == -1)
+            {
+                PlayerRenderer.flipX = true;//왼쪽을 바라보도록
+            }
+        }
+    }//방향에 맞게 스프라이트 뒤집음
+    private void Jump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && !isJump)
         {
-            isJump = true;
-            PR.velocity = Vector2.up * JumpForce;
-            SetDirection(Dir);
-            Invoke("JumpReset", 1f);
+            isJump = true;//점프했다
+            PR.velocity = Vector2.up * JumpForce;//순간 속력을 위로 점프력만큼 줌
+            SetDirection(Dir);//점프시 이동가능한 방향(반대로 방향 조절 못하게)
+            Invoke("JumpReset", 1f);//1초 뒤에 점프리셋(수정할수도있음)
             Debug.Log("스페이스바 눌림");
         }
         else if (isJump)
         {
-            if(h == Dir)
+            if (h == Dir)
             {
-                h = Dir;
+                h = Dir;//점프시 이동가능한 방향
             }
             else
             {
-                h = 0;
+                h = 0;//점프시 방향 전환을 못하게끔
             }
         }
+    }//점프를 처리하는 함수
 
-        if(h == 1)
+    private void Move()
+    {
+        if (!isDash)
         {
-            PlayerRenderer.flipX = false;
-        }
-        if(h == -1)
-        {
-            PlayerRenderer.flipX = true;
-        }
+            Vector2 newVel = new Vector2(h * MaxSpeed, PR.velocity.y);//플레이어 이동속도
+            PR.velocity = newVel;//리지드바디에 속도 등록
+        }//대쉬중이 아닐때 이동속도를 이걸로 정해줌
+    }//움직임을 처리하는 함수
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDash) { 
+    private void Dash()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDash)
+        {
             isDash = true;//대쉬했다를 체크
             Invoke("DashReset", 0.4f);
         }
@@ -78,22 +171,12 @@ public class Player : LivingEntity
         {
             Vector3 DashPos = new Vector3(Dir, 0, 0) * 2 * MaxSpeed * Time.deltaTime;//대쉬할때 다음위치
             transform.position = curPos + DashPos;//더해서 위치변경
-        }//대쉬
-
-
-        //Vector3 nextPos = new Vector3(h, 0, 0) * Speed * Time.deltaTime;//키입력에 따른 다음 위치
-        //transform.position = curPos + nextPos;//현재위치와 다음위치를 더함으로써 이동
-        if (!isDash)
-        {
-            Vector2 newVel = new Vector2(h * MaxSpeed, PR.velocity.y);//플레이어 이동속도
-            PR.velocity = newVel;//리지드바디에 속도 등록
         }
-
-    }
+    }//대쉬 함수
 
     public void SetDirection(float h) 
     {
-        Dir = h;
+        Dir = h;//마지막 방향 저장(체크할때 사용)
     }
 
     public bool GetMoveCheck()
@@ -109,15 +192,17 @@ public class Player : LivingEntity
     private void DashReset()
     {
         isDash = false;
-    }//대쉬이후
+    }//대쉬이후 초기화
 
     private void JumpReset()
     {
         isJump = false;
-    }//대쉬이후 초기화
+    }//점프 이후 초기화
 
     public void OnTriggerStay2D(Collider2D collision)
     {
         
     }
 }
+//Vector3 nextPos = new Vector3(h, 0, 0) * Speed * Time.deltaTime;//키입력에 따른 다음 위치
+//transform.position = curPos + nextPos;//현재위치와 다음위치를 더함으로써 이동(이전 로직 지금은 사용안함)
