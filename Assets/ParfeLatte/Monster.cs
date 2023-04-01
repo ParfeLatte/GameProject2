@@ -105,7 +105,9 @@ public class Monster : LivingEntity
     {
         if (SleepState == 3)
         {
+            
             Debug.DrawRay(MR.position, dirVec * 1.2f, new Color(0, 1, 0));//레이캐스트 표시(거리 확인용)
+            animator.SetBool("isMove", true);
             if (player.transform.position.x - gameObject.transform.position.x >= 0)
             {
                 Dir = 1;

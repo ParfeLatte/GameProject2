@@ -21,7 +21,8 @@ public class Player : LivingEntity
 
 
     private Rigidbody2D PR;//플레이어 리지드바디
-    private SpriteRenderer PlayerRenderer;
+    private SpriteRenderer PlayerRenderer;//스프라이트 좌우 바꿀때 사용했음
+    private Animator animator;//애니메이터
 
     private float ChargeTime;//공격 차징시간
     private Vector3 curPos;//현재 위치
@@ -31,6 +32,7 @@ public class Player : LivingEntity
     void Awake()
     {
         PR = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         PlayerRenderer = GetComponent<SpriteRenderer>();
         SetStatus(100, 15, 4);
         Health = MaxHealth;
@@ -46,10 +48,12 @@ public class Player : LivingEntity
             Dir = h;
             dirVec = new Vector3(h, 0f, 0f);
             isMove = true;
+            animator.SetBool("isMove", true);
         }
         else if(h == 0)
         {
             isMove = false;
+            animator.SetBool("isMove", false);
         }//움직이는지 확인함
         
         flipSpr();//좌우반전
