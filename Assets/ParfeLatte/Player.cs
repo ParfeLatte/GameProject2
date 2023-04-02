@@ -6,7 +6,7 @@ public class Player : LivingEntity
 { 
     public float movetime;//이동한 시간 체크
     public float stoptime;
-    public float JumpForce;
+    public float JumpForce;//점프력
     public float Dir;//이동방향(대쉬나 점프시에 방향 못바꾸게함)
     public float h;//GeTAxisRaw로 받는 값
 
@@ -15,9 +15,9 @@ public class Player : LivingEntity
     public bool isJump;//점프했는지 체크
 
     //public PlayerAttack Attack;
-    public PlayerAttack Attack;
+    public PlayerAttack Attack;//공격을 실행해주는 스크립트(공격 범위 오브젝트에 할당되어 있으며 여기서 공격을 실행함)
 
-    private GameObject Enemy;
+    private GameObject Enemy;//몬스터
 
 
     private Rigidbody2D PR;//플레이어 리지드바디
@@ -31,11 +31,11 @@ public class Player : LivingEntity
 
     void Awake()
     {
-        PR = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        PlayerRenderer = GetComponent<SpriteRenderer>();
-        SetStatus(100, 15, 4);
-        Health = MaxHealth;
+        PR = GetComponent<Rigidbody2D>();//할당
+        animator = GetComponent<Animator>();//할당
+        PlayerRenderer = GetComponent<SpriteRenderer>();//할당
+        SetStatus(100, 15, 4);//스탯을 설정함
+        Health = MaxHealth;//시작할때 현재 체력을 최대 체력으로 설정해줌
     }
 
     // Update is called once per frame
@@ -65,27 +65,27 @@ public class Player : LivingEntity
 
     private void AttackCheck()
     {
-        if (Input.GetKey(KeyCode.J))
+        if (Input.GetKey(KeyCode.J))//키는 임시임 J를 누르는 중일때
         {
             ChargeTime += Time.deltaTime;
             //차징 애니메이숀
             Debug.Log("공격 차징중");
         }
-        if (Input.GetKeyUp(KeyCode.J))
+        if (Input.GetKeyUp(KeyCode.J))//키를 뗐을때
         {
-            if (ChargeTime <= 0.5f)
+            if (ChargeTime <= 0.5f)//차징 시간이 0.5초 이하이면 기본공격
             {
                 Debug.Log("기본 공격");
-                Attack.GetAttack(damage);
+                Attack.GetAttack(damage);//PlayerAttack 스크립트에 데미지를 전달해주고 PlayerAttack에서는 공격을 실행함
                 //기본공격 모션
             }
-            else if (ChargeTime >= 1.0f)
+            else if (ChargeTime >= 1.0f)//차징 시간이 1초 이상이면 강공
             {
                 Debug.Log("강화 공격");
-                Attack.GetAttack(damage * 2.0f);
+                Attack.GetAttack(damage * 2.0f);//위와 같으나 2배의 데미지를 가함
                 //강공 모션
             }
-            ChargeTime = 0;
+            ChargeTime = 0;//차징 타임 초기화
         }
     }//공격 체크, 공격버튼을 누르고 있으면 차징함!
 
