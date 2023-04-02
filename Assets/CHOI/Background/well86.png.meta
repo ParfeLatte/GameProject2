@@ -1459,9 +1459,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      well86_18: -1504865599
+      well86_41: 1105843964
+      well86_35: -1138865878
       well86_11: 927806647
-      well86_23: 162529028
       well86_42: 1266031648
       well86_1: -2138220142
       well86_14: 52092638
@@ -1521,8 +1521,8 @@ TextureImporter:
       well86_2: -597411129
       well86_62: 329111118
       well86_37: -168950017
-      well86_35: -1138865878
-      well86_41: 1105843964
+      well86_18: -1504865599
+      well86_23: 162529028
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
