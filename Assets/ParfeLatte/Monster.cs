@@ -35,7 +35,7 @@ public class Monster : LivingEntity
     private SpriteRenderer MonsterRenderer;
 
     private Vector3 curPos;//현재위치
-    private Vector2 AddPos = new Vector2(0, 0.5f);//pivot을 아래로 고정했으므로 레이 검사때 위로
+    private Vector2 AddPos = new Vector2(0, 3f);//pivot을 아래로 고정했으므로 레이 검사때 위로
     private Vector2 RayPos;
     private GameObject AttackPlayer;//
 
@@ -69,7 +69,7 @@ public class Monster : LivingEntity
 
     private void AttackCheck()
     {
-        RaycastHit2D rayHit = Physics2D.Raycast(RayPos, dirVec, 1.4f, LayerMask.GetMask("Player"));
+        RaycastHit2D rayHit = Physics2D.Raycast(RayPos, dirVec, 2f, LayerMask.GetMask("Player"));
         if (rayHit.collider != null)
         {
             Player player = rayHit.collider.GetComponent<Player>();
@@ -80,14 +80,7 @@ public class Monster : LivingEntity
                 isMobMove = false;
                 animator.SetBool("isMove", false);
                 animator.SetTrigger("Attack");
-                Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(AttackPos.position, boxSize, 0);
-                foreach (Collider2D collider in collider2Ds)
-                {
-                    if (collider.tag == "Player")
-                    {
-                        player.damaged(damage);
-                    }
-                }
+                Invoke("Attack", 0.15f);
                 AttackTime = 0;
                 Invoke("MoveAgain", 0.15f); ;
             }
@@ -101,6 +94,17 @@ public class Monster : LivingEntity
         }
     }//공격
 
+    private void Attack()
+    {
+        Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(AttackPos.position, boxSize, 0);
+        foreach (Collider2D collider in collider2Ds)
+        {
+            if (collider.tag == "Player")
+            {
+                player.damaged(damage);
+            }
+        }
+    }//범위내 공격
     public void MoveAgain()
     {
         isMobMove = true;
@@ -133,7 +137,7 @@ public class Monster : LivingEntity
     }
     private void OnWake()
     {
-        Debug.DrawRay(RayPos, dirVec * 1.4f, new Color(0, 1, 0));//레이캐스트 표시(거리 확인용)
+        Debug.DrawRay(RayPos, dirVec * 2f, new Color(0, 1, 0));//레이캐스트 표시(거리 확인용)
         if (isMobMove == true)
         {
             if (player.transform.position.x - gameObject.transform.position.x >= 0)

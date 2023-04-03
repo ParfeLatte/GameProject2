@@ -34,7 +34,7 @@ public class Player : LivingEntity
         PR = GetComponent<Rigidbody2D>();//할당
         animator = GetComponent<Animator>();//할당
         PlayerRenderer = GetComponent<SpriteRenderer>();//할당
-        SetStatus(100, 15, 4);//스탯을 설정함
+        SetStatus(100, 15, 8);//스탯을 설정함
         Health = MaxHealth;//시작할때 현재 체력을 최대 체력으로 설정해줌
     }
 
