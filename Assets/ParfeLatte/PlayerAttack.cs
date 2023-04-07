@@ -54,15 +54,16 @@ public class PlayerAttack : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log("몬스터가 범위내에 들어왔습니다. 리스트에 삽입합니다.");
+        
         if(col.tag == "enemy" && !TargetList.Contains(col))
         {
-            Debug.Log("리스트에 삽입됐습니다.");
+            //Debug.Log("몬스터가 범위내에 들어왔습니다. 리스트에 삽입합니다.");
+            //Debug.Log("리스트에 삽입됐습니다.");
             TargetList.Add(col);//몬스터가 공격범위 내에 들어오면 공격대상에 추가
         }
         else
         {
-            Debug.Log("이미 리스트에 있습니다");//예외처리
+            //Debug.Log("이미 리스트에 있습니다");//예외처리
         }
     }
 

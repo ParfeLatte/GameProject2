@@ -69,19 +69,19 @@ public class Player : LivingEntity
         {
             ChargeTime += Time.deltaTime;
             //차징 애니메이숀
-            Debug.Log("공격 차징중");
+            //Debug.Log("공격 차징중");
         }
         if (Input.GetKeyUp(KeyCode.J))//키를 뗐을때
         {
             if (ChargeTime <= 0.5f)//차징 시간이 0.5초 이하이면 기본공격
             {
-                Debug.Log("기본 공격");
+                //Debug.Log("기본 공격");
                 Attack.GetAttack(damage);//PlayerAttack 스크립트에 데미지를 전달해주고 PlayerAttack에서는 공격을 실행함
                 //기본공격 모션
             }
             else if (ChargeTime >= 1.0f)//차징 시간이 1초 이상이면 강공
             {
-                Debug.Log("강화 공격");
+                //Debug.Log("강화 공격");
                 Attack.GetAttack(damage * 2.0f);//위와 같으나 2배의 데미지를 가함
                 //강공 모션
             }
@@ -111,7 +111,7 @@ public class Player : LivingEntity
             PR.velocity = Vector2.up * JumpForce;//순간 속력을 위로 점프력만큼 줌
             SetDirection(Dir);//점프시 이동가능한 방향(반대로 방향 조절 못하게)
             Invoke("JumpReset", 1f);//1초 뒤에 점프리셋(수정할수도있음)
-            Debug.Log("스페이스바 눌림");
+            //Debug.Log("스페이스바 눌림");
         }
         else if (isJump)
         {
@@ -173,11 +173,6 @@ public class Player : LivingEntity
     {
         isJump = false;
     }//점프 이후 초기화
-
-    public void OnTriggerStay2D(Collider2D collision)
-    {
-        
-    }
 }
 //Vector3 nextPos = new Vector3(h, 0, 0) * Speed * Time.deltaTime;//키입력에 따른 다음 위치
 //transform.position = curPos + nextPos;//현재위치와 다음위치를 더함으로써 이동(이전 로직 지금은 사용안함)

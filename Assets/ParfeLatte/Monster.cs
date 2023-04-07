@@ -8,6 +8,7 @@ public class Monster : LivingEntity
     //public GameObject Big;//범위 30의 콜라이더 영역
     public GameObject Player;//거리측정용
     public Transform AttackPos;//공격범위 위치
+    public EventMonster Eventmob;//이벤트몹
     public Vector2 boxSize;//공격범위
 
     public int SleepState;//현재 수면상태 0:깊은수면, 1:중간수면, 2:얕은수면, 3:기상!!!
@@ -37,7 +38,7 @@ public class Monster : LivingEntity
     private Vector3 curPos;//현재위치
     private Vector2 AddPos = new Vector2(0, 3f);//pivot을 아래로 고정했으므로 레이 검사때 위로
     private Vector2 RayPos;//레이 방향
-    private GameObject AttackPlayer;//
+    private GameObject AttackPlayer;//공격대상
 
     private bool isMobMove = false;//몬스터가 움직이는지
 
@@ -46,6 +47,7 @@ public class Monster : LivingEntity
         MR = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         MonsterRenderer = GetComponent<SpriteRenderer>();
+        Player = GameObject.Find("Player");
         SleepState = 0;//깊은수면 상태로 스폰
         SetStatus(30, 10, 4.5f);//일단 일반몹기준
         Health = MaxHealth;//체력을 최대체력으로 설정 
@@ -74,7 +76,7 @@ public class Monster : LivingEntity
         {
             Player player = rayHit.collider.GetComponent<Player>();//플레이어 컴포넌트 할당
             AttackPlayer = rayHit.collider.gameObject;//공격할 플레이어 대상 할당
-            Debug.Log("플레이어가 사정거리내에 있음");
+            //Debug.Log("플레이어가 사정거리내에 있음");
             if (AttackPlayer != null && AttackTime >= CoolTime)//공격 쿨타임이 돌았고, 플레이어가 할당되어있다면
             {
                 isMobMove = false;//잠시 움직임을 멈추고
@@ -84,13 +86,13 @@ public class Monster : LivingEntity
                 AttackTime = 0;//다시 쿨타임
                 Invoke("MoveAgain", 0.15f);//공격후에 다시 움직이도록
             }
-            Debug.Log("공격합니다.");
+            //Debug.Log("공격합니다.");
         }
         else
         {
             AttackPlayer = null;
-            Debug.Log("사정거리내에 아무도 없음");
-            Debug.Log("계속 추적합니다");
+            //Debug.Log("사정거리내에 아무도 없음");
+            //Debug.Log("계속 추적합니다");
         }//예외처리
     }//공격
 
@@ -189,7 +191,7 @@ public class Monster : LivingEntity
                         SleepState = 1;//중간 수면 상태로 들어감
                         moveTimeOne = 0;//1차 검사시간은 초기화
                         animator.SetInteger("SleepState", 1);//애니메이션의 기상상태를 중간수면 상태로 바꿈
-                        Debug.Log("중간수면 상태로 들어갑니다.");
+                        //Debug.Log("중간수면 상태로 들어갑니다.");
                     }
                 }//거리가 30안에 들어오면 체크(깊은수면상태)
                 break;
@@ -201,13 +203,13 @@ public class Monster : LivingEntity
                         SleepState = 2;//얕은 수면 상태로 들어감
                         moveTimeTwo = 0;//2차 검사시간 초기화
                         animator.SetInteger("SleepState", 2);//얕은 수면 애니메이션으로 변경
-                        Debug.Log("얕은수면 상태로 들어갑니다.");
+                        //Debug.Log("얕은수면 상태로 들어갑니다.");
                     }
                     else if(isPlayerStop)//만약 멈췄다면
                     {
                         SleepState = 0;//다시 깊은 수면 상태로 들어감
                         animator.SetInteger("SleepState", 0);//깊은 수면 상태로 애니메이션 전환
-                        Debug.Log("깊은 수면 상태로 돌아갑니다.");
+                        //Debug.Log("깊은 수면 상태로 돌아갑니다.");
                     }
                 }//중간수면 상태이고 15안에서 0.8초간 움직였나?
                 break;
@@ -222,7 +224,7 @@ public class Monster : LivingEntity
                     {
                         SleepState = 1;//중간 수면 상태로 돌아감
                         animator.SetInteger("SleepState", 1);//중간 수면 상태로 애니메이션 변경
-                        Debug.Log("중간 수면 상태로 돌아갑니다.");
+                        //Debug.Log("중간 수면 상태로 돌아갑니다.");
                     }
                 }//얕은 수면 상태 이 상태에 플레이어가 걸으면 바로 기상
                 break;
@@ -238,19 +240,19 @@ public class Monster : LivingEntity
         }
     }//플레이어가 대쉬했는지 체크함
 
-    private void MonsterAwake()
+    public void MonsterAwake()
     {
         SleepState = 3;//깨어난 상태
         animator.SetInteger("SleepState", 3);//애니메이션을 기상 상태로 변경
         animator.SetBool("isMove", true);//플레이어를 추적해오기 때문에 isMove 파라미터값을 true로 변경
         isMobMove = true;//몬스터는 움직인다.
-        Debug.Log("깨어났습니다.");
+        //Debug.Log("깨어났습니다.");
     }
 
     public override void damaged(float damage)
     {
         Health -= damage;//체력에서 데미지만큼 깎음
-        Debug.Log("몬스터가 데미지를 입었습니다.");
+        //Debug.Log("몬스터가 데미지를 입었습니다.");
         //모션
         //사운드
 
@@ -270,6 +272,7 @@ public class Monster : LivingEntity
     {
         isMobMove = false;//움직임 멈춤
         isDead = true;//사망했음
+        Eventmob.isDead = true;//이벤트몹 사망처리
         animator.SetTrigger("Die");//애니메이터에 Die 트리거를 전달해서 사망 애니메이션 재생
         Invoke("Destroy", 1.3f);//잠시후에 오브젝트 비활성화
     }

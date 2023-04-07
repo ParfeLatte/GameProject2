@@ -11,16 +11,15 @@ public class AccessPoint : MonoBehaviour
 
     public int accessLevel;
 
-    public bool isEvent = false;//이벤트가 실행중인지
-    public bool CanAccess = false;//카드에 접근가능한지
-
-    public event Action EventStart;
+    public bool isEvent;//이벤트가 실행중인지
+    public bool isEnd;//이벤트를 끝냈는지
+    public bool CanAccess;//카드에 접근가능한지
 
     void Awake()
     {
-        EventStart += SetEvent;
-        EventStart += Event.SirenOn;
-        EventStart += Event.MobSpawn;
+        isEvent = false;
+        isEnd = false;
+        CanAccess = false;
     }
 
     void Update()
@@ -28,8 +27,10 @@ public class AccessPoint : MonoBehaviour
         
     }
 
-    private void SetEvent()
+    private void StartEvent()
     {
+        Event.SirenOn();
+        Event.MobSpawn();
         isEvent = true;
         Debug.Log("이벤트가 시작됐습니다.");
     }
@@ -58,12 +59,12 @@ public class AccessPoint : MonoBehaviour
     {
         if(!isEvent && !CanAccess)//이벤트가 진행중이지 않고, 엑세스가 불가능하다면
         {
-            EventStart();//이벤트 발생!!
+            StartEvent();//이벤트 발생!!
             Debug.Log("이벤트 시작");
         }
-        else if (isEvent)
+        else if (isEvent && !CanAccess)
         {
-            Debug.Log("이벤트 중이므로 접근 거절");
+            Debug.Log("이벤트 중이므로 접근 거부");
             return;
         }
         else if(!isEvent && CanAccess)
@@ -71,18 +72,16 @@ public class AccessPoint : MonoBehaviour
             keycard.AccessToKey();
             KeyCardCheck();
             Debug.Log("키카드에 접근 승인");
+            gameObject.SetActive(false);
         }
-
     }
 
     private void OnTriggerStay2D(Collider2D col)
     {
-       if(col.tag == "Player")
+        Debug.Log("플레이어가 범위내에 있음 엑세스포인트에 접근 가능");
+        if (col.tag == "Player" && Input.GetKeyDown(KeyCode.U))
         {
-            if (Input.GetKeyDown(KeyCode.U))
-            {
-                CheckAccess();//엑세스 확인(첫 접근에는 이벤트 시작, 이벤트 중에는 접근 불가능, 이벤트 끝난 후에 키카드 획득 가능)
-            }
+            CheckAccess();//엑세스 확인(첫 접근에는 이벤트 시작, 이벤트 중에는 접근 불가능, 이벤트 끝난 후에 키카드 획득 가능)
         }
     }
 }

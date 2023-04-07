@@ -57,7 +57,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.96, y: 4.86}
+  m_Size: {x: 1.96, y: 4.5}
   m_EdgeRadius: 0
 --- !u!114 &4765354534789382537
 MonoBehaviour:
@@ -152,12 +152,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 305701743, guid: cf091b2ff041db24fa8b01770d393722, type: 3}
+  m_Sprite: {fileID: -37748938, guid: cf091b2ff041db24fa8b01770d393722, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 2.2307692, y: 4.6923075}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -176,6 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 0
+  isDead: 0
   movetime: 0
   stoptime: 0
   JumpForce: 12
@@ -239,6 +240,6 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 2.51}
-  m_Size: {x: 1.91, y: 5.03}
+  m_Offset: {x: 0, y: 2.39}
+  m_Size: {x: 1.91, y: 4.7}
   m_Direction: 0

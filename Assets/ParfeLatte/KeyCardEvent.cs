@@ -6,26 +6,28 @@ using UnityEngine;
 public class KeyCardEvent : MonoBehaviour
 {
     public AccessPoint AP;//엑세스 포인트
-    public GameObject Monster;//마구 몰려올 몬스터들!
 
-    public AudioClip Siren;//사이렌 사운드
-
+    public MobSpawner Spawner;//몬스터 생성
     public Transform SpawnPos;//이벤트 몹 생성위치
+
+    public bool isAllDead;//모든 몬스터가 죽었는지 확인
 
     private AudioSource SirenSound;//사이렌 재생용
 
-    public List<Monster> MobList = new List<Monster>();//살아있는지 체크함
-    void Start()
+
+    public List<GameObject> MobList = new List<GameObject>();//몬스터 리스트
+    public List<EventMonster> DeadCheck = new List<EventMonster>();//살았는지 체크
+    void Awake()
     {
         SirenSound = GetComponent<AudioSource>();
-        SirenSound.clip = Siren;
+        isAllDead = false;
     }
 
     public void SirenOn()
     {
         SirenSound.Play();
     }
-
+        
     public void SirenOff()
     {
         SirenSound.Stop();
@@ -36,31 +38,44 @@ public class KeyCardEvent : MonoBehaviour
         //몬스터들 스폰시킴
         for(int i = 0; i < 5; i++)
         {
-            GameObject monster = Instantiate(Monster, SpawnPos);
-            Monster Mob = monster.GetComponent<Monster>();
-            MobList[i] = Mob;
+            MobList.Add(Spawner.spawnEnemy(SpawnPos));
+            DeadCheck.Add(MobList[i].GetComponent<EventMonster>());
         }
         Debug.Log("몬스터들이 몰려옵니다.");
+    }
+
+    public void ClearEvent()
+    {
+        SirenOff();
+        AP.EndEvent();
     }
 
     public void CheckMob()
     {
         for(int i = 0; i < MobList.Count; i++)
         {
-            if (MobList[i].isDead) { MobList.RemoveAt(i); }
+            if (DeadCheck[i].isDead)
+            {
+                isAllDead = true;
+            }
+            else
+            {
+                isAllDead = false;
+                return;
+            }
         }
-        //이벤트 몹이 살아있는지 확인함
-        if(MobList.Count == 0)
+        if (isAllDead)
         {
-            SirenOff();
-            AP.EndEvent();
+            ClearEvent();
         }
+
     }
 
     void Update()
     {
-        CheckMob();
+        if (AP.isEvent)
+        {
+            CheckMob();
+        }
     }
-
-    
 }
