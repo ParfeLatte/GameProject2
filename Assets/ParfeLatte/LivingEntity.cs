@@ -9,7 +9,7 @@ public class LivingEntity : MonoBehaviour
     protected float damage;//공격시 가하는 데미지
     protected float MaxSpeed;//이동속도
 
-    protected bool isDead;//캐릭터가 사망했는지 확인
+    public bool isDead;//캐릭터가 사망했는지 확인
 
 
     public virtual void SetStatus(float HP, float Damage, float Speed)

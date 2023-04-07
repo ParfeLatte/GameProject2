@@ -12,6 +12,6 @@ public class KeyCard : ScriptableObject
 
     public void AccessToKey()
     {
-        isHave = true;
+        isHave = true;//키를 소유했음
     }//이벤트가 끝나면 Key에 엑세스해서 획득
 }

@@ -6,46 +6,83 @@ using UnityEngine;
 public class AccessPoint : MonoBehaviour
 {
     public KeyCard keycard;
-    public int accessLevel;
-    public bool isEvent = false;
-    public event Action EventStart;
-    public event Action EventClear;
-    public AudioClip Siren;//사이렌 사운드
+    public GameManager gameManager;
+    public KeyCardEvent Event;
 
-    private AudioSource SirenSound;//사이렌 재생용
+    public int accessLevel;
+
+    public bool isEvent = false;//이벤트가 실행중인지
+    public bool CanAccess = false;//카드에 접근가능한지
+
+    public event Action EventStart;
 
     void Awake()
     {
-        SirenSound = GetComponent<AudioSource>();
-        accessLevel = keycard.AccessLevel;
-        SirenSound.clip = Siren;
-
-        EventStart += SirenOn;
-        EventStart += MobSpawn;
-
-        EventClear += keycard.AccessToKey;
+        EventStart += SetEvent;
+        EventStart += Event.SirenOn;
+        EventStart += Event.MobSpawn;
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
 
-    private void SirenOn()
+    private void SetEvent()
     {
-        SirenSound.Play();
+        isEvent = true;
+        Debug.Log("이벤트가 시작됐습니다.");
     }
-    public void MobSpawn()
+
+    public void EndEvent()
     {
-        //몬스터들 스폰시킴
+        isEvent = false;
+        CanAccess = true;
+        Debug.Log("이벤트가 끝났습니다.\n키카드에 승인가능합니다.");
     }
-    
+
     public void KeyCardCheck()
     {
         if (keycard.isHave)
         {
+            gameManager.GetCard(keycard.AccessLevel, keycard.isHave);
+            Debug.Log(keycard.KeyColor + "key card를 획득했습니다");
+        }
+        else
+        {
+            return;
+        }
+    }
 
+    private void CheckAccess()
+    {
+        if(!isEvent && !CanAccess)//이벤트가 진행중이지 않고, 엑세스가 불가능하다면
+        {
+            EventStart();//이벤트 발생!!
+            Debug.Log("이벤트 시작");
+        }
+        else if (isEvent)
+        {
+            Debug.Log("이벤트 중이므로 접근 거절");
+            return;
+        }
+        else if(!isEvent && CanAccess)
+        {
+            keycard.AccessToKey();
+            KeyCardCheck();
+            Debug.Log("키카드에 접근 승인");
+        }
+
+    }
+
+    private void OnTriggerStay2D(Collider2D col)
+    {
+       if(col.tag == "Player")
+        {
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                CheckAccess();//엑세스 확인(첫 접근에는 이벤트 시작, 이벤트 중에는 접근 불가능, 이벤트 끝난 후에 키카드 획득 가능)
+            }
         }
     }
 }
