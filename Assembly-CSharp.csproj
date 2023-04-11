@@ -58,6 +58,8 @@
   <ItemGroup>
     <Compile Include="Assets\ParfeLatte\MonsterAttack.cs" />
     <Compile Include="Assets\ParfeLatte\AccessPoint.cs" />
+    <Compile Include="Assets\ParfeLatte\MobSpawner.cs" />
+    <Compile Include="Assets\ParfeLatte\EventMonster.cs" />
     <Compile Include="Assets\ParfeLatte\KeyCardEvent.cs" />
     <Compile Include="Assets\ParfeLatte\PlayerAttack.cs" />
     <Compile Include="Assets\ParfeLatte\KeyCard.cs" />
@@ -65,8 +67,7 @@
     <Compile Include="Assets\ParfeLatte\GameManager.cs" />
     <Compile Include="Assets\ParfeLatte\LivingEntity.cs" />
     <Compile Include="Assets\ParfeLatte\Monster.cs" />
-    <Compile Include="Assets\ParfeLatte\MobSpawner.cs" />
-    <Compile Include="Assets\ParfeLatte\EventMonster.cs" />
+    <Compile Include="Assets\ParfeLatte\GateCheck.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

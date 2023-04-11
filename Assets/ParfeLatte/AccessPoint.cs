@@ -15,16 +15,21 @@ public class AccessPoint : MonoBehaviour
     public bool isEnd;//이벤트를 끝냈는지
     public bool CanAccess;//카드에 접근가능한지
 
+    private bool isPlayer;//플레이어가 접근했는지
+
     void Awake()
     {
         isEvent = false;
         isEnd = false;
         CanAccess = false;
+        isPlayer = false;
     }
 
     void Update()
     {
-        
+        if(isPlayer && Input.GetKeyDown(KeyCode.U)){
+            CheckAccess();
+        }
     }
 
     private void StartEvent()
@@ -79,9 +84,17 @@ public class AccessPoint : MonoBehaviour
     private void OnTriggerStay2D(Collider2D col)
     {
         Debug.Log("플레이어가 범위내에 있음 엑세스포인트에 접근 가능");
-        if (col.tag == "Player" && Input.GetKeyDown(KeyCode.U))
+        if (col.tag == "Player")
         {
-            CheckAccess();//엑세스 확인(첫 접근에는 이벤트 시작, 이벤트 중에는 접근 불가능, 이벤트 끝난 후에 키카드 획득 가능)
+            isPlayer = true;//엑세스 확인(첫 접근에는 이벤트 시작, 이벤트 중에는 접근 불가능, 이벤트 끝난 후에 키카드 획득 가능)
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.tag == "Player")
+        {
+            isPlayer = false;//엑세스 확인(첫 접근에는 이벤트 시작, 이벤트 중에는 접근 불가능, 이벤트 끝난 후에 키카드 획득 가능)
         }
     }
 }

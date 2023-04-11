@@ -12,6 +12,11 @@ public class GameManager : MonoBehaviour
         
     }
 
+    public bool CheckGateOpen(int gateLv)
+    {
+        return accessLv[gateLv-1];
+    }
+
     public void GetCard(int level, bool isHave) {
         if(!accessLv[level-1] && isHave)
         {

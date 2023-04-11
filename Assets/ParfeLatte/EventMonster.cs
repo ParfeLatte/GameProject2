@@ -17,4 +17,9 @@ public class EventMonster : MonoBehaviour
         Mob.MonsterAwake();
         isDead = false;
     }
+
+    private void OnDisable()
+    {
+        isDead = true;
+    }
 }

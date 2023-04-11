@@ -8,7 +8,7 @@ public class KeyCardEvent : MonoBehaviour
     public AccessPoint AP;//엑세스 포인트
 
     public MobSpawner Spawner;//몬스터 생성
-    public Transform SpawnPos;//이벤트 몹 생성위치
+    public List<Transform> SpawnPos = new List<Transform>();//이벤트 몹 생성위치
 
     public bool isAllDead;//모든 몬스터가 죽었는지 확인
 
@@ -38,11 +38,17 @@ public class KeyCardEvent : MonoBehaviour
         //몬스터들 스폰시킴
         for(int i = 0; i < 5; i++)
         {
-            MobList.Add(Spawner.spawnEnemy(SpawnPos));
+            int pos = ChangePos();
+            MobList.Add(Spawner.spawnEnemy(SpawnPos[pos]));
             DeadCheck.Add(MobList[i].GetComponent<EventMonster>());
         }
         Debug.Log("몬스터들이 몰려옵니다.");
     }
+
+    private int ChangePos()
+    {
+        return UnityEngine.Random.Range(0, 4);
+    } 
 
     public void ClearEvent()
     {

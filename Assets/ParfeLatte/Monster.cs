@@ -8,9 +8,8 @@ public class Monster : LivingEntity
     //public GameObject Big;//범위 30의 콜라이더 영역
     public GameObject Player;//거리측정용
     public Transform AttackPos;//공격범위 위치
-    public EventMonster Eventmob;//이벤트몹
     public Vector2 boxSize;//공격범위
-
+    
     public int SleepState;//현재 수면상태 0:깊은수면, 1:중간수면, 2:얕은수면, 3:기상!!!
 
     public float moveTimeOne;//플레이어가 얼마나 걸었는지 확인
@@ -56,13 +55,17 @@ public class Monster : LivingEntity
     // Update is called once per frame
     void Update()
     {
-        Dist = Mathf.Abs(Player.transform.position.x - gameObject.transform.position.x);//플레이어와 몬스터 사이 거리
+        if (Mathf.Abs(Player.transform.position.y - gameObject.transform.position.y) < 5)
+        {
+            Dist = Mathf.Abs(Player.transform.position.x - gameObject.transform.position.x);//플레이어와 몬스터 사이 거리
+            if (SleepState != 3 & !isDead)
+            {
+                StateCheck();//현재 수면상태이므로 수면상태 확인
+            }//수면시 패턴
+        }
         curPos = transform.position;//현재위치
         RayPos = MR.position + AddPos;//레이를 발사하는 위치
-        if(SleepState != 3 & !isDead) { 
-            StateCheck();//현재 수면상태이므로 수면상태 확인
-        }//수면시 패턴
-        else if(SleepState == 3 && !isDead) {
+        if(SleepState == 3 && !isDead) {
             OnWake();//깨어있을때 행동패턴
             AttackCheck();//공격범위 내에 들어오면 공격
         }//기상시 패턴
@@ -272,9 +275,8 @@ public class Monster : LivingEntity
     {
         isMobMove = false;//움직임 멈춤
         isDead = true;//사망했음
-        Eventmob.isDead = true;//이벤트몹 사망처리
         animator.SetTrigger("Die");//애니메이터에 Die 트리거를 전달해서 사망 애니메이션 재생
-        Invoke("Destroy", 1.3f);//잠시후에 오브젝트 비활성화
+        Invoke("Destroy", 1.2f);//잠시후에 오브젝트 비활성화
     }
 
     private void Destroy()
