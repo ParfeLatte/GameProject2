@@ -9,17 +9,17 @@ public class EventMonster : MonoBehaviour
 
     private void Awake()
     {
-        Mob.MonsterAwake();
-        isDead = false;
+        Mob.MonsterAwake();//몬스터 기상
+        isDead = false;//안죽었음
     }
     private void OnEnable()
     {
-        Mob.MonsterAwake();
-        isDead = false;
+        Mob.MonsterAwake();//몬스터 기상(오브젝트 풀링 준비)
+        isDead = false;//안죽었음
     }
 
     private void OnDisable()
     {
-        isDead = true;
+        isDead = true;//사망
     }
 }

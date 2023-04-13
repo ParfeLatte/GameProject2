@@ -4,41 +4,46 @@ using UnityEngine;
 
 public class GateCheck : MonoBehaviour
 {
-    public GameObject Gate;
-    public GameManager Manager;
+    public GameObject Gate;//문
+    public GameManager Manager;//게임매니저
 
-    public bool isOpen;
-    public int GateLv;
+    public bool isOpen;//열렸는지
+    public int GateLv;//문의의 접근레벨
 
-    private SpriteRenderer Spr;
+    private Animator animator;
 
     private void Awake()
     {
-        Spr = GetComponent<SpriteRenderer>();
-        Gate.SetActive(true);
-        isOpen = false;
+        animator = GetComponent<Animator>();
+        Gate.SetActive(true);//못지나가도록 콜라이더 오브젝트인 문을 켬
+        isOpen = false;//닫힘
     }
-
-    // Update is called once per frame
-    void Update()
+    private void OpenClose()
     {
         if (isOpen)
         {
-            Gate.SetActive(false);
-            Spr.color = new Color(1, 1, 1, 0.4f);
+            animator.enabled = true;//애니메이터를 켜서 문 애니메이션 재생가능
+            animator.SetBool("isOpen", true);//문열림
+            Gate.SetActive(false);//콜라이더가 있는 오브젝트인 문을 비활성화 해서 지나갈 수 있음
+            Debug.Log(GateLv +"Lv 게이트 접근 승인, 문이 열립니다.");
         }
         else
         {
-            Gate.SetActive(true);
-            Spr.color = new Color(1, 1, 1, 1f);
+            Gate.SetActive(true);//못지나가도록 다시 활성화
+            animator.SetBool("isOpen", false);//역재생으로 문닫는 애니메이션 재생
         }
-     }
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        OpenClose();//열고닫음을 확인함
+    }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.tag == "Player")
         {
-            isOpen = Manager.CheckGateOpen(GateLv);
+            isOpen = Manager.CheckGateOpen(GateLv);//플레이어 태그의 오브젝트가 들어오면 문열리는지 확인
         }
     }
 
@@ -46,7 +51,7 @@ public class GateCheck : MonoBehaviour
     {
         if (col.tag == "Player")
         {
-            isOpen = false;
+            isOpen = false;//범위 내에서 벗어나면 문을 닫음
         }
     }
 }

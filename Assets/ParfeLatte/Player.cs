@@ -73,16 +73,17 @@ public class Player : LivingEntity
         }
         if (Input.GetKeyUp(KeyCode.J))//키를 뗐을때
         {
-            if (ChargeTime <= 0.5f)//차징 시간이 0.5초 이하이면 기본공격
+            if (ChargeTime < 1f)//차징 시간이 1초 이하이면 기본공격
             {
                 //Debug.Log("기본 공격");
                 Attack.GetAttack(damage);//PlayerAttack 스크립트에 데미지를 전달해주고 PlayerAttack에서는 공격을 실행함
-                //기본공격 모션
+                animator.SetTrigger("Attack");//공격 애니메이션 재생
             }
             else if (ChargeTime >= 1.0f)//차징 시간이 1초 이상이면 강공
             {
                 //Debug.Log("강화 공격");
                 Attack.GetAttack(damage * 2.0f);//위와 같으나 2배의 데미지를 가함
+                animator.SetTrigger("Attack");//공격 애니메이션 재생
                 //강공 모션
             }
             ChargeTime = 0;//차징 타임 초기화

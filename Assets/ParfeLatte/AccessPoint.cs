@@ -9,7 +9,7 @@ public class AccessPoint : MonoBehaviour
     public GameManager gameManager;
     public KeyCardEvent Event;
 
-    public int accessLevel;
+    public int accessLevel;//키카드 레벨
 
     public bool isEvent;//이벤트가 실행중인지
     public bool isEnd;//이벤트를 끝냈는지
@@ -23,41 +23,42 @@ public class AccessPoint : MonoBehaviour
         isEnd = false;
         CanAccess = false;
         isPlayer = false;
+        accessLevel = keycard.AccessLevel;
     }
 
     void Update()
     {
         if(isPlayer && Input.GetKeyDown(KeyCode.U)){
-            CheckAccess();
+            CheckAccess();//플레이어가 범위 내에 있을때 U를 눌렀으면 접근시도
         }
-    }
-
-    private void StartEvent()
-    {
-        Event.SirenOn();
-        Event.MobSpawn();
-        isEvent = true;
-        Debug.Log("이벤트가 시작됐습니다.");
-    }
-
-    public void EndEvent()
-    {
-        isEvent = false;
-        CanAccess = true;
-        Debug.Log("이벤트가 끝났습니다.\n키카드에 승인가능합니다.");
     }
 
     public void KeyCardCheck()
     {
         if (keycard.isHave)
         {
-            gameManager.GetCard(keycard.AccessLevel, keycard.isHave);
+            gameManager.GetCard(keycard.AccessLevel, keycard.isHave);//키카드를 가지고있으면 게임매니저에게 전달
             Debug.Log(keycard.KeyColor + "key card를 획득했습니다");
         }
         else
         {
-            return;
+            return;//없음
         }
+    }
+
+    public void EndEvent()
+    {
+        isEvent = false;//이벤트가 끝남
+        CanAccess = true;//키카드에 접근가능
+        Debug.Log("이벤트가 끝났습니다.\n키카드에 승인가능합니다.");
+    }
+
+    private void StartEvent()
+    {
+        Event.SirenOn();//사이렌 재생
+        Event.MobSpawn();//이벤트 몬스터 스폰
+        isEvent = true;
+        Debug.Log("이벤트가 시작됐습니다.");
     }
 
     private void CheckAccess()
@@ -70,14 +71,14 @@ public class AccessPoint : MonoBehaviour
         else if (isEvent && !CanAccess)
         {
             Debug.Log("이벤트 중이므로 접근 거부");
-            return;
+            return;//접근 못하도록 리턴
         }
         else if(!isEvent && CanAccess)
         {
-            keycard.AccessToKey();
-            KeyCardCheck();
-            Debug.Log("키카드에 접근 승인");
-            gameObject.SetActive(false);
+            keycard.AccessToKey();//키카드 획득
+            KeyCardCheck();//키카드를 획득했음을 게임매니저에 전달
+            Debug.Log(accessLevel +"Lv키카드를 획득했습니다.");
+            gameObject.SetActive(false);//키카드 제거(오브젝트에서)
         }
     }
 

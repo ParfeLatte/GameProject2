@@ -84,7 +84,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        Debug.Log("몬스터가 범위에서 벗어났습니다. 리스트에서 삭제합니다.");
+        //Debug.Log("몬스터가 범위에서 벗어났습니다. 리스트에서 삭제합니다.");
         if (TargetList.Contains(col))
         {
             TargetList.Remove(col);//범위를 벗어나면 리스트에 있던 몬스터를 제거함(공격대상X)

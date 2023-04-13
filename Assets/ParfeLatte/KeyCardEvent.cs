@@ -20,17 +20,17 @@ public class KeyCardEvent : MonoBehaviour
     void Awake()
     {
         SirenSound = GetComponent<AudioSource>();
-        isAllDead = false;
+        isAllDead = false;//이벤트 몬스터가 아직 살아있음
     }
 
     public void SirenOn()
     {
-        SirenSound.Play();
+        SirenSound.Play();//사이렌 재생
     }
         
     public void SirenOff()
     {
-        SirenSound.Stop();
+        SirenSound.Stop();//사이렌 정지(이벤트 끝)
     }
 
     public void MobSpawn()
@@ -38,22 +38,22 @@ public class KeyCardEvent : MonoBehaviour
         //몬스터들 스폰시킴
         for(int i = 0; i < 5; i++)
         {
-            int pos = ChangePos();
-            MobList.Add(Spawner.spawnEnemy(SpawnPos[pos]));
-            DeadCheck.Add(MobList[i].GetComponent<EventMonster>());
+            int pos = ChangePos();//랜덤한 위치에서 몹스폰
+            MobList.Add(Spawner.spawnEnemy(SpawnPos[pos]));//정해진 위치에 몹 스폰
+            DeadCheck.Add(MobList[i].GetComponent<EventMonster>());//이벤트몹 스크립트 가져옴
         }
         Debug.Log("몬스터들이 몰려옵니다.");
     }
 
     private int ChangePos()
     {
-        return UnityEngine.Random.Range(0, 4);
+        return UnityEngine.Random.Range(0, 4);//랜덤한 위치 하나 선정
     } 
 
     public void ClearEvent()
     {
-        SirenOff();
-        AP.EndEvent();
+        SirenOff();//사이렌 정지
+        AP.EndEvent();//이벤트 끝냄
     }
 
     public void CheckMob()
@@ -66,13 +66,13 @@ public class KeyCardEvent : MonoBehaviour
             }
             else
             {
-                isAllDead = false;
+                isAllDead = false;//몬스터가 한 마리라도 살아있으면 false가 반환됨
                 return;
             }
         }
         if (isAllDead)
         {
-            ClearEvent();
+            ClearEvent();//몬스터가 전부 죽었으면 이벤트 끝
         }
 
     }
@@ -82,6 +82,6 @@ public class KeyCardEvent : MonoBehaviour
         if (AP.isEvent)
         {
             CheckMob();
-        }
+        }//이벤트 중일때 이벤트 몹의 생사 확인
     }
 }
