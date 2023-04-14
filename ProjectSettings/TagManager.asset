@@ -8,6 +8,8 @@ TagManager:
   - Wall
   - Floor
   - Sailing
+  - Stop
+  - Lift
   layers:
   - Default
   - TransparentFX

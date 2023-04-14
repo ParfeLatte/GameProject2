@@ -9,7 +9,7 @@ public class Monster : LivingEntity
     public GameObject Player;//거리측정용
     public Transform AttackPos;//공격범위 위치
     public Vector2 boxSize;//공격범위
-    
+
     public int SleepState;//현재 수면상태 0:깊은수면, 1:중간수면, 2:얕은수면, 3:기상!!!
 
     public float moveTimeOne;//플레이어가 얼마나 걸었는지 확인
@@ -65,7 +65,7 @@ public class Monster : LivingEntity
         }
         curPos = transform.position;//현재위치
         RayPos = MR.position + AddPos;//레이를 발사하는 위치
-        if(SleepState == 3 && !isDead) {
+        if (SleepState == 3 && !isDead) {
             OnWake();//깨어있을때 행동패턴
             AttackCheck();//공격범위 내에 들어오면 공격
         }//기상시 패턴
@@ -87,7 +87,7 @@ public class Monster : LivingEntity
                 animator.SetTrigger("Attack");//attack Trigger를 발동해서 공격 애니메이션 재생
                 Invoke("Attack", 0.15f);//애니메이션에서 휘두르는 모션에 맞게 공격
                 AttackTime = 0;//다시 쿨타임
-                Invoke("MoveAgain", 0.15f);//공격후에 다시 움직이도록
+                Invoke("MoveAgain", 0.55f);//공격후에 다시 움직이도록
             }
             //Debug.Log("공격합니다.");
         }
@@ -112,9 +112,9 @@ public class Monster : LivingEntity
     }//범위내 공격
 
     public void MoveAgain()
-    {
-        isMobMove = true;//다시 움직임
+    { 
         animator.SetBool("isMove", true);//이동 애니메이션 셋
+        isMobMove = true;//다시 움직임
     }
 
     private void StateCheck()

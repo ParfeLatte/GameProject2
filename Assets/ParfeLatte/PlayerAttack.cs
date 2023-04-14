@@ -66,22 +66,6 @@ public class PlayerAttack : MonoBehaviour
             //Debug.Log("이미 리스트에 있습니다");//예외처리
         }
     }
-
-    //private void OnTriggerStay2D(Collider2D col)
-    //{
-    //    //if (col.tag == "enemy")
-    //    //{
-    //    //    Debug.Log("몬스터가 범위내에 있습니다");
-    //    //    if (isAttack)
-    //    //    {
-    //    //        Monster enemy = col.GetComponent<Monster>();
-    //    //        enemy.damaged(Damage);
-    //    //        isAttack = false;
-    //    //    }
-    //    //    //공격처리!
-    //    //}
-    //}
-
     private void OnTriggerExit2D(Collider2D col)
     {
         //Debug.Log("몬스터가 범위에서 벗어났습니다. 리스트에서 삭제합니다.");
@@ -96,3 +80,19 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 }
+
+
+//private void OnTriggerStay2D(Collider2D col)
+//{
+//    //if (col.tag == "enemy")
+//    //{
+//    //    Debug.Log("몬스터가 범위내에 있습니다");
+//    //    if (isAttack)
+//    //    {
+//    //        Monster enemy = col.GetComponent<Monster>();
+//    //        enemy.damaged(Damage);
+//    //        isAttack = false;
+//    //    }
+//    //    //공격처리!
+//    //}
+//}
