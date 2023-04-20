@@ -26,6 +26,7 @@ public class Monster : LivingEntity
 
     public bool isPlayerDash;//플레이어가 대쉬했는지 확인
     public bool isPlayerStop;//플레이어가 멈췄는가?
+    public bool isAttack;//공격중인가?
 
     public Vector3 lastPlayerPosition;//위치 비교용
 
@@ -68,13 +69,13 @@ public class Monster : LivingEntity
         if (SleepState == 3 && !isDead) {
             OnWake();//깨어있을때 행동패턴
             AttackCheck();//공격범위 내에 들어오면 공격
+            AttackTime += Time.deltaTime;//쿨타임
         }//기상시 패턴
-        AttackTime += Time.deltaTime;//쿨타임
     }
 
     private void AttackCheck()
     {
-        RaycastHit2D rayHit = Physics2D.Raycast(RayPos, dirVec, 2f, LayerMask.GetMask("Player"));//Ray를 발사하여 플레이어가 범위내에 있는지 확인
+        RaycastHit2D rayHit = Physics2D.Raycast(RayPos, dirVec, 1.75f, LayerMask.GetMask("Player"));//Ray를 발사하여 플레이어가 범위내에 있는지 확인
         if (rayHit.collider != null)//레이에 충돌한 대상이 있으면
         {
             Player player = rayHit.collider.GetComponent<Player>();//플레이어 컴포넌트 할당
@@ -85,7 +86,7 @@ public class Monster : LivingEntity
                 isMobMove = false;//잠시 움직임을 멈추고
                 animator.SetBool("isMove", false);//애니메이션 파라미터에서 isMove를 false로 바꾸고
                 animator.SetTrigger("Attack");//attack Trigger를 발동해서 공격 애니메이션 재생
-                Invoke("Attack", 0.15f);//애니메이션에서 휘두르는 모션에 맞게 공격
+                Invoke("Attack", 0.2f);//애니메이션에서 휘두르는 모션에 맞게 공격
                 AttackTime = 0;//다시 쿨타임
                 Invoke("MoveAgain", 0.55f);//공격후에 다시 움직이도록
             }
@@ -143,7 +144,7 @@ public class Monster : LivingEntity
     }
     private void OnWake()
     {
-        Debug.DrawRay(RayPos, dirVec * 2f, new Color(0, 1, 0));//레이캐스트 표시(거리 확인용)
+        Debug.DrawRay(RayPos, dirVec * 1.75f, new Color(0, 1, 0));//레이캐스트 표시(거리 확인용)
         if (isMobMove == true)
         {
             if (player.transform.position.x - gameObject.transform.position.x >= 0)
@@ -193,6 +194,7 @@ public class Monster : LivingEntity
                     {
                         SleepState = 1;//중간 수면 상태로 들어감
                         moveTimeOne = 0;//1차 검사시간은 초기화
+                        //MonsterRenderer.color = new Color(1, 0.92f, 0.016f, 1);
                         animator.SetInteger("SleepState", 1);//애니메이션의 기상상태를 중간수면 상태로 바꿈
                         //Debug.Log("중간수면 상태로 들어갑니다.");
                     }
@@ -205,12 +207,14 @@ public class Monster : LivingEntity
                     {
                         SleepState = 2;//얕은 수면 상태로 들어감
                         moveTimeTwo = 0;//2차 검사시간 초기화
+                        //MonsterRenderer.color = new Color(1, 0.92f, 0.016f, 0.85f);
                         animator.SetInteger("SleepState", 2);//얕은 수면 애니메이션으로 변경
                         //Debug.Log("얕은수면 상태로 들어갑니다.");
                     }
                     else if(isPlayerStop)//만약 멈췄다면
                     {
                         SleepState = 0;//다시 깊은 수면 상태로 들어감
+                        //MonsterRenderer.color = new Color(1, 1, 1, 1);
                         animator.SetInteger("SleepState", 0);//깊은 수면 상태로 애니메이션 전환
                         //Debug.Log("깊은 수면 상태로 돌아갑니다.");
                     }
@@ -226,6 +230,7 @@ public class Monster : LivingEntity
                     else//움직이지 않았다면
                     {
                         SleepState = 1;//중간 수면 상태로 돌아감
+                        //MonsterRenderer.color = new Color(1, 0.92f, 0.016f, 1);
                         animator.SetInteger("SleepState", 1);//중간 수면 상태로 애니메이션 변경
                         //Debug.Log("중간 수면 상태로 돌아갑니다.");
                     }
@@ -247,6 +252,7 @@ public class Monster : LivingEntity
     {
         SleepState = 3;//깨어난 상태
         animator.SetInteger("SleepState", 3);//애니메이션을 기상 상태로 변경
+        //MonsterRenderer.color = new Color(1, 0f, 0f, 1f);
         animator.SetBool("isMove", true);//플레이어를 추적해오기 때문에 isMove 파라미터값을 true로 변경
         isMobMove = true;//몬스터는 움직인다.
         //Debug.Log("깨어났습니다.");

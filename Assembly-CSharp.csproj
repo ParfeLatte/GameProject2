@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{F4439203-C38C-1896-46B8-75AF86568070}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -64,12 +65,12 @@
     <Compile Include="Assets\ParfeLatte\PlayerAttack.cs" />
     <Compile Include="Assets\ParfeLatte\KeyCard.cs" />
     <Compile Include="Assets\ParfeLatte\Player.cs" />
+    <Compile Include="Assets\ParfeLatte\ObjectManager.cs" />
     <Compile Include="Assets\ParfeLatte\GameManager.cs" />
     <Compile Include="Assets\ParfeLatte\LiftTest.cs" />
     <Compile Include="Assets\ParfeLatte\LivingEntity.cs" />
     <Compile Include="Assets\ParfeLatte\Monster.cs" />
     <Compile Include="Assets\ParfeLatte\GateCheck.cs" />
-    <Compile Include="Assets\ParfeLatte\ObjectManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

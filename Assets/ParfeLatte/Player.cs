@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : LivingEntity
-{ 
+{
+    public float CoolTime;//쿨타임
     public float movetime;//이동한 시간 체크
     public float stoptime;
     public float JumpForce;//점프력
@@ -16,7 +18,7 @@ public class Player : LivingEntity
 
     //public PlayerAttack Attack;
     public PlayerAttack Attack;//공격을 실행해주는 스크립트(공격 범위 오브젝트에 할당되어 있으며 여기서 공격을 실행함)
-
+    
     private GameObject Enemy;//몬스터
 
 
@@ -24,6 +26,7 @@ public class Player : LivingEntity
     private SpriteRenderer PlayerRenderer;//스프라이트 좌우 바꿀때 사용했음
     private Animator animator;//애니메이터
 
+    public float AttackTime;//공격한시간
     private float ChargeTime;//공격 차징시간
     private Vector3 curPos;//현재 위치
     private Vector3 dirVec;//바라보는 방향
@@ -36,6 +39,7 @@ public class Player : LivingEntity
         PlayerRenderer = GetComponent<SpriteRenderer>();//할당
         SetStatus(100, 15, 8);//스탯을 설정함
         Health = MaxHealth;//시작할때 현재 체력을 최대 체력으로 설정해줌
+        gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -55,12 +59,17 @@ public class Player : LivingEntity
             isMove = false;
             animator.SetBool("isMove", false);
         }//움직이는지 확인함
+
+        AttackTime += Time.deltaTime;
         
         flipSpr();//좌우반전
-        Jump();//점프
-        Dash();//대쉬
-        Move();//이동
-        AttackCheck();//공격
+        if (!isDead)
+        {
+            Jump();//점프
+            Dash();//대쉬
+            Move();//이동
+            AttackCheck();//공격
+        }
     }
 
     private void AttackCheck()
@@ -71,19 +80,21 @@ public class Player : LivingEntity
             //차징 애니메이숀
             //Debug.Log("공격 차징중");
         }
-        if (Input.GetKeyUp(KeyCode.J))//키를 뗐을때
+        if (Input.GetKeyUp(KeyCode.J) && AttackTime >= CoolTime)//키를 뗐을때
         {
             if (ChargeTime < 1f)//차징 시간이 1초 이하이면 기본공격
             {
                 //Debug.Log("기본 공격");
                 Attack.GetAttack(damage);//PlayerAttack 스크립트에 데미지를 전달해주고 PlayerAttack에서는 공격을 실행함
                 animator.SetTrigger("Attack");//공격 애니메이션 재생
+                AttackTime = 0;
             }
-            else if (ChargeTime >= 1.0f)//차징 시간이 1초 이상이면 강공
+            else if (ChargeTime >= 1.0f && AttackTime >= CoolTime)//차징 시간이 1초 이상이면 강공
             {
                 //Debug.Log("강화 공격");
                 Attack.GetAttack(damage * 2.0f);//위와 같으나 2배의 데미지를 가함
                 animator.SetTrigger("Attack");//공격 애니메이션 재생
+                AttackTime = 0;
                 //강공 모션
             }
             ChargeTime = 0;//차징 타임 초기화
@@ -141,7 +152,7 @@ public class Player : LivingEntity
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isDash)
         {
             isDash = true;//대쉬했다를 체크
-            Invoke("DashReset", 0.4f);
+            Invoke("DashReset", 0.25f);
         }
         else if (isDash)
         {
@@ -174,6 +185,20 @@ public class Player : LivingEntity
     {
         isJump = false;
     }//점프 이후 초기화
+
+    public override void Die()
+    {
+        
+        isDead = true;//사망했음
+        animator.SetTrigger("Die");//애니메이터에 Die 트리거를 전달해서 사망 애니메이션 재생
+        Invoke("Dead", 1.2f);//잠시후에 오브젝트 비활성화
+    }
+
+    private void Dead()
+    {
+        gameObject.SetActive(false);//오브젝트 비활성화
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 }
 //Vector3 nextPos = new Vector3(h, 0, 0) * Speed * Time.deltaTime;//키입력에 따른 다음 위치
 //transform.position = curPos + nextPos;//현재위치와 다음위치를 더함으로써 이동(이전 로직 지금은 사용안함)
