@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Player : LivingEntity
 {
+    public float AttackTime;//공격한시간
     public float CoolTime;//쿨타임
     public float movetime;//이동한 시간 체크
     public float stoptime;
@@ -14,6 +15,7 @@ public class Player : LivingEntity
 
     public bool isDash;//대쉬했는지 체크
     public bool isMove;//움직였는지 체크
+    public bool isWall;//벽에 부딪혔는지 체크
     public bool isJump;//점프했는지 체크
 
     //public PlayerAttack Attack;
@@ -26,7 +28,6 @@ public class Player : LivingEntity
     private SpriteRenderer PlayerRenderer;//스프라이트 좌우 바꿀때 사용했음
     private Animator animator;//애니메이터
 
-    public float AttackTime;//공격한시간
     private float ChargeTime;//공격 차징시간
     private Vector3 curPos;//현재 위치
     private Vector3 dirVec;//바라보는 방향
@@ -37,7 +38,7 @@ public class Player : LivingEntity
         PR = GetComponent<Rigidbody2D>();//할당
         animator = GetComponent<Animator>();//할당
         PlayerRenderer = GetComponent<SpriteRenderer>();//할당
-        SetStatus(100, 15, 8);//스탯을 설정함
+        SetStatus(100, 10, 8);//스탯을 설정함 체력, 데미지, 이동속도
         Health = MaxHealth;//시작할때 현재 체력을 최대 체력으로 설정해줌
         gameObject.SetActive(true);
     }
@@ -92,7 +93,7 @@ public class Player : LivingEntity
             else if (ChargeTime >= 1.0f && AttackTime >= CoolTime)//차징 시간이 1초 이상이면 강공
             {
                 //Debug.Log("강화 공격");
-                Attack.GetAttack(damage * 2.0f);//위와 같으나 2배의 데미지를 가함
+                Attack.GetAttack(damage * 3.0f);//위와 같으나 3배의 데미지를 가함
                 animator.SetTrigger("Attack");//공격 애니메이션 재생
                 AttackTime = 0;
                 //강공 모션
@@ -122,7 +123,7 @@ public class Player : LivingEntity
             isJump = true;//점프했다
             PR.velocity = Vector2.up * JumpForce;//순간 속력을 위로 점프력만큼 줌
             SetDirection(Dir);//점프시 이동가능한 방향(반대로 방향 조절 못하게)
-            Invoke("JumpReset", 1f);//1초 뒤에 점프리셋(수정할수도있음)
+            //Invoke("JumpReset", 0.8f);//1초 뒤에 점프리셋(수정할수도있음)
             //Debug.Log("스페이스바 눌림");
         }
         else if (isJump)
@@ -140,7 +141,7 @@ public class Player : LivingEntity
 
     private void Move()
     {
-        if (!isDash)
+        if (!isDash || !isWall)
         {
             Vector2 newVel = new Vector2(h * MaxSpeed, PR.velocity.y);//플레이어 이동속도
             PR.velocity = newVel;//리지드바디에 속도 등록
@@ -181,10 +182,10 @@ public class Player : LivingEntity
         isDash = false;
     }//대쉬이후 초기화
 
-    private void JumpReset()
-    {
-        isJump = false;
-    }//점프 이후 초기화
+    //private void JumpReset()
+    //{
+    //    isJump = false;
+    //}//점프 이후 초기화
 
     public override void Die()
     {
@@ -198,6 +199,37 @@ public class Player : LivingEntity
     {
         gameObject.SetActive(false);//오브젝트 비활성화
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if(col.gameObject.tag == "Floor")
+        {
+            isJump = false;
+        }
+        if (col.gameObject.tag == "Wall")
+        {
+            h = 0;
+            Dir = 0;
+            isWall = true;
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Wall")
+        {
+            Dir = 0;
+            h = 0;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D col)
+    {
+        if(col.gameObject.tag == "Wall")
+        {
+            isWall = false;
+        }
     }
 }
 //Vector3 nextPos = new Vector3(h, 0, 0) * Speed * Time.deltaTime;//키입력에 따른 다음 위치
