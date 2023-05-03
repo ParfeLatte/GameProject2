@@ -56,9 +56,9 @@ public class Monster : LivingEntity
     // Update is called once per frame
     void Update()
     {
+        Dist = Mathf.Abs(Player.transform.position.x - gameObject.transform.position.x);//플레이어와 몬스터 사이 거리
         if (Mathf.Abs(Player.transform.position.y - gameObject.transform.position.y) < 5)
         {
-            Dist = Mathf.Abs(Player.transform.position.x - gameObject.transform.position.x);//플레이어와 몬스터 사이 거리
             if (SleepState != 3 & !isDead)
             {
                 StateCheck();//현재 수면상태이므로 수면상태 확인
@@ -73,6 +73,12 @@ public class Monster : LivingEntity
         }//기상시 패턴
     }
 
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.blue;
+    //    Gizmos.DrawWireCube(AttackPos.position, boxSize);
+    //}
+
     private void AttackCheck()
     {
         RaycastHit2D rayHit = Physics2D.Raycast(RayPos, dirVec, 1.75f, LayerMask.GetMask("Player"));//Ray를 발사하여 플레이어가 범위내에 있는지 확인
@@ -86,7 +92,7 @@ public class Monster : LivingEntity
                 isMobMove = false;//잠시 움직임을 멈추고
                 animator.SetBool("isMove", false);//애니메이션 파라미터에서 isMove를 false로 바꾸고
                 animator.SetTrigger("Attack");//attack Trigger를 발동해서 공격 애니메이션 재생
-                Invoke("Attack", 0.2f);//애니메이션에서 휘두르는 모션에 맞게 공격
+                Invoke("Attack", 0.38f);//애니메이션에서 휘두르는 모션에 맞게 공격
                 AttackTime = 0;//다시 쿨타임
                 Invoke("MoveAgain", 0.55f);//공격후에 다시 움직이도록
             }
@@ -147,17 +153,23 @@ public class Monster : LivingEntity
         Debug.DrawRay(RayPos, dirVec * 1.75f, new Color(0, 1, 0));//레이캐스트 표시(거리 확인용)
         if (isMobMove == true)
         {
-            if (player.transform.position.x - gameObject.transform.position.x >= 0)
+            
+            if (player.transform.position.x - gameObject.transform.position.x > 0)
             {
                 Dir = 1;//방향 오른쪽
                 dirVec = new Vector3(1f, 0f, 0f);//Ray 발사방향
                 MonsterRenderer.flipX = false;//스프라이트 반전x(오른쪽 봄)
             }
-            else
+            else if((player.transform.position.x - gameObject.transform.position.x < 0))
             {
                 Dir = -1;//방향 왼쪽
                 dirVec = new Vector3(-1, 0f, 0f);//Ray 발사방향
                 MonsterRenderer.flipX = true;//스프라이트 반전 O(왼쪽보게)
+            }
+
+            if (Dist <= 1.3f)
+            {
+                Dir = 0;
             }
             Vector3 NextPos = new Vector3(Dir, 0, 0) * MaxSpeed * Time.deltaTime;
             transform.position = curPos + NextPos;//플레이어 향해서 이동(추적)
