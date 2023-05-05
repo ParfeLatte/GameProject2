@@ -54,6 +54,13 @@ public class Monster : LivingEntity
         Health = MaxHealth;//체력을 최대체력으로 설정 
     }
 
+    private void OnEnable()
+    {
+        isDead = false;
+        SetStatus(30, 10, 4.5f);//일단 일반몹기준
+        Health = MaxHealth;//체력을 최대체력으로 설정 
+    }
+
     // Update is called once per frame
     void Update()
     {
