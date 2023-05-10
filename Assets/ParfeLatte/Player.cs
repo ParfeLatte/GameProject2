@@ -17,6 +17,8 @@ public class Player : LivingEntity
     public bool isMove;//움직였는지 체크
     public bool isWall;//벽에 부딪혔는지 체크
     public bool isJump;//점프했는지 체크
+    public bool isCharge;//공격충전중인지
+
 
     //public PlayerAttack Attack;
     public PlayerAttack Attack;//공격을 실행해주는 스크립트(공격 범위 오브젝트에 할당되어 있으며 여기서 공격을 실행함)
@@ -66,10 +68,10 @@ public class Player : LivingEntity
         flipSpr();//좌우반전
         if (!isDead)
         {
+            AttackCheck();//공격
             Jump();//점프
             Dash();//대쉬
             Move();//이동
-            AttackCheck();//공격
         }
     }
 
@@ -78,11 +80,16 @@ public class Player : LivingEntity
         if (Input.GetKey(KeyCode.J))//키는 임시임 J를 누르는 중일때
         {
             ChargeTime += Time.deltaTime;
-            //차징 애니메이숀
+            h = 0;
+
+            isCharge = true;
+            animator.SetBool("isCharge", true);
             //Debug.Log("공격 차징중");
         }
         if (Input.GetKeyUp(KeyCode.J) && AttackTime >= CoolTime)//키를 뗐을때
         {
+            isCharge = false;
+            animator.SetBool("isCharge", false); 
             if (ChargeTime < 1f)//차징 시간이 1초 이하이면 기본공격
             {
                 //Debug.Log("기본 공격");
@@ -141,7 +148,7 @@ public class Player : LivingEntity
 
     private void Move()
     {
-        if (!isDash || !isWall)
+        if (!isDash || !isWall || !isCharge)
         {
             Vector2 newVel = new Vector2(h * MaxSpeed, PR.velocity.y);//플레이어 이동속도
             PR.velocity = newVel;//리지드바디에 속도 등록

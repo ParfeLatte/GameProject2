@@ -11,8 +11,10 @@ public class KeyCardEvent : MonoBehaviour
     public Transform SpawnPos;//이벤트 몹 생성위치
 
     public int HowMuch;
+    public int MobIndex;
 
     public float MaxPullPos;
+    public float SpawnTimer;
 
     public bool isAllDead;//모든 몬스터가 죽었는지 확인
 
@@ -25,6 +27,8 @@ public class KeyCardEvent : MonoBehaviour
     {
         SirenSound = GetComponent<AudioSource>();
         isAllDead = false;//이벤트 몬스터가 아직 살아있음
+        SpawnTimer = 0f;
+        MobIndex = 0;
     }
 
     public void SirenOn()
@@ -37,15 +41,14 @@ public class KeyCardEvent : MonoBehaviour
         SirenSound.Stop();//사이렌 정지(이벤트 끝)
     }
 
-    public void MobSpawn()
+    public void MobSpawn(int i)
     {
         //몬스터들 스폰시킴
-        for(int i = 0; i < HowMuch; i++)
-        {
-            ChangePos();//랜덤한 위치에서 몹스폰
-            MobList.Add(Spawner.spawnEnemy(SpawnPos));//정해진 위치에 몹 스폰
-            DeadCheck.Add(MobList[i].GetComponent<EventMonster>());//이벤트몹 스크립트 가져옴
-        }
+        ChangePos();//랜덤한 위치에서 몹스폰
+        MobList.Add(Spawner.spawnEnemy(SpawnPos));//정해진 위치에 몹 스폰
+        DeadCheck.Add(MobList[i].GetComponent<EventMonster>());//이벤트몹 스크립트 가져옴
+        SpawnTimer = 0;
+        MobIndex++;
         Debug.Log("몬스터들이 몰려옵니다.");
     }
 
@@ -84,8 +87,13 @@ public class KeyCardEvent : MonoBehaviour
 
     void Update()
     {
+        SpawnTimer += Time.deltaTime;
         if (AP.isEvent)
         {
+            if (SpawnTimer >= 0.8f && MobIndex < HowMuch)
+            {
+                MobSpawn(MobIndex);
+            }
             CheckMob();
         }//이벤트 중일때 이벤트 몹의 생사 확인
     }

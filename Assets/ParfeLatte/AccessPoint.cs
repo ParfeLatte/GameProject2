@@ -56,7 +56,6 @@ public class AccessPoint : MonoBehaviour
     private void StartEvent()
     {
         Event.SirenOn();//사이렌 재생
-        Event.MobSpawn();//이벤트 몬스터 스폰
         isEvent = true;
         Debug.Log("이벤트가 시작됐습니다.");
     }
