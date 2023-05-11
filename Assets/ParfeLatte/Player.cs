@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : LivingEntity
 {
@@ -12,12 +13,17 @@ public class Player : LivingEntity
     public float JumpForce;//점프력
     public float Dir;//이동방향(대쉬나 점프시에 방향 못바꾸게함)
     public float h;//GeTAxisRaw로 받는 값
+    public float stamina;//스테미나
+    public float dashtime;//대쉬한지 얼마나 지났는지 체크해서 스테미너 채움
+
 
     public bool isDash;//대쉬했는지 체크
     public bool isMove;//움직였는지 체크
     public bool isWall;//벽에 부딪혔는지 체크
     public bool isJump;//점프했는지 체크
     public bool isCharge;//공격충전중인지
+
+    public Slider HealthSlider;//체력UI
 
 
     //public PlayerAttack Attack;
@@ -43,6 +49,8 @@ public class Player : LivingEntity
         SetStatus(100, 10, 8);//스탯을 설정함 체력, 데미지, 이동속도
         Health = MaxHealth;//시작할때 현재 체력을 최대 체력으로 설정해줌
         gameObject.SetActive(true);
+        stamina = 100f;
+        HealthSlider.value = Health;
     }
 
     // Update is called once per frame
@@ -72,6 +80,8 @@ public class Player : LivingEntity
             Jump();//점프
             Dash();//대쉬
             Move();//이동
+            StaminaCheck();
+            dashtime += Time.deltaTime;
         }
     }
 
@@ -157,9 +167,11 @@ public class Player : LivingEntity
 
     private void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDash)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDash && stamina >= 25f)
         {
             isDash = true;//대쉬했다를 체크
+            stamina -= 25f;
+            dashtime = 0f;
             Invoke("DashReset", 0.25f);
         }
         else if (isDash)
@@ -168,6 +180,18 @@ public class Player : LivingEntity
             transform.position = curPos + DashPos;//더해서 위치변경
         }
     }//대쉬 함수
+    
+    private void StaminaCheck()
+    {
+        if(dashtime >= 1.25f && stamina <= 100f)
+        {
+            stamina += 5 * Time.deltaTime;
+            if(stamina >= 100f)
+            {
+                stamina = 100f;
+            }
+        }
+    }//스테미나 회복검사 
 
     public void SetDirection(float h) 
     {
@@ -196,10 +220,22 @@ public class Player : LivingEntity
 
     public override void Die()
     {
-        
-        isDead = true;//사망했음
+
+        base.Die();
         animator.SetTrigger("Die");//애니메이터에 Die 트리거를 전달해서 사망 애니메이션 재생
         Invoke("Dead", 1.2f);//잠시후에 오브젝트 비활성화
+    }
+
+    public override void RestoreHealth(float newHealth)
+    {
+        base.RestoreHealth(newHealth);
+        HealthCheck();
+    }
+
+    public override void damaged(float damage)
+    {
+        base.damaged(damage);
+        HealthCheck();
     }
 
     private void Dead()
@@ -208,6 +244,10 @@ public class Player : LivingEntity
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    private void HealthCheck()
+    {
+        HealthSlider.value = Health;
+    }
     private void OnCollisionEnter2D(Collision2D col)
     {
         if(col.gameObject.tag == "Floor")

@@ -296,6 +296,7 @@
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Light\ShadowEngine\ShadowEngine.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Utilities\2\Polygon2\Polygon2Collider3D.cs" />
     <Compile Include="Assets\Assetss\Effect_Vol.5\Script\SpriteAnimation.cs" />
+    <Compile Include="Assets\ParfeLatte\HealPoint.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
