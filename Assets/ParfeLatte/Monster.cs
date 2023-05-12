@@ -18,6 +18,7 @@ public class Monster : LivingEntity
     public float CoolTime;//공격 쿨타임
     public float AttackTime;//공격시간
     public float Dist;//몬스터와 플레이어 사이 거리
+    public float YDist;//y축 거리
     public float Dir;//이동방향
     public Vector3 dirVec;//레이 방향
 
@@ -50,14 +51,14 @@ public class Monster : LivingEntity
         MonsterRenderer = GetComponent<SpriteRenderer>();
         Player = GameObject.Find("Player");
         SleepState = 0;//깊은수면 상태로 스폰
-        SetStatus(30, 10, 8f);//일단 일반몹기준
+        SetStatus(30, 10, 8.5f);//일단 일반몹기준
         Health = MaxHealth;//체력을 최대체력으로 설정 
     }
 
     private void OnEnable()
     {
         isDead = false;
-        SetStatus(30, 10, 8f);//일단 일반몹기준
+        SetStatus(30, 5, 8.5f);//일단 일반몹기준
         Health = MaxHealth;//체력을 최대체력으로 설정 
     }
 
@@ -65,7 +66,8 @@ public class Monster : LivingEntity
     void Update()
     {
         Dist = Mathf.Abs(Player.transform.position.x - gameObject.transform.position.x);//플레이어와 몬스터 사이 거리
-        if (Mathf.Abs(Player.transform.position.y - gameObject.transform.position.y) < 5)
+        YDist = Mathf.Abs(Player.transform.position.y - gameObject.transform.position.y);//플레이어와  몬스터의 y축 거리 
+        if (YDist < 5)
         {
             if (SleepState != 3 & !isDead)
             {
@@ -100,7 +102,7 @@ public class Monster : LivingEntity
                 isMobMove = false;//잠시 움직임을 멈추고
                 animator.SetBool("isMove", false);//애니메이션 파라미터에서 isMove를 false로 바꾸고
                 animator.SetTrigger("Attack");//attack Trigger를 발동해서 공격 애니메이션 재생
-                Invoke("Attack", 0.38f);//애니메이션에서 휘두르는 모션에 맞게 공격
+                Invoke("Attack", 0.4f);//애니메이션에서 휘두르는 모션에 맞게 공격
                 AttackTime = 0;//다시 쿨타임
                 Invoke("MoveAgain", 0.55f);//공격후에 다시 움직이도록
             }
@@ -181,11 +183,11 @@ public class Monster : LivingEntity
 
     IEnumerator CheckStop()
     {
-        lastPlayerPosition = Player.transform.position;
+        lastPlayerPosition.x = Player.transform.position.x;
 
         yield return new WaitForSeconds(0.1f);
         //Debug.Log("검사합니다.");
-        if (lastPlayerPosition == Player.transform.position)
+        if (lastPlayerPosition.x == Player.transform.position.x)
         {
             //Debug.Log("멈췄습니다.");
             moveTimeOne = 0;//플레이어가 움직인 시간 초기화
