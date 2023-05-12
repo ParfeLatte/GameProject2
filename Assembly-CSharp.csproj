@@ -53,7 +53,7 @@
     <UnityVersion>2021.3.11f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\ParfeLatte\MonsterAttack.cs" />
@@ -64,12 +64,15 @@
     <Compile Include="Assets\ParfeLatte\PlayerAttack.cs" />
     <Compile Include="Assets\ParfeLatte\KeyCard.cs" />
     <Compile Include="Assets\ParfeLatte\Player.cs" />
+    <Compile Include="Assets\ParfeLatte\ObjectManager.cs" />
     <Compile Include="Assets\ParfeLatte\GameManager.cs" />
     <Compile Include="Assets\ParfeLatte\LiftTest.cs" />
     <Compile Include="Assets\ParfeLatte\LivingEntity.cs" />
     <Compile Include="Assets\ParfeLatte\Monster.cs" />
     <Compile Include="Assets\ParfeLatte\GateCheck.cs" />
-    <Compile Include="Assets\ParfeLatte\ObjectManager.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Interaction\Interactable.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Interaction\Interactor.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Console.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -335,12 +338,6 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Android.Types">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.11f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Android.Gradle">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.11f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Gradle.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.11f1\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>
