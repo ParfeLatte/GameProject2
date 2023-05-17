@@ -23,6 +23,7 @@ public class Monster : LivingEntity
     public Vector3 dirVec;//레이 방향
 
     public Player player;//플레이어 코드
+    public GateHP Gate;
     //public MonsterAttack Attack;//공격 실행 스크립트
 
     public bool isPlayerDash;//플레이어가 대쉬했는지 확인
@@ -52,7 +53,7 @@ public class Monster : LivingEntity
         Player = GameObject.Find("Player");
         SleepState = 0;//깊은수면 상태로 스폰
         SetStatus(30, 10, 8.5f);//일단 일반몹기준
-        Health = MaxHealth;//체력을 최대체력으로 설정 
+        Health = MaxHealth;//체력을 최대체력으로 설정
     }
 
     private void OnEnable()
@@ -91,6 +92,7 @@ public class Monster : LivingEntity
 
     private void AttackCheck()
     {
+        RaycastHit2D GateHit= Physics2D.Raycast(RayPos, dirVec, 1.75f, LayerMask.GetMask("Gate"));//Ray를 발사하여 플레이어가 범위내에 있는지 확인
         RaycastHit2D rayHit = Physics2D.Raycast(RayPos, dirVec, 1.75f, LayerMask.GetMask("Player"));//Ray를 발사하여 플레이어가 범위내에 있는지 확인
         if (rayHit.collider != null)//레이에 충돌한 대상이 있으면
         {
@@ -99,24 +101,43 @@ public class Monster : LivingEntity
             //Debug.Log("플레이어가 사정거리내에 있음");
             if (AttackPlayer != null && AttackTime >= CoolTime)//공격 쿨타임이 돌았고, 플레이어가 할당되어있다면
             {
-                isMobMove = false;//잠시 움직임을 멈추고
-                animator.SetBool("isMove", false);//애니메이션 파라미터에서 isMove를 false로 바꾸고
-                animator.SetTrigger("Attack");//attack Trigger를 발동해서 공격 애니메이션 재생
-                Invoke("Attack", 0.4f);//애니메이션에서 휘두르는 모션에 맞게 공격
-                AttackTime = 0;//다시 쿨타임
-                Invoke("MoveAgain", 0.55f);//공격후에 다시 움직이도록
+                DoAttack();
             }
             //Debug.Log("공격합니다.");
         }
-        else
+        else if(GateHit != null)
+        {
+            GateHP gatehp = GateHit.collider.GetComponent<GateHP>();
+            Gate = gatehp;
+            if(Gate != null && AttackTime >= CoolTime)
+            {
+                DoAttack();
+            }
+            else if(Gate == null)
+            {
+                return;
+            }
+        }
+        else if(GateHit == null && Gate != null)
         {
             AttackPlayer = null;
+            Gate = null;
             //Debug.Log("사정거리내에 아무도 없음");
             //Debug.Log("계속 추적합니다");
         }//예외처리
     }//공격
 
-    private void Attack()
+    private void DoAttack()
+    {
+        isMobMove = false;//잠시 움직임을 멈추고
+        animator.SetBool("isMove", false);//애니메이션 파라미터에서 isMove를 false로 바꾸고
+        animator.SetTrigger("Attack");//attack Trigger를 발동해서 공격 애니메이션 재생
+        Invoke("Attack", 0.4f);//애니메이션에서 휘두르는 모션에 맞게 공격
+        AttackTime = 0;//다시 쿨타임
+        Invoke("MoveAgain", 0.55f);//공격후에 다시 움직이도록
+    }
+
+        private void Attack()
     {
         Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(AttackPos.position, boxSize, 0);//오버랩 박스를 이용
         foreach (Collider2D collider in collider2Ds)
@@ -124,6 +145,10 @@ public class Monster : LivingEntity
             if (collider.tag == "Player")//오버랩박스로 검사한 오브젝트 중에서 플레이어가 있으면
             {
                 player.damaged(damage);//플레이어의 damaged 함수 호출해서 데미지를 줌
+            }
+            else if(collider.tag == "Gate")
+            {
+                Gate.damaged(damage);//게이트에 피해를 줌
             }
         }
     }//범위내 공격

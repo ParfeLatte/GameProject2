@@ -8,6 +8,7 @@ public class GateCheck : MonoBehaviour
     public GameManager Manager;//게임매니저
 
     public bool isOpen;//열렸는지
+    public bool isDestroy;//파괴되었는지
     public bool GateStat;// false는 닫힘, true는 열림
     public int GateLv;//문의의 접근레벨
 
@@ -19,22 +20,18 @@ public class GateCheck : MonoBehaviour
         animator.enabled = true;//애니메이터를 켜서 문 애니메이션 재생가능
         Gate.SetActive(true);//못지나가도록 콜라이더 오브젝트인 문을 켬
         isOpen = false;//닫힘
+        isDestroy = false;
     }
     private void OpenClose()
     {
-        if (isOpen && Input.GetKeyDown(KeyCode.U))
+        if (isOpen && Input.GetKeyDown(KeyCode.U) && !isDestroy)
         {
             switch (GateStat) {
                 case false:
-                    animator.SetBool("isOpen", true);//문열림
-                    Gate.SetActive(false);//콜라이더가 있는 오브젝트인 문을 비활성화 해서 지나갈 수 있음
-                    GateStat = true;
-                    Debug.Log(GateLv + "Lv 게이트 접근 승인, 문이 열립니다.");
+                    GateOpen();
                     break;
                 case true:
-                    Gate.SetActive(true);//못지나가도록 다시 활성화
-                    animator.SetBool("isOpen", false);//역재생으로 문닫는 애니메이션 재생
-                    GateStat = false;
+                    GateClose();
                     break;
             }
         }
@@ -51,6 +48,26 @@ public class GateCheck : MonoBehaviour
         {
             isOpen = Manager.CheckGateOpen(GateLv);//플레이어 태그의 오브젝트가 들어오면 문열리는지 확인
         }
+    }
+
+    private void GateOpen()
+    {
+        animator.SetBool("isOpen", true);//문열림
+        Gate.SetActive(false);//콜라이더가 있는 오브젝트인 문을 비활성화 해서 지나갈 수 있음
+        GateStat = true;
+        Debug.Log(GateLv + "Lv 게이트 접근 승인, 문이 열립니다.");
+    }
+
+    private void GateClose()
+    {
+        Gate.SetActive(true);//못지나가도록 다시 활성화
+        animator.SetBool("isOpen", false);//역재생으로 문닫는 애니메이션 재생
+        GateStat = false;
+    }
+    public void DestroyGate()
+    {
+        isDestroy = true;
+        GateOpen();
     }
 
     private void OnTriggerExit2D(Collider2D col)
