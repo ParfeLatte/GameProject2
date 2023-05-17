@@ -6,6 +6,7 @@ public class LiftTest : MonoBehaviour
 {
     public GameObject Lift;
     public bool Reverse;//true일때 아래로, false일때 위로
+    public bool isMove;//움직이는지 안움직이는지
     public List<GameObject> Objects = new List<GameObject>();
     Vector3 nextpos = new Vector3(0, 4f, 0);
     // Start is called before the first frame update
@@ -17,14 +18,24 @@ public class LiftTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Reverse)
+        if(Reverse && isMove)
         {
             Down();
         }
-        else
+        else if(isMove)
         {
             Up();
         }
+    }
+
+    public void Move()
+    {
+        isMove = true;
+    }
+
+    public void Stop()
+    {
+        isMove = false;
     }
 
     public void Up()
@@ -49,7 +60,6 @@ public class LiftTest : MonoBehaviour
         if(col.gameObject.tag=="Player" || col.gameObject.tag=="enemy") {
             Objects.Add(col.gameObject);
         }
-        
     }
     private void OnCollisionExit2D(Collision2D col)
     {
@@ -66,13 +76,12 @@ public class LiftTest : MonoBehaviour
             if (Reverse)
             {
                Reverse = false;
-               
             }
             else if (!Reverse)
             {
-                Reverse = true;
+               Reverse = true;
             }
-
+            Stop();
         }
     }
 }
