@@ -105,7 +105,7 @@ public class Monster : LivingEntity
             }
             //Debug.Log("공격합니다.");
         }
-        else if(GateHit != null)
+        else if(GateHit.collider != null)
         {
             GateHP gatehp = GateHit.collider.GetComponent<GateHP>();
             Gate = gatehp;
@@ -117,8 +117,8 @@ public class Monster : LivingEntity
             {
                 return;
             }
-        }
-        else if(GateHit == null && Gate != null)
+        }   
+        else
         {
             AttackPlayer = null;
             Gate = null;
@@ -142,11 +142,11 @@ public class Monster : LivingEntity
         Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(AttackPos.position, boxSize, 0);//오버랩 박스를 이용
         foreach (Collider2D collider in collider2Ds)
         {
-            if (collider.tag == "Player")//오버랩박스로 검사한 오브젝트 중에서 플레이어가 있으면
+            if (player != null && collider.tag == "Player")//오버랩박스로 검사한 오브젝트 중에서 플레이어가 있으면
             {
                 player.damaged(damage);//플레이어의 damaged 함수 호출해서 데미지를 줌
             }
-            else if(collider.tag == "Gate")
+            else if(Gate != null && collider.tag == "Gate")
             {
                 Gate.damaged(damage);//게이트에 피해를 줌
             }
