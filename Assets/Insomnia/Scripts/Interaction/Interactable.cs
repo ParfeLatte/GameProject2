@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Insomnia {
+    [RequireComponent(typeof(BoxCollider2D))]
     public class Interactable : MonoBehaviour {
         private Collider _trigArea = null;  //Interactor와 충돌을 감지할 Trigger Collider
         private Interactor _interactor = null;
