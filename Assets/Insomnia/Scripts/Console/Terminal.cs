@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Insomnia {
-    public class Console : Interactable {
+    public class Terminal : Interactable {
         [SerializeField] private SpriteRenderer _lapTop = null;
         [SerializeField] private Sprite[] _lapTopSprites = null;
-        [SerializeField] private ConsoleUI m_consoleUI = null;
+        [SerializeField] private TerminalUI m_terminalUI = null;
 
         protected override void Awake() {
             base.Awake();
@@ -21,11 +21,11 @@ namespace Insomnia {
         }
 
         public override void OnInteractStart() {
-            m_consoleUI.OpenConsole();
+            m_terminalUI.OpenConsole();
         }
 
         public override void OnInteractEnd() {
-            m_consoleUI.CloseConsole();
+            m_terminalUI.CloseConsole();
         }
     }
 }

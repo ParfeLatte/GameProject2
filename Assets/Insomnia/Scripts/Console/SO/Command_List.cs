@@ -12,7 +12,7 @@ namespace Insomnia {
             return m_command.Equals(splitted.ToUpper());
         }
 
-        public override KeyValuePair<float, List<string>> RunCommand(ConsoleUI console, string command) {
+        public override KeyValuePair<float, List<string>> RunCommand(TerminalUI console, string command) {
             m_commandResult.Clear();
             m_commandResult.Add(m_listStartFormat);
             string[] keys = command.Split(' ');
