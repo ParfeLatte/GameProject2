@@ -14,7 +14,7 @@ namespace Insomnia {
         SyntaxError = 3,
     }
 
-    public class ConsoleUI : MonoBehaviour {
+    public class TerminalUI : MonoBehaviour {
         #region Elements
         private TMP_InputField m_consoleInput = null;
         private TMP_Text m_consoleWindow = null;

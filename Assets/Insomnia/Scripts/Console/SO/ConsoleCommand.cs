@@ -16,13 +16,15 @@ namespace Insomnia {
         /// </summary>
         /// <param name="command">splitted[0] 전달 필수</param>
         /// <returns>return true if command is valid. else false.</returns>
-        public abstract bool CheckCommand(string splitted);
+        public virtual bool CheckCommand(string splitted) {
+            return m_command.Equals(splitted.ToUpper());
+        }
 
         /// <summary>
         /// 입력한 커맨드 전체를 읽어 명령을 실행하는 함수.
         /// </summary>
         /// <param name="command">입력된 명령어 전체.</param>
         /// <returns>returns <see cref="m_loadingTime"/> : 로딩 시간 반환.</returns>
-        public abstract KeyValuePair<float, List<string>> RunCommand(ConsoleUI console, string command);
+        public abstract KeyValuePair<float, List<string>> RunCommand(TerminalUI console, string command);
     }
 }
