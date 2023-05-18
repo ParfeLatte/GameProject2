@@ -8,6 +8,8 @@ public class GateCheck : MonoBehaviour
     public GameManager Manager;//게임매니저
 
     public bool isOpen;//열렸는지
+    public bool isDestroy;//파괴되었는지
+    public bool GateStat;// false는 닫힘, true는 열림
     public int GateLv;//문의의 접근레벨
 
     private Animator animator;
@@ -15,25 +17,26 @@ public class GateCheck : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        animator.enabled = true;//애니메이터를 켜서 문 애니메이션 재생가능
         Gate.SetActive(true);//못지나가도록 콜라이더 오브젝트인 문을 켬
         isOpen = false;//닫힘
+        isDestroy = false;
     }
     private void OpenClose()
     {
-        if (isOpen)
+        if (isOpen && Input.GetKeyDown(KeyCode.U) && !isDestroy)
         {
-            animator.enabled = true;//애니메이터를 켜서 문 애니메이션 재생가능
-            animator.SetBool("isOpen", true);//문열림
-            Gate.SetActive(false);//콜라이더가 있는 오브젝트인 문을 비활성화 해서 지나갈 수 있음
-            Debug.Log(GateLv +"Lv 게이트 접근 승인, 문이 열립니다.");
-        }
-        else
-        {
-            Gate.SetActive(true);//못지나가도록 다시 활성화
-            animator.SetBool("isOpen", false);//역재생으로 문닫는 애니메이션 재생
+            switch (GateStat) {
+                case false:
+                    GateOpen();
+                    break;
+                case true:
+                    GateClose();
+                    break;
+            }
         }
     }
-    // Update is called once per frame
+
     void Update()
     {
         OpenClose();//열고닫음을 확인함
@@ -45,6 +48,26 @@ public class GateCheck : MonoBehaviour
         {
             isOpen = Manager.CheckGateOpen(GateLv);//플레이어 태그의 오브젝트가 들어오면 문열리는지 확인
         }
+    }
+
+    private void GateOpen()
+    {
+        animator.SetBool("isOpen", true);//문열림
+        Gate.SetActive(false);//콜라이더가 있는 오브젝트인 문을 비활성화 해서 지나갈 수 있음
+        GateStat = true;
+        Debug.Log(GateLv + "Lv 게이트 접근 승인, 문이 열립니다.");
+    }
+
+    private void GateClose()
+    {
+        Gate.SetActive(true);//못지나가도록 다시 활성화
+        animator.SetBool("isOpen", false);//역재생으로 문닫는 애니메이션 재생
+        GateStat = false;
+    }
+    public void DestroyGate()
+    {
+        isDestroy = true;
+        GateOpen();
     }
 
     private void OnTriggerExit2D(Collider2D col)

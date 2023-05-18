@@ -1,22 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : LivingEntity
-{ 
+{
+    public float AttackTime;//공격한시간
+    public float CoolTime;//쿨타임
     public float movetime;//이동한 시간 체크
     public float stoptime;
     public float JumpForce;//점프력
     public float Dir;//이동방향(대쉬나 점프시에 방향 못바꾸게함)
     public float h;//GeTAxisRaw로 받는 값
+    public float stamina;//스테미나
+    public float dashtime;//대쉬한지 얼마나 지났는지 체크해서 스테미너 채움
+
 
     public bool isDash;//대쉬했는지 체크
     public bool isMove;//움직였는지 체크
+    public bool isWall;//벽에 부딪혔는지 체크
     public bool isJump;//점프했는지 체크
+    public bool isCharge;//공격충전중인지
+
+    public Slider HealthSlider;//체력UI
+
 
     //public PlayerAttack Attack;
     public PlayerAttack Attack;//공격을 실행해주는 스크립트(공격 범위 오브젝트에 할당되어 있으며 여기서 공격을 실행함)
-
+    
     private GameObject Enemy;//몬스터
 
 
@@ -34,8 +46,11 @@ public class Player : LivingEntity
         PR = GetComponent<Rigidbody2D>();//할당
         animator = GetComponent<Animator>();//할당
         PlayerRenderer = GetComponent<SpriteRenderer>();//할당
-        SetStatus(100, 15, 8);//스탯을 설정함
+        SetStatus(100, 10, 8);//스탯을 설정함 체력, 데미지, 이동속도
         Health = MaxHealth;//시작할때 현재 체력을 최대 체력으로 설정해줌
+        gameObject.SetActive(true);
+        stamina = 100f;
+        HealthSlider.value = Health;
     }
 
     // Update is called once per frame
@@ -55,39 +70,56 @@ public class Player : LivingEntity
             isMove = false;
             animator.SetBool("isMove", false);
         }//움직이는지 확인함
+
+        AttackTime += Time.deltaTime;
         
         flipSpr();//좌우반전
-        Jump();//점프
-        Dash();//대쉬
-        Move();//이동
-        AttackCheck();//공격
+        if (!isDead)
+        {
+            AttackCheck();//공격
+            Jump();//점프
+            Dash();//대쉬
+            Move();//이동
+            StaminaCheck();
+            dashtime += Time.deltaTime;
+        }
     }
 
     private void AttackCheck()
     {
-        if (Input.GetKey(KeyCode.J))//키는 임시임 J를 누르는 중일때
-        {
-            ChargeTime += Time.deltaTime;
-            //차징 애니메이숀
-            //Debug.Log("공격 차징중");
-        }
-        if (Input.GetKeyUp(KeyCode.J))//키를 뗐을때
-        {
-            if (ChargeTime < 1f)//차징 시간이 1초 이하이면 기본공격
+            if (Input.GetKeyDown(KeyCode.J) && AttackTime >= CoolTime && !isCharge)
             {
-                //Debug.Log("기본 공격");
-                Attack.GetAttack(damage);//PlayerAttack 스크립트에 데미지를 전달해주고 PlayerAttack에서는 공격을 실행함
-                animator.SetTrigger("Attack");//공격 애니메이션 재생
+                animator.SetBool("isCharge", true);
             }
-            else if (ChargeTime >= 1.0f)//차징 시간이 1초 이상이면 강공
+            if (Input.GetKey(KeyCode.J) && AttackTime >= CoolTime)//키는 임시임 J를 누르는 중일때
             {
-                //Debug.Log("강화 공격");
-                Attack.GetAttack(damage * 2.0f);//위와 같으나 2배의 데미지를 가함
-                animator.SetTrigger("Attack");//공격 애니메이션 재생
-                //강공 모션
+                ChargeTime += Time.deltaTime;
+                h = 0;
+
+                isCharge = true;
+                //Debug.Log("공격 차징중");
             }
-            ChargeTime = 0;//차징 타임 초기화
-        }
+            if (Input.GetKeyUp(KeyCode.J) && isCharge && AttackTime >= CoolTime)//키를 뗐을때
+            {
+                isCharge = false;
+                animator.SetBool("isCharge", false);
+                if (ChargeTime < 1f)//차징 시간이 1초 이하이면 기본공격
+                {
+                    //Debug.Log("기본 공격");
+                    Attack.GetAttack(damage);//PlayerAttack 스크립트에 데미지를 전달해주고 PlayerAttack에서는 공격을 실행함
+                    animator.SetTrigger("Attack");//공격 애니메이션 재생
+                    AttackTime = 0;
+                }
+                else if (ChargeTime >= 1.0f)//차징 시간이 1초 이상이면 강공
+                {
+                    //Debug.Log("강화 공격");
+                    Attack.GetAttack(damage * 3.0f);//위와 같으나 3배의 데미지를 가함
+                    animator.SetTrigger("Attack");//공격 애니메이션 재생
+                    AttackTime = 0;
+                    //강공 모션
+                }
+                ChargeTime = 0;//차징 타임 초기화
+            }
     }//공격 체크, 공격버튼을 누르고 있으면 차징함!
 
     private void flipSpr()
@@ -111,7 +143,8 @@ public class Player : LivingEntity
             isJump = true;//점프했다
             PR.velocity = Vector2.up * JumpForce;//순간 속력을 위로 점프력만큼 줌
             SetDirection(Dir);//점프시 이동가능한 방향(반대로 방향 조절 못하게)
-            Invoke("JumpReset", 1f);//1초 뒤에 점프리셋(수정할수도있음)
+            animator.SetBool("isJump", true);
+            //Invoke("JumpReset", 0.8f);//1초 뒤에 점프리셋(수정할수도있음)
             //Debug.Log("스페이스바 눌림");
         }
         else if (isJump)
@@ -129,7 +162,7 @@ public class Player : LivingEntity
 
     private void Move()
     {
-        if (!isDash)
+        if (!isDash || !isWall || !isCharge)
         {
             Vector2 newVel = new Vector2(h * MaxSpeed, PR.velocity.y);//플레이어 이동속도
             PR.velocity = newVel;//리지드바디에 속도 등록
@@ -138,10 +171,13 @@ public class Player : LivingEntity
 
     private void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDash)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDash && stamina >= 25f)
         {
             isDash = true;//대쉬했다를 체크
-            Invoke("DashReset", 0.4f);
+            animator.SetBool("isDash", true);
+            stamina -= 25f;
+            dashtime = 0f;
+            Invoke("DashReset", 0.25f);
         }
         else if (isDash)
         {
@@ -149,6 +185,18 @@ public class Player : LivingEntity
             transform.position = curPos + DashPos;//더해서 위치변경
         }
     }//대쉬 함수
+    
+    private void StaminaCheck()
+    {
+        if(dashtime >= 1.25f && stamina <= 100f)
+        {
+            stamina += 5 * Time.deltaTime;
+            if(stamina >= 100f)
+            {
+                stamina = 100f;
+            }
+        }
+    }//스테미나 회복검사 
 
     public void SetDirection(float h) 
     {
@@ -168,12 +216,75 @@ public class Player : LivingEntity
     private void DashReset()
     {
         isDash = false;
+        animator.SetBool("isDash", false);
     }//대쉬이후 초기화
 
-    private void JumpReset()
+    //private void JumpReset()
+    //{
+    //    isJump = false;
+    //}//점프 이후 초기화
+
+    public override void Die()
     {
-        isJump = false;
-    }//점프 이후 초기화
+
+        base.Die();
+        animator.SetTrigger("Die");//애니메이터에 Die 트리거를 전달해서 사망 애니메이션 재생
+        Invoke("Dead", 1.2f);//잠시후에 오브젝트 비활성화
+    }
+
+    public override void RestoreHealth(float newHealth)
+    {
+        base.RestoreHealth(newHealth);
+        HealthCheck();
+    }
+
+    public override void damaged(float damage)
+    {
+        base.damaged(damage);
+        HealthCheck();
+    }
+
+    private void Dead()
+    {
+        gameObject.SetActive(false);//오브젝트 비활성화
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void HealthCheck()
+    {
+        HealthSlider.value = Health;
+    }
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if(col.gameObject.tag == "Floor")
+        {
+            isJump = false;
+            animator.SetBool("isJump", false);
+        }
+        if (col.gameObject.tag == "Wall")
+        {
+            h = 0;
+            Dir = 0;
+            isWall = true;
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Wall")
+        {
+            Dir = 0;
+            h = 0;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D col)
+    {
+        if(col.gameObject.tag == "Wall")
+        {
+            isWall = false;
+        }
+    }
 }
 //Vector3 nextPos = new Vector3(h, 0, 0) * Speed * Time.deltaTime;//키입력에 따른 다음 위치
 //transform.position = curPos + nextPos;//현재위치와 다음위치를 더함으로써 이동(이전 로직 지금은 사용안함)

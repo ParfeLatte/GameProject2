@@ -28,8 +28,29 @@ public class AccessPoint : MonoBehaviour
 
     void Update()
     {
+        
         if(isPlayer && Input.GetKeyDown(KeyCode.U)){
-            CheckAccess();//플레이어가 범위 내에 있을때 U를 눌렀으면 접근시도
+            switch (accessLevel)
+            {
+                case 4:
+                    TargetCheck();
+                    break;
+                default:
+                    CheckAccess();//플레이어가 범위 내에 있을때 U를 눌렀으면 접근시도
+                    break;
+            }
+        }
+    }
+
+    public void TargetCheck()
+    {
+        if (gameManager.Target())
+        {
+            CheckAccess();
+        }
+        else
+        {
+            Debug.Log("타겟이 없으므로 접근불가");
         }
     }
 
@@ -56,7 +77,6 @@ public class AccessPoint : MonoBehaviour
     private void StartEvent()
     {
         Event.SirenOn();//사이렌 재생
-        Event.MobSpawn();//이벤트 몬스터 스폰
         isEvent = true;
         Debug.Log("이벤트가 시작됐습니다.");
     }
