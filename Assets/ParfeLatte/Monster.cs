@@ -14,6 +14,7 @@ public class Monster : LivingEntity
 
     public float moveTimeOne;//플레이어가 얼마나 걸었는지 확인
     //public float moveTimeTwo;//플레이어가 얼마나 걸었는지 확인
+    public float ThinkTime;
     public float CheckTime;//범위 안에 들어온 시간
     public float CoolTime;//공격 쿨타임
     public float AttackTime;//공격시간
@@ -181,30 +182,68 @@ public class Monster : LivingEntity
     private void OnWake()
     {
         Debug.DrawRay(RayPos, dirVec * 1.75f, new Color(0, 1, 0));//레이캐스트 표시(거리 확인용)
+        float xdistance = player.transform.position.x - gameObject.transform.position.x;
         if (isMobMove == true)
         {
-            
-            if (player.transform.position.x - gameObject.transform.position.x > 0)
+            if (YDist <= 5)
             {
-                Dir = 1;//방향 오른쪽
-                dirVec = new Vector3(1f, 0f, 0f);//Ray 발사방향
-                MonsterRenderer.flipX = false;//스프라이트 반전x(오른쪽 봄)
+                if (xdistance > 0)
+                {
+                    Dir = 1;//방향 오른쪽
+                    dirVec = new Vector3(1f, 0f, 0f);//Ray 발사방향
+                    MonsterRenderer.flipX = false;//스프라이트 반전x(오른쪽 봄)
+                }
+                else if ((xdistance < 0))
+                {
+                    Dir = -1;//방향 왼쪽
+                    dirVec = new Vector3(-1, 0f, 0f);//Ray 발사방향
+                    MonsterRenderer.flipX = true;//스프라이트 반전 O(왼쪽보게)
+                }
+                if (Dist <= 1.3f)
+                {
+                    Dir = 0;
+                }
             }
-            else if((player.transform.position.x - gameObject.transform.position.x < 0))
+            else if(YDist > 5)
             {
-                Dir = -1;//방향 왼쪽
-                dirVec = new Vector3(-1, 0f, 0f);//Ray 발사방향
-                MonsterRenderer.flipX = true;//스프라이트 반전 O(왼쪽보게)
-            }
-
-            if (Dist <= 1.3f)
-            {
-                Dir = 0;
+                ThinkTime += Time.deltaTime;
+                if (ThinkTime >= 5f)
+                {
+                    Dir = Think();
+                    ThinkTime = 0f;
+                }
+                if (Dir == 0)
+                {
+                    animator.SetBool("isIdle", true);
+                }
+                else if (Dir == 1f)
+                {
+                    Dir = 1;//방향 오른쪽
+                    dirVec = new Vector3(1f, 0f, 0f);//Ray 발사방향
+                    MonsterRenderer.flipX = false;//스프라이트 반전x(오른쪽 봄)
+                    animator.SetBool("isIdle", false);
+                }
+                else if(Dir == -1f)
+                {
+                    Dir = -1;//방향 왼쪽
+                    dirVec = new Vector3(-1, 0f, 0f);//Ray 발사방향
+                    MonsterRenderer.flipX = true;//스프라이트 반전 O(왼쪽보게)
+                    animator.SetBool("isIdle", false);
+                }
+                Debug.Log("떠돌아다니는중");
             }
             Vector3 NextPos = new Vector3(Dir, 0, 0) * MaxSpeed * Time.deltaTime;
             transform.position = curPos + NextPos;//플레이어 향해서 이동(추적)
         }
     }//깨어있는 동안 행동하는 루틴
+
+    private float Think()
+    {
+        int NextMove = UnityEngine.Random.Range(0, 3);
+        if(NextMove == 0){ return 1f; }
+        else if(NextMove == 1) { return -1f; }
+        else { return 0f; }
+    }
 
     IEnumerator CheckStop()
     {
@@ -313,6 +352,10 @@ public class Monster : LivingEntity
             Dir = 0;
             isWall = true;
         }
+        if(col.gameObject.tag == "Floor")
+        {
+            animator.SetBool("isFalling", false);
+        }
     }
 
     private void OnCollisionStay2D(Collision2D col) 
@@ -328,6 +371,10 @@ public class Monster : LivingEntity
         if (col.gameObject.tag == "Wall")
         {
             isWall = false;
+        }
+        if(col.gameObject.tag == "Floor")
+        {
+            animator.SetBool("isFalling", true);
         }
     }
 }
