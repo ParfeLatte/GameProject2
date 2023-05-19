@@ -5,10 +5,11 @@ using UnityEngine;
 
 
 namespace Insomnia {
-    public abstract class ConsoleCommand : ScriptableObject {
+    public abstract class TerminalCommand : ScriptableObject {
 
         [SerializeField] protected string m_command = "";
         [SerializeField] protected float m_loadingTime = 0;
+        [SerializeField, Multiline(10)] protected string m_Description = string.Empty;
         protected List<string> m_commandResult = new List<string>();
 
         /// <summary>
@@ -18,6 +19,10 @@ namespace Insomnia {
         /// <returns>return true if command is valid. else false.</returns>
         public virtual bool CheckCommand(string splitted) {
             return m_command.Equals(splitted.ToUpper());
+        }
+
+        public virtual string GetDescription() {
+            return m_Description;
         }
 
         /// <summary>

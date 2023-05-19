@@ -21,11 +21,11 @@ namespace Insomnia {
         }
 
         public override void OnInteractStart() {
-            m_terminalUI.OpenConsole();
+            m_terminalUI.OpenTerminal();
         }
 
         public override void OnInteractEnd() {
-            m_terminalUI.CloseConsole();
+            m_terminalUI.CloseTerminal();
         }
     }
 }

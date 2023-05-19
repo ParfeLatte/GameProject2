@@ -26,13 +26,19 @@ namespace Insomnia {
             m_itemDatas.Remove(item);
         }
 
-        public ItemData[] GetItemDatas(string key) {
+        public ItemData[] GetItemDatas(string key, bool isForQuery = false) {
             ItemBase[] items;
 
-            if(key == null)
-                items = m_itemDatas.ToArray();
-            else
-                items = m_itemDatas.Where(x => x.Contains(key)).ToArray();
+            if(isForQuery) 
+                items = m_itemDatas.Where(x => x.CheckValidID(key)).ToArray();
+            else {
+                if(key == null)
+                    items = default(ItemBase[]);
+                if(key == "all")
+                    items = m_itemDatas.ToArray();
+                else
+                    items = m_itemDatas.Where(x => x.Contains(key)).ToArray();
+            }
 
             ItemData[] ret = new ItemData[items.Length];
             for(int i = 0; i < items.Length; i++) {
@@ -40,6 +46,10 @@ namespace Insomnia {
             }
 
             return ret;
+        }
+
+        private void OnApplicationQuit() {
+            m_itemDatas.Clear();
         }
     }
 }
