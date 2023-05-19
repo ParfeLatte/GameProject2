@@ -22,28 +22,17 @@ namespace Insomnia {
         #endregion
 
         #region Variables
-        [SerializeField] private List<ConsoleCommand> m_commands = new List<ConsoleCommand>();
+        [SerializeField] private List<TerminalCommand> m_commands = new List<TerminalCommand>();
         private List<string> commandContainer = new List<string>();
         private readonly int MaxCommandLines = 32;
         private int m_selectedIndex = 0;
         private int m_maxIndex = 0;
         private bool m_loading = false;
-
-        private WaitForSeconds m_loadingWait = new WaitForSeconds(0.2f);
-        #endregion
-
-        #region Command Formats
-        
-
         #endregion
 
         private void Awake() {
             m_consoleInput = GetComponentInChildren<TMP_InputField>();
             m_consoleWindow = GetComponentInChildren<TMP_Text>();
-        }
-
-        private void OnEnable() {
-            m_consoleInput.ActivateInputField();
         }
 
         public void OnKeyDown_Enter() {
@@ -56,8 +45,8 @@ namespace Insomnia {
             CalculateLastIndex();
 
             ProcessErrorType success = ProcessCommand(command);
-            if(success == ProcessErrorType.SyntaxError) commandContainer.Add($"<color=red>Syntax Error: Check the Command - {command.Split('\n')[0]}</color>");
-            if(success == ProcessErrorType.Loading    ) commandContainer.Add($"<color=yellow>Sequence Error: Wait for the Signal : </color>");
+            if(success == ProcessErrorType.SyntaxError) commandContainer.Add($"<color=red>Syntax Error: Check the Command - {command.Split(' ')[0]}</color>");
+            if(success == ProcessErrorType.Loading    ) commandContainer.Add($"<color=yellow>Command Timeout: Wait for the Signal : </color>");
             if(success == ProcessErrorType.Failed     ) commandContainer.Add($"<color=red>Command Failed: ^%!$@#!^%@$#%^!$@#</color>");
 
             DisplayCommand();
@@ -92,28 +81,6 @@ namespace Insomnia {
         }
 
         /// <summary>
-        /// 위쪽 방향키가 입력되었을 때 실행되는 함수. 이전 커맨드를 불러온다.
-        /// 최초 커맨드에서 더 이상 움직이지 않는다.
-        /// </summary>
-        public void OnKeyDown_ArrowUp() {
-            if(m_selectedIndex <= 0)
-                return;
-
-
-        }
-
-        /// <summary>
-        /// 아래쪽 방향키가 입력되었을 때 실행되는 함수. 지금보다 이후의 커맨드를 불러온다.
-        /// 커맨드가 없을 경우 공란으로 둔다.
-        /// </summary>
-        public void OnKeyDown_ArrowDown() {
-            if(m_selectedIndex == m_maxIndex)
-                return;
-
-
-        }
-
-        /// <summary>
         /// 입력받은 명령어를 처리한다.
         /// </summary>
         /// <param name="command"></param>
@@ -129,22 +96,31 @@ namespace Insomnia {
                 switch(splitted[0]) {
                     case "/COMMAND": {
                         Debug.Log("command list");
-                    }
-                    break;
+
+                        for(int i = 0; i < m_commands.Count; i++) {
+                            commandContainer.Add(m_commands[i].GetDescription());
+                        }
+                        DisplayCommand();
+                    } break;
                     case "/EXIT": {
                         Debug.Log("exit command");
-                        CloseConsole();
-                    }
-                    break;
+                        CloseTerminal();
+                    } break;
+                    case "/CLEAR": {
+                        commandContainer.Clear();
+                        DisplayCommand();
+                    }break;
                     default: return ProcessErrorType.SyntaxError;
                 }
             }
             else {
-                ConsoleCommand activeCommand = m_commands.Single(x => x.CheckCommand(splitted[0]) == true);
-                if(activeCommand == null)
+                TerminalCommand validCommand = m_commands.SingleOrDefault(x => x.CheckCommand(splitted[0]));
+                //Single은 무조건 하나가 있어야 되지만 SingleOrDefault는 하나만 있거나 없을 수 있다. 없을 경우 null을 return;
+                if(validCommand == null)
                     return ProcessErrorType.SyntaxError;
 
-                KeyValuePair<float, List<string>> result = activeCommand.RunCommand(this, command);
+                Debug.Assert(validCommand != null, "ValidCommand is null");
+                KeyValuePair<float, List<string>> result = validCommand.RunCommand(this, command);
                 StartCoroutine(CoLoadData(result));
             }
 
@@ -168,6 +144,7 @@ namespace Insomnia {
                 commandContainer[loadingCommand] = MakeProcessVisual(commandOrigin, (int)Mathf.Round(processInterval));
                 DisplayCommand();
             }
+
             if(result.Value != null)
                 commandContainer.AddRange(result.Value);
             commandContainer[loadingCommand] = commandOrigin;
@@ -177,34 +154,17 @@ namespace Insomnia {
             yield break;
         }
 
-        /// <summary>
-        /// 제일 최근 커맨드의 뒤에 로딩 효과를 적용하는 함수
-        /// </summary>
-        /// <param name="origin"></param>
-        /// <param name="percentage"></param>
-        /// <returns></returns>
-        //private string MakeProcessVisual(string origin, int percentage) {
-        //    char[] val = new char[10];
-        //    for(int i = 0; i < val.Length; i++) {
-        //        if(percentage / ( ( i + 1 ) * 10 ) != 0)
-        //            val[i] = '#';
-        //        else
-        //            val[i] = '.';
-        //    }
-
-        //    return origin + $" - [{val.ArrayToString()}]";
-        //}
-
         private string MakeProcessVisual(string origin, int processInterval) {
             char[] loadingIcon = { '\\', '|', '/', '―'};
             return origin + $" - {loadingIcon[processInterval % loadingIcon.Length]}";
         }
 
-        public void OpenConsole() {
+        public void OpenTerminal() {
             gameObject.SetActive(true);
+            m_consoleInput.ActivateInputField();
         }
 
-        public void CloseConsole() {
+        public void CloseTerminal() {
             gameObject.SetActive(false);
         }
     }

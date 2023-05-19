@@ -19,6 +19,7 @@ namespace Insomnia {
         public struct ItemData {
             public string ID;
             public string Location;
+            public string Description;
             public Vector3 Pos;
             public ObjectType ObjectType;
             public StatusType Status;
