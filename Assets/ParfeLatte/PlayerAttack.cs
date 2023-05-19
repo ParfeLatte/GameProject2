@@ -47,7 +47,7 @@ public class PlayerAttack : MonoBehaviour
         {
             Monster enemy = TargetList[i].GetComponent<Monster>();//대상에게서 몬스터 스크립트를  받아옴
             enemy.damaged(Damage);//공격받을때 부르는 함수
-            Debug.Log("Monster[" + i + "]에게 데미지!");//확인용
+            //Debug.Log("Monster[" + i + "]에게 데미지!");//확인용
         }
         isAttack = false;
     }//공격 대상으로 들어왔있는 모든 몬스터에게 데미지가 들어감
@@ -75,11 +75,11 @@ public class PlayerAttack : MonoBehaviour
         if (TargetList.Contains(col))
         {
             TargetList.Remove(col);//범위를 벗어나면 리스트에 있던 몬스터를 제거함(공격대상X)
-            Debug.Log("제거했습니다");
+            //Debug.Log("제거했습니다");
         }
         else
         {
-            Debug.Log("이미 제거됐습니다");//예외처리
+            //Debug.Log("이미 제거됐습니다");//예외처리
         }
     }
 }
