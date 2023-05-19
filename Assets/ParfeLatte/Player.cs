@@ -9,18 +9,20 @@ public class Player : LivingEntity
     public float AttackTime;//공격한시간
     public float CoolTime;//쿨타임
     public float movetime;//이동한 시간 체크
-    public float stoptime;
+    public float stoptime;//
     public float JumpForce;//점프력
     public float Dir;//이동방향(대쉬나 점프시에 방향 못바꾸게함)
     public float h;//GeTAxisRaw로 받는 값
     public float stamina;//스테미나
     public float dashtime;//대쉬한지 얼마나 지났는지 체크해서 스테미너 채움
+    public float airtime;//체공시간
 
 
     public bool isDash;//대쉬했는지 체크
     public bool isMove;//움직였는지 체크
     public bool isWall;//벽에 부딪혔는지 체크
     public bool isJump;//점프했는지 체크
+    public bool isFall;//떨어지는지
     public bool isCharge;//공격충전중인지
 
     public Slider HealthSlider;//체력UI
@@ -82,6 +84,11 @@ public class Player : LivingEntity
             Move();//이동
             StaminaCheck();
             dashtime += Time.deltaTime;
+        }
+
+        if (isFall)
+        {
+            airtime += Time.deltaTime;
         }
     }
 
@@ -259,6 +266,14 @@ public class Player : LivingEntity
         if(col.gameObject.tag == "Floor")
         {
             isJump = false;
+            isFall = false;
+            if (airtime >= 1f)
+            {
+                float Time = Mathf.Round(airtime / 0.2f);
+                float damage = Time * 5f;
+                damaged(damage);
+            }
+            airtime = 0;
             animator.SetBool("isJump", false);
         }
         if (col.gameObject.tag == "Wall")
@@ -283,6 +298,10 @@ public class Player : LivingEntity
         if(col.gameObject.tag == "Wall")
         {
             isWall = false;
+        }
+        if(col.gameObject.tag == "Floor")
+        {
+            isFall = true;
         }
     }
 }
