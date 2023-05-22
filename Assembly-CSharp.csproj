@@ -166,6 +166,7 @@
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Lightmap\Objects\ParticleRenderer.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Utils\Defines.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Settings\Presets\LightmapPresets.cs" />
+    <Compile Include="Assets\ParfeLatte\EndTutorial.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Utilities\2\Polygon2\Polygon2ListCollider2D.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Light\Mask\Tile.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Universal\Objects\Texture.cs" />
@@ -192,6 +193,7 @@
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Lightmap\Objects\LightSource.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\SuperTilemapEditor\Rendering\Light\Shadow\Collider.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Utilities\2D\Polygon\Polygon2DListCollider2D.cs" />
+    <Compile Include="Assets\ParfeLatte\LoadSceneTest.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Interaction\Interactor.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Components\LightTilemap2D\LightTile.cs" />
     <Compile Include="Assets\ParfeLatte\Lift\ElevatorButton.cs" />
@@ -675,6 +677,12 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Android.Types">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.11f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Android.Gradle">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.11f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Gradle.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.11f1\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>

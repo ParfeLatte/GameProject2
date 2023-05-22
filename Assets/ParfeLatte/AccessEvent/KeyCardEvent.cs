@@ -19,13 +19,14 @@ public class KeyCardEvent : MonoBehaviour
     public bool isAllDead;//모든 몬스터가 죽었는지 확인
 
     private AudioSource SirenSound;//사이렌 재생용
-
+    public Animator sirenAnimation;//사이렌 애니메이션
 
     public List<GameObject> MobList = new List<GameObject>();//몬스터 리스트
     public List<EventMonster> DeadCheck = new List<EventMonster>();//살았는지 체크
     void Awake()
     {
         SirenSound = GetComponent<AudioSource>();
+        sirenAnimation.enabled = false;//비활성화
         isAllDead = false;//이벤트 몬스터가 아직 살아있음
         SpawnTimer = 0f;
         MobIndex = 0;
@@ -34,11 +35,13 @@ public class KeyCardEvent : MonoBehaviour
     public void SirenOn()
     {
         SirenSound.Play();//사이렌 재생
+        sirenAnimation.enabled = true;
     }
         
     public void SirenOff()
     {
         SirenSound.Stop();//사이렌 정지(이벤트 끝)
+        sirenAnimation.enabled = false;
     }
 
     public void MobSpawn(int i)

@@ -22,7 +22,7 @@ public class HealPoint : MonoBehaviour
     {
         if (healCount > 0)
         {
-            if (CanHeal && Input.GetKeyDown(KeyCode.U))
+            if (CanHeal && Input.GetKeyDown(KeyCode.F))
             {
                 if (player.Health < 100f)
                 {

@@ -29,7 +29,7 @@ public class AccessPoint : MonoBehaviour
     void Update()
     {
         
-        if(isPlayer && Input.GetKeyDown(KeyCode.U)){
+        if(isPlayer && Input.GetKeyDown(KeyCode.F)){
             switch (accessLevel)
             {
                 case 4:

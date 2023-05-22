@@ -22,10 +22,10 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.h == 1) {
+        if (player.Dir == 1) {
             this.transform.localPosition = new Vector3(curPos.x, curPos.y, curPos.z);//공격 범위 위치 조절(플레이어 오른쪽)
         }
-        if (player.h == -1)
+        if (player.Dir == -1)
         {
             this.transform.localPosition = new Vector3(curPos.x * -1, curPos.y, curPos.z);//공격 범위 위치 조절(플레이어 왼쪽)
         }

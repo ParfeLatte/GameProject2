@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Monster : LivingEntity
 {
+    public float SetHealth, SetDamage, SetSpeed;
+
     //public GameObject small;//범위 15의 콜라이더 영역
     //public GameObject Big;//범위 30의 콜라이더 영역
     public GameObject Player;//거리측정용
@@ -53,14 +55,14 @@ public class Monster : LivingEntity
         MonsterRenderer = GetComponent<SpriteRenderer>();
         Player = GameObject.Find("Player");
         SleepState = 0;//깊은수면 상태로 스폰
-        SetStatus(30, 10, 8.5f);//일단 일반몹기준
+        SetStatus(SetHealth, SetDamage, SetSpeed);//일단 일반몹기준
         Health = MaxHealth;//체력을 최대체력으로 설정
     }
 
     private void OnEnable()
     {
         isDead = false;
-        SetStatus(30, 5, 8.5f);//일단 일반몹기준
+        SetStatus(SetHealth, SetDamage, SetSpeed);//일단 일반몹기준
         Health = MaxHealth;//체력을 최대체력으로 설정 
     }
 

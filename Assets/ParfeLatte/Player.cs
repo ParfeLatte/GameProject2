@@ -94,11 +94,11 @@ public class Player : LivingEntity
 
     private void AttackCheck()
     {
-            if (Input.GetKeyDown(KeyCode.J) && AttackTime >= CoolTime && !isCharge)
+            if (Input.GetKeyDown(KeyCode.Z) && AttackTime >= CoolTime && !isCharge)
             {
                 animator.SetBool("isCharge", true);
             }
-            if (Input.GetKey(KeyCode.J) && AttackTime >= CoolTime)//키는 임시임 J를 누르는 중일때
+            if (Input.GetKey(KeyCode.Z) && AttackTime >= CoolTime)//키는 임시임 J를 누르는 중일때
             {
                 ChargeTime += Time.deltaTime;
                 h = 0;
@@ -106,7 +106,7 @@ public class Player : LivingEntity
                 isCharge = true;
                 //Debug.Log("공격 차징중");
             }
-            if (Input.GetKeyUp(KeyCode.J) && isCharge && AttackTime >= CoolTime)//키를 뗐을때
+            if (Input.GetKeyUp(KeyCode.Z) && isCharge && AttackTime >= CoolTime)//키를 뗐을때
             {
                 isCharge = false;
                 animator.SetBool("isCharge", false);
@@ -145,7 +145,7 @@ public class Player : LivingEntity
     }//방향에 맞게 스프라이트 뒤집음
     private void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isJump)
+        if (Input.GetKeyDown(KeyCode.UpArrow) && !isJump)
         {
             isJump = true;//점프했다
             PR.velocity = Vector2.up * JumpForce;//순간 속력을 위로 점프력만큼 줌

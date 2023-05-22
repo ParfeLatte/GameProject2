@@ -103,18 +103,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 0
   isDead: 0
+  SetHealth: 30
+  SetDamage: 5
+  SetSpeed: 8.5
   Player: {fileID: 0}
   AttackPos: {fileID: 3947306826951480239}
   boxSize: {x: 2.2, y: 4}
   SleepState: 0
   moveTimeOne: 0
+  ThinkTime: 0
   CheckTime: 0
   CoolTime: 2
   AttackTime: 0
   Dist: 0
+  YDist: 0
   Dir: 0
   dirVec: {x: 0, y: 0, z: 0}
   player: {fileID: 0}
+  Gate: {fileID: 0}
   isPlayerDash: 0
   isPlayerStop: 0
   isAttack: 0
