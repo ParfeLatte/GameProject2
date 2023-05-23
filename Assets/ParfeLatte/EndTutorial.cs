@@ -17,7 +17,7 @@ public class EndTutorial : MonoBehaviour
     {
         if(isinterect && Input.GetKeyDown(KeyCode.F))
         {
-            SceneManager.LoadScene("CHOI/Lab");
+            SceneManager.LoadScene("Lab");
         }
     }
 

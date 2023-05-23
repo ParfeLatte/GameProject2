@@ -15,18 +15,19 @@ public class Player : LivingEntity
     public float h;//GeTAxisRaw로 받는 값
     public float stamina;//스테미나
     public float dashtime;//대쉬한지 얼마나 지났는지 체크해서 스테미너 채움
-    public float airtime;//체공시간
-
+    public float lastYpos;//점프나 땅에서 떨어졌을 때 마지막 y값
+    public float CurYpos;//착지 시에 비교할 y값
 
     public bool isDash;//대쉬했는지 체크
     public bool isMove;//움직였는지 체크
     public bool isWall;//벽에 부딪혔는지 체크
     public bool isJump;//점프했는지 체크
-    public bool isFall;//떨어지는지
     public bool isCharge;//공격충전중인지
+    public bool isFallDamage;//낙뎀받았는지
 
     public Slider HealthSlider;//체력UI
-
+    public Slider StaminaSlider;//스테미너UI
+    
 
     //public PlayerAttack Attack;
     public PlayerAttack Attack;//공격을 실행해주는 스크립트(공격 범위 오브젝트에 할당되어 있으며 여기서 공격을 실행함)
@@ -53,6 +54,7 @@ public class Player : LivingEntity
         gameObject.SetActive(true);
         stamina = 100f;
         HealthSlider.value = Health;
+        StaminaSlider.value = stamina;
     }
 
     // Update is called once per frame
@@ -84,11 +86,6 @@ public class Player : LivingEntity
             Move();//이동
             StaminaCheck();
             dashtime += Time.deltaTime;
-        }
-
-        if (isFall)
-        {
-            airtime += Time.deltaTime;
         }
     }
 
@@ -203,6 +200,7 @@ public class Player : LivingEntity
                 stamina = 100f;
             }
         }
+        StaminaSlider.value = stamina;
     }//스테미나 회복검사 
 
     public void SetDirection(float h) 
@@ -248,6 +246,7 @@ public class Player : LivingEntity
     public override void damaged(float damage)
     {
         base.damaged(damage);
+        Debug.Log(damage);
         HealthCheck();
     }
 
@@ -261,20 +260,34 @@ public class Player : LivingEntity
     {
         HealthSlider.value = Health;
     }
+
+    private void SetLastPos()
+    {
+        lastYpos = transform.position.y;
+        isFallDamage = false;
+        Debug.Log("떨어짐");
+    }
+    private void CheckFallDamage()
+    {
+        float Ydiff = Mathf.Abs(lastYpos - transform.position.y);
+        if (!isFallDamage && Ydiff > 30f)
+        {
+            isFallDamage = true;
+            damaged(25f);
+            Debug.Log("착지함");
+        }
+        isFallDamage = true;
+    }
     private void OnCollisionEnter2D(Collision2D col)
     {
         if(col.gameObject.tag == "Floor")
         {
             isJump = false;
-            isFall = false;
-            if (airtime >= 1f)
-            {
-                float Time = Mathf.Round(airtime / 0.2f);
-                float damage = Time * 5f;
-                damaged(damage);
-            }
-            airtime = 0;
             animator.SetBool("isJump", false);
+            if (!isFallDamage)
+            {
+                CheckFallDamage();
+            }
         }
         if (col.gameObject.tag == "Wall")
         {
@@ -301,7 +314,7 @@ public class Player : LivingEntity
         }
         if(col.gameObject.tag == "Floor")
         {
-            isFall = true;
+            SetLastPos();
         }
     }
 }

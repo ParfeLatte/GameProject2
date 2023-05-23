@@ -20,6 +20,7 @@ public class Monster : LivingEntity
     public float CheckTime;//범위 안에 들어온 시간
     public float CoolTime;//공격 쿨타임
     public float AttackTime;//공격시간
+    public float FallTime;
     public float Dist;//몬스터와 플레이어 사이 거리
     public float YDist;//y축 거리
     public float Dir;//이동방향
@@ -32,6 +33,7 @@ public class Monster : LivingEntity
     public bool isPlayerDash;//플레이어가 대쉬했는지 확인
     public bool isPlayerStop;//플레이어가 멈췄는가?
     public bool isAttack;//공격중인가?
+    public bool isFall;//넘어졋나?
     public bool isWall;//벽에 부딪혔는가?
 
     public Vector3 lastPlayerPosition;//위치 비교용
@@ -80,11 +82,16 @@ public class Monster : LivingEntity
         }
         curPos = transform.position;//현재위치
         RayPos = MR.position + AddPos;//레이를 발사하는 위치
-        if (SleepState == 3 && !isDead) {
+        if (SleepState == 3 && !isDead && !isFall) {
             OnWake();//깨어있을때 행동패턴
             AttackCheck();//공격범위 내에 들어오면 공격
             AttackTime += Time.deltaTime;//쿨타임
         }//기상시 패턴
+        if (isFall)
+        {
+            FallTime += Time.deltaTime;
+            FallCheck();
+        }
     }
 
     //private void OnDrawGizmos()
@@ -315,6 +322,23 @@ public class Monster : LivingEntity
         //Debug.Log("깨어났습니다.");
     }
 
+    public void FallCheck()
+    {
+        if(FallTime > 0.1f)
+        {
+            animator.SetBool("isFalling", true);
+            isMobMove = false;
+        }
+    }
+
+    public void StopFalling()
+    {
+        animator.SetBool("isFalling", false);
+        Invoke("MoveAgain", 0.5f);
+        isFall = false;
+        FallTime = 0f;
+    }
+    
     public override void damaged(float damage)
     {
         Health -= damage;//체력에서 데미지만큼 깎음
@@ -354,9 +378,9 @@ public class Monster : LivingEntity
             Dir = 0;
             isWall = true;
         }
-        if(col.gameObject.tag == "Floor")
+        if(col.gameObject.tag == "Floor" && isFall)
         {
-            animator.SetBool("isFalling", false);
+            StopFalling();
         }
     }
 
@@ -366,6 +390,10 @@ public class Monster : LivingEntity
         {
             Dir = 0;
         }
+        if(col.gameObject.tag == "Floor" && isFall)
+        {
+            StopFalling();
+        }
     }
 
     private void OnCollisionExit2D(Collision2D col)
@@ -374,9 +402,9 @@ public class Monster : LivingEntity
         {
             isWall = false;
         }
-        if(col.gameObject.tag == "Floor")
+        if (col.gameObject.tag == "Floor")
         {
-            animator.SetBool("isFalling", true);
+            isFall = true;
         }
     }
 }

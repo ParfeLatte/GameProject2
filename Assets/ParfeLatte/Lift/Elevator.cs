@@ -5,6 +5,8 @@ using UnityEngine;
 public class Elevator : MonoBehaviour
 {
     public GameObject elevator;
+    public GameObject elevatorDoor;
+    public Animator elevAnim;
     public int floor;//몇 층인지
     public bool Reverse;//true일때 아래로, false일때 위로
     public bool isMove;//움직이는지 안움직이는지
@@ -15,7 +17,8 @@ public class Elevator : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        
+        elevatorDoor.SetActive(false);
+        elevAnim.SetBool("isOpen", true);
     }
 
     // Update is called once per frame
@@ -31,6 +34,8 @@ public class Elevator : MonoBehaviour
     public void Move()
     {
         isMove = true;
+        elevatorDoor.SetActive(true);
+        elevAnim.SetBool("isOpen", false);
     }
 
     public void StopCheck()
@@ -40,52 +45,60 @@ public class Elevator : MonoBehaviour
             if (transform.position.y >= StopPos.position.y)
             {
                 isMove = false;
+                elevatorDoor.SetActive(false);
+                elevAnim.SetBool("isOpen", true);
             }
         }
-        else
+        else if(Reverse)
         {
             if(transform.position.y <= StopPos.position.y)
             {
                 isMove = false;
+                elevatorDoor.SetActive(false);
+                elevAnim.SetBool("isOpen", true);
             }
         }
     }
     public void Up()
     {
-        if (floor == 1)
+        if(floor == 3)
+        {
+            return;
+        }
+        else if (floor == 1)
         {
             floor = 2;
             StopPos = Floors[1];
             Reverse = false;
+            Move();
         }
         else if(floor == 2)
         {
             floor = 3;
             StopPos= Floors[2];
             Reverse = false;
-        }
-        else
-        {
-            return;
+            Move();
         }
     }
     public void Down()
     {
+        if(floor == 1)
+        {
+            return;
+        }
         if(floor == 3)
         {
             floor = 2;
             StopPos = Floors[1];
             Reverse = true;
+            Move();
         }
         else if(floor == 2)
         {
             floor = 1;
             StopPos = Floors[0];
             Reverse = true;
-        }
-        else
-        {
-            return;
+            Move();
         }
     }
 
