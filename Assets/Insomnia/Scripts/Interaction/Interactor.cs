@@ -6,8 +6,12 @@ namespace Insomnia {
     public class Interactor : MonoBehaviour {
         private Interactable _curInteract = null;
         [SerializeField] private KeyCode _interactKey = KeyCode.F;
+        [SerializeField] private bool _isUsingInputActor = false;
 
         private void Update() {
+            if(_isUsingInputActor)
+                return;
+
             if(Input.GetKeyDown(_interactKey)) {
                 OnInteractStart();
             }

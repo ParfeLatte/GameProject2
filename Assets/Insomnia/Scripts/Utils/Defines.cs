@@ -5,22 +5,25 @@ using UnityEngine;
 namespace Insomnia {
     public class Defines : MonoBehaviour {
         public enum ObjectType {
-            Terminal,
-            Security,
-            Resources,
-            Passage,
-            Storage,
-
+            None,
+            Terminal,       //터미널
+            Security,       //보안문?
+            Resources,      //순수 아이템
+            Passage,        //일반 문?
+            Storage,        //아이템 보관함
         }
+
         public enum StatusType {
+            None,
             Normal,
 
         }
+
         public struct ItemData {
             public string ID;
             public string Location;
             public string Description;
-            public Vector3 Pos;
+            public Vector3 Position;
             public ObjectType ObjectType;
             public StatusType Status;
         }

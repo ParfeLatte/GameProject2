@@ -2,7 +2,7 @@ using Insomnia;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 
 namespace Insomnia {
     public abstract class TerminalCommand : ScriptableObject {
@@ -11,6 +11,8 @@ namespace Insomnia {
         [SerializeField] protected float m_loadingTime = 0;
         [SerializeField, Multiline(10)] protected string m_Description = string.Empty;
         protected List<string> m_commandResult = new List<string>();
+
+        [SerializeField] private UnityEvent onCommandSuccess = null;
 
         /// <summary>
         /// 입력한 커맨드의 첫번째 토큰을 비교하는 함수.
@@ -21,6 +23,10 @@ namespace Insomnia {
             return m_command.Equals(splitted.ToUpper());
         }
 
+        /// <summary>
+        /// 커맨드에 대한 설명을 만환하는 함수.
+        /// </summary>
+        /// <returns></returns>
         public virtual string GetDescription() {
             return m_Description;
         }
