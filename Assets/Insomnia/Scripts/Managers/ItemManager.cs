@@ -9,35 +9,34 @@ using static Insomnia.Defines;
 
 namespace Insomnia {
     public class ItemManager : Singleton<ItemManager> {
-        //TODO: ItemData를 매번 생성하는게 아닌 추가될 때 같이 미리 만들어놓도록 수정 필요.
-        [SerializeField] private List<ItemBase> m_itemDatas = new List<ItemBase>();
+        [SerializeField] private List<Item> m_itemDatas = new List<Item>();
 
-        public void AddItemData(ItemBase item) {
+        public void AddItemData(Item item) {
             if(m_itemDatas.Contains(item) == true)
                 return;
 
             m_itemDatas.Add(item); 
         }
 
-        public void RemoveItemData(ItemBase item) {
+        public void RemoveItemData(Item item) {
             if(m_itemDatas.Contains(item) == false)
                 return;
 
             m_itemDatas.Remove(item);
         }
 
-        public ItemData[] GetItemDatas(string key, bool isForQuery = false) {
-            ItemBase[] items;
+        public ItemData[] GetItemDatas(string itemID, bool isForQuery = false) {
+            SearchableBase[] items;
 
             if(isForQuery) 
-                items = m_itemDatas.Where(x => x.CheckValidID(key)).ToArray();
+                items = m_itemDatas.Where(x => x.CheckValidID(itemID)).ToArray();
             else {
-                if(key == null)
-                    items = default(ItemBase[]);
-                if(key == "all")
+                if(itemID == null)
+                    items = default(SearchableBase[]);
+                if(itemID == "all")
                     items = m_itemDatas.ToArray();
                 else
-                    items = m_itemDatas.Where(x => x.Contains(key)).ToArray();
+                    items = m_itemDatas.Where(x => x.Contains(itemID)).ToArray();
             }
 
             ItemData[] ret = new ItemData[items.Length];
@@ -48,8 +47,23 @@ namespace Insomnia {
             return ret;
         }
 
-        private void OnApplicationQuit() {
-            m_itemDatas.Clear();
+        public ItemData[] GetItemDatas(string itemID, string locationID, bool isForQuery = false) {
+            //로케이션ID로 아이템 찾는 기능 만들기
+            SearchableBase[] items = default(SearchableBase[]);
+            ItemData[] ret = default(ItemData[]);
+            if(isForQuery) {
+                items = m_itemDatas.Where(x => x.CheckValidID(itemID) && x.CheckValidLocation(locationID)).ToArray();
+            }
+            else {
+                if(itemID == null)
+                    items = default(SearchableBase[]);
+                if(itemID == "all") {
+
+                }
+
+            }
+
+            return ret;
         }
     }
-}
+} 
