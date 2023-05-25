@@ -65,11 +65,14 @@
     <Compile Include="Assets\ParfeLatte\MonsterAttack.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Buffers\LightMainBuffer2D.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Light\ShadowEngine\Algorithm\LegacyCPU.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Command_Save.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Components\LightTilemap2D\Types\Hexagon.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Settings\LightingSettings.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Input\PlayerInput\Mouse\MouseAction.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Components\Lightmap\Light2D.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Camera\CameraLightmap.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Interaction\Interactable.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Command_Clear.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Misc\MeshObject.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Components\LightTilemap2D\Types\Isometric.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Lightmap\NoSort.cs" />
@@ -78,10 +81,11 @@
     <Compile Include="Assets\ParfeLatte\MobSpawner.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Depth\Rendering.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Components\Mesh2D.cs" />
-    <Compile Include="Assets\Insomnia\Scripts\Console\SO\Command_List.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Command_List.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Depth\Pass.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Input\Base\AnalogInputActor.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\LightShapes\Extensions\Collider3DShape.cs" />
-    <Compile Include="Assets\Insomnia\Scripts\Console\ConsoleUI.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Terminal\TerminalUI.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Light\ShadowEngine\Algorithm\PerpendicularIntersection.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Utilities\2\Polygon2\Polygon2Helper.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Light\ShadowEngine\Algorithm\SoftShadowSorter.cs" />
@@ -97,6 +101,7 @@
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Triangulation\Advanced Triangulator\PolygonUtility.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Light\ShadowEngine\Algorithm\SpriteProjection.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Camera\LightmapShaders.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Input\Base\InputActor.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Graphics\SmartMaterial.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Manager.cs" />
     <Compile Include="Assets\ParfeLatte\PlayerAttack.cs" />
@@ -116,6 +121,7 @@
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\LightShapes\LightShape.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Misc\LightingRender2D.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Components\LightSprite2D\LightSpriteShape.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Character\UI\Health.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Components\Camera\CameraTransform.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Camera\LightingCameras.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Components\LightTilemap2D\TilemapProperties.cs" />
@@ -123,6 +129,7 @@
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Components\LightTilemapOcclusion\OcclusionTileset.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Utilities\2\Vector2Extension.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Material\Lighting2DMaterials.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Command_Command.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Lightmap\Objects\LightSprite.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Light\ShadowEngine\Extensions\Tile.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Misc\SpriteTransform.cs" />
@@ -169,6 +176,7 @@
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Settings\Presets\LightmapPresets.cs" />
     <Compile Include="Assets\ParfeLatte\EndTutorial.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Utilities\2\Polygon2\Polygon2ListCollider2D.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Input\PlayerInput\Mouse\MouseButtonActor.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Light\Mask\Tile.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Universal\Objects\Texture.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Sprite Mesh\SpriteMeshObject.cs" />
@@ -177,7 +185,7 @@
     <Compile Include="Assets\Assetss\FunkyCode\Demos - SmartLighting2D\Demos - Intermediate\1 - Demo Dungeon\Scripts\DungeonPlayerController.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Utilities\2D\Polygon\Polygon2DCollider2D.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Universal\Objects\GLExtended.cs" />
-    <Compile Include="Assets\Insomnia\Scripts\Console\SO\ConsoleCommand.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\TerminalCommand.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Misc\LightingMonobehavior.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\UI\UICanvasScale.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\SuperTilemapEditor\Tilemap2D.cs" />
@@ -190,6 +198,7 @@
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Utilities\2\Polygon2\Polygon2.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Buffers\LightBuffer2D.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Components\LightTilemap2D\Types\Rectangle.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Input\Base\TriggerInputActor.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\MeshRendererManager.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Lightmap\Objects\LightSource.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\SuperTilemapEditor\Rendering\Light\Shadow\Collider.cs" />
@@ -199,6 +208,7 @@
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Components\LightTilemap2D\LightTile.cs" />
     <Compile Include="Assets\ParfeLatte\Lift\ElevatorButton.cs" />
     <Compile Include="Assets\ParfeLatte\GameUI.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Input\PlayerInput\Keyboard\KeyboardAxisActor.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Light\Mask\SpriteRenderer2D.cs" />
     <Compile Include="Assets\ParfeLatte\ChangeScene.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Components\LightCollider\LightCollider2D.cs" />
@@ -226,6 +236,7 @@
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Light\Mask\UnityTilemap.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Utilities\2D\Mathd.cs" />
     <Compile Include="Assets\ParfeLatte\AccessEvent\KeyCardEvent.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Command_Exit.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Utilities\2D\DoublePair2D.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\SceneView\SceneView.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Camera\LightmapMaterials.cs" />
@@ -237,8 +248,10 @@
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Day\NoSort.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Light\Main.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\Demos - SmartLighting2D\Demos - Intermediate\5 - Race\Scripts\RacerController.cs" />
-    <Compile Include="Assets\Insomnia\Scripts\Item\ItemBase.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Item\Item.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Item\SearchableBase.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Lightmap\Main.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Input\PlayerInput\Keyboard\KeyboardButtonActor.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Material\Extended\Shadow.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Components\LightTilemapRoom2D\LightingTilemapRoomTransform.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Components\Lightmap\LightSprite2D.cs" />
@@ -257,6 +270,7 @@
     <Compile Include="Assets\ParfeLatte\ObjectManager.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Light\Pass.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Misc\GizmosHelper.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Managers\InputManager.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Components\Manager\LightingMeshRenderer.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Event Handling\LightCollider.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Depth\Shadow\SpriteRendererShadow.cs" />
@@ -284,6 +298,7 @@
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Depth\Shadow\Shadow.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Material\Extended\Room.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Lightmap\Objects\TextureRenderer.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Managers\Managers.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Universal\Objects\Sprite.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Day\Shadow\SpriteRendererShadow.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Light\Sorting\SortObject.cs" />
@@ -306,10 +321,11 @@
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\SpriteExtension\PhysicsShapeManager.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\LightShapes\Extensions\SkinnedMeshRendererShape.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Triangulation\Advanced Triangulator\DelaunayTriangle.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Input\Base\InputListener.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Graphics\MaterialManager.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Event Handling\Object.cs" />
     <Compile Include="Assets\ParfeLatte\GateCheck.cs" />
-    <Compile Include="Assets\Insomnia\Scripts\Console\Console.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Terminal\Terminal.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Settings\Lighting2D.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Lightmap\Objects\Particle.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Light\ShadowEngine\Algorithm\SoftDefault.cs" />
@@ -318,9 +334,12 @@
     <Compile Include="Assets\ParfeLatte\Lift\LiftDownButton.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Light\ShadowEngine\ShadowEngine.cs" />
     <Compile Include="Assets\ParfeLatte\MainUI.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Input\PlayerInput\Mouse\MouseAxisActor.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Utilities\2\Polygon2\Polygon2Collider3D.cs" />
     <Compile Include="Assets\Assetss\Effect_Vol.5\Script\SpriteAnimation.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Utils\Singleton.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Command_Query.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Character\Object\PlayerLocomotion.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -1221,6 +1240,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{AC8F2D26-C164-160E-244E-39CB4F5F87FE}</Project>
+      <Name>Assembly-CSharp-firstpass</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
