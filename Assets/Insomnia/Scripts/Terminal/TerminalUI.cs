@@ -30,6 +30,12 @@ namespace Insomnia {
         private bool m_loading = false;
         #endregion
 
+        #region Properties
+        public List<TerminalCommand> Commands { get => m_commands; }
+        public List<string> Container { get => commandContainer; }
+
+        #endregion
+
         private void Awake() {
             m_consoleInput = GetComponentInChildren<TMP_InputField>();
             m_consoleWindow = GetComponentInChildren<TMP_Text>();
@@ -68,15 +74,21 @@ namespace Insomnia {
                 return;
             }
 
-            int index = Mathf.Max(0, commandContainer.Count - MaxCommandLines);
-            int count = commandContainer.Count < MaxCommandLines ? commandContainer.Count : MaxCommandLines;
+            int startIndex = Mathf.Max(0, commandContainer.Count - MaxCommandLines);
+            int count = Mathf.Clamp(commandContainer.Count, 0, MaxCommandLines);
 
             string res = "";
 
-            for(int i = index; i < index + count; i++) {
-                res += commandContainer[i] + '\n';
+            for(int i = startIndex; i < startIndex + count; i++) {
+                res += (commandContainer[i] + '\n');
             }
-
+            string[] test = res.Split('\n');
+            int skipCount = Mathf.Clamp(test.Length - MaxCommandLines, 0, MaxCommandLines);
+            string[] skipped = test.Skip(skipCount).ToArray();
+            res = "";
+            for(int i = 0; i < skipped.Length; i++) {
+                res += skipped[i] + '\n';
+            }
             m_consoleWindow.text = res;
         }
 
@@ -92,37 +104,16 @@ namespace Insomnia {
             if(m_loading && splitted[0] != "/EXIT")
                 return ProcessErrorType.Loading;
 
-            if(splitted[0].StartsWith('/')) {
-                switch(splitted[0]) {
-                    case "/COMMAND": {
-                        Debug.Log("command list");
+            TerminalCommand validCommand = m_commands.SingleOrDefault(x => x.CheckCommand(splitted[0]));
+            //Single은 무조건 하나가 있어야 되지만 SingleOrDefault는 하나만 있거나 없을 수 있다. 없을 경우 null을 return;
 
-                        for(int i = 0; i < m_commands.Count; i++) {
-                            commandContainer.Add(m_commands[i].GetDescription());
-                        }
-                        DisplayCommand();
-                    } break;
-                    case "/EXIT": {
-                        Debug.Log("exit command");
-                        CloseTerminal();
-                    } break;
-                    case "/CLEAR": {
-                        commandContainer.Clear();
-                        DisplayCommand();
-                    }break;
-                    default: return ProcessErrorType.SyntaxError;
-                }
-            }
-            else {
-                TerminalCommand validCommand = m_commands.SingleOrDefault(x => x.CheckCommand(splitted[0]));
-                //Single은 무조건 하나가 있어야 되지만 SingleOrDefault는 하나만 있거나 없을 수 있다. 없을 경우 null을 return;
-                if(validCommand == null)
-                    return ProcessErrorType.SyntaxError;
+            if(validCommand == null)
+                return ProcessErrorType.SyntaxError;
 
-                Debug.Assert(validCommand != null, "ValidCommand is null");
-                KeyValuePair<float, List<string>> result = validCommand.RunCommand(this, command);
+            Debug.Assert(validCommand != null, "ValidCommand is null");
+            KeyValuePair<float, List<string>> result = validCommand.RunCommand(this, command);
+            if(result.Key >= 0.1f)
                 StartCoroutine(CoLoadData(result));
-            }
 
             return ProcessErrorType.Success;
         }
