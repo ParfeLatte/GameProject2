@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Monster : LivingEntity
 {
+    public float SetHealth, SetDamage, SetSpeed;
+
     //public GameObject small;//범위 15의 콜라이더 영역
     //public GameObject Big;//범위 30의 콜라이더 영역
     public GameObject Player;//거리측정용
@@ -14,9 +16,11 @@ public class Monster : LivingEntity
 
     public float moveTimeOne;//플레이어가 얼마나 걸었는지 확인
     //public float moveTimeTwo;//플레이어가 얼마나 걸었는지 확인
+    public float ThinkTime;
     public float CheckTime;//범위 안에 들어온 시간
     public float CoolTime;//공격 쿨타임
     public float AttackTime;//공격시간
+    public float FallTime;
     public float Dist;//몬스터와 플레이어 사이 거리
     public float YDist;//y축 거리
     public float Dir;//이동방향
@@ -29,6 +33,7 @@ public class Monster : LivingEntity
     public bool isPlayerDash;//플레이어가 대쉬했는지 확인
     public bool isPlayerStop;//플레이어가 멈췄는가?
     public bool isAttack;//공격중인가?
+    public bool isFall;//넘어졋나?
     public bool isWall;//벽에 부딪혔는가?
 
     public Vector3 lastPlayerPosition;//위치 비교용
@@ -52,14 +57,14 @@ public class Monster : LivingEntity
         MonsterRenderer = GetComponent<SpriteRenderer>();
         Player = GameObject.Find("Player");
         SleepState = 0;//깊은수면 상태로 스폰
-        SetStatus(30, 10, 8.5f);//일단 일반몹기준
+        SetStatus(SetHealth, SetDamage, SetSpeed);//일단 일반몹기준
         Health = MaxHealth;//체력을 최대체력으로 설정
     }
 
     private void OnEnable()
     {
         isDead = false;
-        SetStatus(30, 5, 8.5f);//일단 일반몹기준
+        SetStatus(SetHealth, SetDamage, SetSpeed);//일단 일반몹기준
         Health = MaxHealth;//체력을 최대체력으로 설정 
     }
 
@@ -77,11 +82,16 @@ public class Monster : LivingEntity
         }
         curPos = transform.position;//현재위치
         RayPos = MR.position + AddPos;//레이를 발사하는 위치
-        if (SleepState == 3 && !isDead) {
+        if (SleepState == 3 && !isDead && !isFall) {
             OnWake();//깨어있을때 행동패턴
             AttackCheck();//공격범위 내에 들어오면 공격
             AttackTime += Time.deltaTime;//쿨타임
         }//기상시 패턴
+        if (isFall)
+        {
+            FallTime += Time.deltaTime;
+            FallCheck();
+        }
     }
 
     //private void OnDrawGizmos()
@@ -181,30 +191,68 @@ public class Monster : LivingEntity
     private void OnWake()
     {
         Debug.DrawRay(RayPos, dirVec * 1.75f, new Color(0, 1, 0));//레이캐스트 표시(거리 확인용)
+        float xdistance = player.transform.position.x - gameObject.transform.position.x;
         if (isMobMove == true)
         {
-            
-            if (player.transform.position.x - gameObject.transform.position.x > 0)
+            if (YDist <= 5)
             {
-                Dir = 1;//방향 오른쪽
-                dirVec = new Vector3(1f, 0f, 0f);//Ray 발사방향
-                MonsterRenderer.flipX = false;//스프라이트 반전x(오른쪽 봄)
+                if (xdistance > 0)
+                {
+                    Dir = 1;//방향 오른쪽
+                    dirVec = new Vector3(1f, 0f, 0f);//Ray 발사방향
+                    MonsterRenderer.flipX = false;//스프라이트 반전x(오른쪽 봄)
+                }
+                else if ((xdistance < 0))
+                {
+                    Dir = -1;//방향 왼쪽
+                    dirVec = new Vector3(-1, 0f, 0f);//Ray 발사방향
+                    MonsterRenderer.flipX = true;//스프라이트 반전 O(왼쪽보게)
+                }
+                if (Dist <= 1.3f)
+                {
+                    Dir = 0;
+                }
             }
-            else if((player.transform.position.x - gameObject.transform.position.x < 0))
+            else if(YDist > 5)
             {
-                Dir = -1;//방향 왼쪽
-                dirVec = new Vector3(-1, 0f, 0f);//Ray 발사방향
-                MonsterRenderer.flipX = true;//스프라이트 반전 O(왼쪽보게)
-            }
-
-            if (Dist <= 1.3f)
-            {
-                Dir = 0;
+                ThinkTime += Time.deltaTime;
+                if (ThinkTime >= 5f)
+                {
+                    Dir = Think();
+                    ThinkTime = 0f;
+                }
+                if (Dir == 0)
+                {
+                    animator.SetBool("isIdle", true);
+                }
+                else if (Dir == 1f)
+                {
+                    Dir = 1;//방향 오른쪽
+                    dirVec = new Vector3(1f, 0f, 0f);//Ray 발사방향
+                    MonsterRenderer.flipX = false;//스프라이트 반전x(오른쪽 봄)
+                    animator.SetBool("isIdle", false);
+                }
+                else if(Dir == -1f)
+                {
+                    Dir = -1;//방향 왼쪽
+                    dirVec = new Vector3(-1, 0f, 0f);//Ray 발사방향
+                    MonsterRenderer.flipX = true;//스프라이트 반전 O(왼쪽보게)
+                    animator.SetBool("isIdle", false);
+                }
+                Debug.Log("떠돌아다니는중");
             }
             Vector3 NextPos = new Vector3(Dir, 0, 0) * MaxSpeed * Time.deltaTime;
             transform.position = curPos + NextPos;//플레이어 향해서 이동(추적)
         }
     }//깨어있는 동안 행동하는 루틴
+
+    private float Think()
+    {
+        int NextMove = UnityEngine.Random.Range(0, 3);
+        if(NextMove == 0){ return 1f; }
+        else if(NextMove == 1) { return -1f; }
+        else { return 0f; }
+    }
 
     IEnumerator CheckStop()
     {
@@ -274,6 +322,23 @@ public class Monster : LivingEntity
         //Debug.Log("깨어났습니다.");
     }
 
+    public void FallCheck()
+    {
+        if(FallTime > 0.1f)
+        {
+            animator.SetBool("isFalling", true);
+            isMobMove = false;
+        }
+    }
+
+    public void StopFalling()
+    {
+        animator.SetBool("isFalling", false);
+        Invoke("MoveAgain", 0.5f);
+        isFall = false;
+        FallTime = 0f;
+    }
+    
     public override void damaged(float damage)
     {
         Health -= damage;//체력에서 데미지만큼 깎음
@@ -313,6 +378,10 @@ public class Monster : LivingEntity
             Dir = 0;
             isWall = true;
         }
+        if(col.gameObject.tag == "Floor" && isFall)
+        {
+            StopFalling();
+        }
     }
 
     private void OnCollisionStay2D(Collision2D col) 
@@ -321,6 +390,10 @@ public class Monster : LivingEntity
         {
             Dir = 0;
         }
+        if(col.gameObject.tag == "Floor" && isFall)
+        {
+            StopFalling();
+        }
     }
 
     private void OnCollisionExit2D(Collision2D col)
@@ -328,6 +401,10 @@ public class Monster : LivingEntity
         if (col.gameObject.tag == "Wall")
         {
             isWall = false;
+        }
+        if (col.gameObject.tag == "Floor")
+        {
+            isFall = true;
         }
     }
 }

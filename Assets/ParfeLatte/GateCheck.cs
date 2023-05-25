@@ -24,7 +24,7 @@ public class GateCheck : MonoBehaviour
     }
     private void OpenClose()
     {
-        if (isOpen && Input.GetKeyDown(KeyCode.U) && !isDestroy)
+        if (isOpen && Input.GetKeyDown(KeyCode.F) && !isDestroy)
         {
             switch (GateStat) {
                 case false:

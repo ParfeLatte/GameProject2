@@ -9,22 +9,25 @@ public class Player : LivingEntity
     public float AttackTime;//공격한시간
     public float CoolTime;//쿨타임
     public float movetime;//이동한 시간 체크
-    public float stoptime;
+    public float stoptime;//
     public float JumpForce;//점프력
     public float Dir;//이동방향(대쉬나 점프시에 방향 못바꾸게함)
     public float h;//GeTAxisRaw로 받는 값
     public float stamina;//스테미나
     public float dashtime;//대쉬한지 얼마나 지났는지 체크해서 스테미너 채움
-
+    public float lastYpos;//점프나 땅에서 떨어졌을 때 마지막 y값
+    public float CurYpos;//착지 시에 비교할 y값
 
     public bool isDash;//대쉬했는지 체크
     public bool isMove;//움직였는지 체크
     public bool isWall;//벽에 부딪혔는지 체크
     public bool isJump;//점프했는지 체크
     public bool isCharge;//공격충전중인지
+    public bool isFallDamage;//낙뎀받았는지
 
     public Slider HealthSlider;//체력UI
-
+    public Slider StaminaSlider;//스테미너UI
+    
 
     //public PlayerAttack Attack;
     public PlayerAttack Attack;//공격을 실행해주는 스크립트(공격 범위 오브젝트에 할당되어 있으며 여기서 공격을 실행함)
@@ -51,6 +54,7 @@ public class Player : LivingEntity
         gameObject.SetActive(true);
         stamina = 100f;
         HealthSlider.value = Health;
+        StaminaSlider.value = stamina;
     }
 
     // Update is called once per frame
@@ -87,11 +91,11 @@ public class Player : LivingEntity
 
     private void AttackCheck()
     {
-            if (Input.GetKeyDown(KeyCode.J) && AttackTime >= CoolTime && !isCharge)
+            if (Input.GetKeyDown(KeyCode.Z) && AttackTime >= CoolTime && !isCharge)
             {
                 animator.SetBool("isCharge", true);
             }
-            if (Input.GetKey(KeyCode.J) && AttackTime >= CoolTime)//키는 임시임 J를 누르는 중일때
+            if (Input.GetKey(KeyCode.Z) && AttackTime >= CoolTime)//키는 임시임 J를 누르는 중일때
             {
                 ChargeTime += Time.deltaTime;
                 h = 0;
@@ -99,7 +103,7 @@ public class Player : LivingEntity
                 isCharge = true;
                 //Debug.Log("공격 차징중");
             }
-            if (Input.GetKeyUp(KeyCode.J) && isCharge && AttackTime >= CoolTime)//키를 뗐을때
+            if (Input.GetKeyUp(KeyCode.Z) && isCharge && AttackTime >= CoolTime)//키를 뗐을때
             {
                 isCharge = false;
                 animator.SetBool("isCharge", false);
@@ -138,7 +142,7 @@ public class Player : LivingEntity
     }//방향에 맞게 스프라이트 뒤집음
     private void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isJump)
+        if (Input.GetKeyDown(KeyCode.UpArrow) && !isJump)
         {
             isJump = true;//점프했다
             PR.velocity = Vector2.up * JumpForce;//순간 속력을 위로 점프력만큼 줌
@@ -196,6 +200,7 @@ public class Player : LivingEntity
                 stamina = 100f;
             }
         }
+        StaminaSlider.value = stamina;
     }//스테미나 회복검사 
 
     public void SetDirection(float h) 
@@ -241,6 +246,7 @@ public class Player : LivingEntity
     public override void damaged(float damage)
     {
         base.damaged(damage);
+        Debug.Log(damage);
         HealthCheck();
     }
 
@@ -254,12 +260,34 @@ public class Player : LivingEntity
     {
         HealthSlider.value = Health;
     }
+
+    private void SetLastPos()
+    {
+        lastYpos = transform.position.y;
+        isFallDamage = false;
+        Debug.Log("떨어짐");
+    }
+    private void CheckFallDamage()
+    {
+        float Ydiff = Mathf.Abs(lastYpos - transform.position.y);
+        if (!isFallDamage && Ydiff > 30f)
+        {
+            isFallDamage = true;
+            damaged(25f);
+            Debug.Log("착지함");
+        }
+        isFallDamage = true;
+    }
     private void OnCollisionEnter2D(Collision2D col)
     {
         if(col.gameObject.tag == "Floor")
         {
             isJump = false;
             animator.SetBool("isJump", false);
+            if (!isFallDamage)
+            {
+                CheckFallDamage();
+            }
         }
         if (col.gameObject.tag == "Wall")
         {
@@ -283,6 +311,10 @@ public class Player : LivingEntity
         if(col.gameObject.tag == "Wall")
         {
             isWall = false;
+        }
+        if(col.gameObject.tag == "Floor")
+        {
+            SetLastPos();
         }
     }
 }
