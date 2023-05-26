@@ -35,6 +35,7 @@ public class Monster : LivingEntity
     public bool isAttack;//공격중인가?
     public bool isFall;//넘어졋나?
     public bool isWall;//벽에 부딪혔는가?
+    public bool isEventMob;//이벤트 몬스터가 아니라면 false
 
     public Vector3 lastPlayerPosition;//위치 비교용
 
@@ -42,6 +43,7 @@ public class Monster : LivingEntity
     private Rigidbody2D MR;
     private Animator animator;
     private SpriteRenderer MonsterRenderer;
+    private EventMonster CheckEvent;
 
     private Vector3 curPos;//현재위치
     private Vector2 AddPos = new Vector2(0, 3f);//pivot을 아래로 고정했으므로 레이 검사때 위로
@@ -55,6 +57,7 @@ public class Monster : LivingEntity
         MR = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         MonsterRenderer = GetComponent<SpriteRenderer>();
+        CheckEventMob();
         Player = GameObject.Find("Player");
         SleepState = 0;//깊은수면 상태로 스폰
         SetStatus(SetHealth, SetDamage, SetSpeed);//일단 일반몹기준
@@ -194,26 +197,7 @@ public class Monster : LivingEntity
         float xdistance = player.transform.position.x - gameObject.transform.position.x;
         if (isMobMove == true)
         {
-            if (YDist <= 5)
-            {
-                if (xdistance > 0)
-                {
-                    Dir = 1;//방향 오른쪽
-                    dirVec = new Vector3(1f, 0f, 0f);//Ray 발사방향
-                    MonsterRenderer.flipX = false;//스프라이트 반전x(오른쪽 봄)
-                }
-                else if ((xdistance < 0))
-                {
-                    Dir = -1;//방향 왼쪽
-                    dirVec = new Vector3(-1, 0f, 0f);//Ray 발사방향
-                    MonsterRenderer.flipX = true;//스프라이트 반전 O(왼쪽보게)
-                }
-                if (Dist <= 1.3f)
-                {
-                    Dir = 0;
-                }
-            }
-            else if(YDist > 5)
+            if (YDist > 5 && !isEventMob)
             {
                 ThinkTime += Time.deltaTime;
                 if (ThinkTime >= 5f)
@@ -232,7 +216,7 @@ public class Monster : LivingEntity
                     MonsterRenderer.flipX = false;//스프라이트 반전x(오른쪽 봄)
                     animator.SetBool("isIdle", false);
                 }
-                else if(Dir == -1f)
+                else if (Dir == -1f)
                 {
                     Dir = -1;//방향 왼쪽
                     dirVec = new Vector3(-1, 0f, 0f);//Ray 발사방향
@@ -240,6 +224,25 @@ public class Monster : LivingEntity
                     animator.SetBool("isIdle", false);
                 }
                 Debug.Log("떠돌아다니는중");
+            }
+            else
+            {       
+                if (xdistance > 0)
+                {
+                    Dir = 1;//방향 오른쪽
+                    dirVec = new Vector3(1f, 0f, 0f);//Ray 발사방향
+                    MonsterRenderer.flipX = false;//스프라이트 반전x(오른쪽 봄)
+                }
+                else if ((xdistance < 0))
+                {
+                    Dir = -1;//방향 왼쪽
+                    dirVec = new Vector3(-1, 0f, 0f);//Ray 발사방향
+                    MonsterRenderer.flipX = true;//스프라이트 반전 O(왼쪽보게)
+                }
+                if (Dist <= 1.3f)
+                {
+                    Dir = 0;
+                }
             }
             Vector3 NextPos = new Vector3(Dir, 0, 0) * MaxSpeed * Time.deltaTime;
             transform.position = curPos + NextPos;//플레이어 향해서 이동(추적)
@@ -339,6 +342,19 @@ public class Monster : LivingEntity
         FallTime = 0f;
     }
     
+    public void CheckEventMob()
+    {
+        CheckEvent = GetComponent<EventMonster>();
+        if(CheckEvent != null)
+        {
+            isEventMob = true;
+        }
+        else
+        {
+            isEventMob = false;
+        }
+    }//이벤트 몬스터인지 체크
+
     public override void damaged(float damage)
     {
         Health -= damage;//체력에서 데미지만큼 깎음

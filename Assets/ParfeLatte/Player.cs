@@ -17,6 +17,7 @@ public class Player : LivingEntity
     public float dashtime;//대쉬한지 얼마나 지났는지 체크해서 스테미너 채움
     public float lastYpos;//점프나 땅에서 떨어졌을 때 마지막 y값
     public float CurYpos;//착지 시에 비교할 y값
+    public float falltime;
 
     public bool isDash;//대쉬했는지 체크
     public bool isMove;//움직였는지 체크
@@ -60,6 +61,7 @@ public class Player : LivingEntity
     // Update is called once per frame
     void Update()
     {
+        Debug.DrawRay(transform.position, Vector2.down * 1.75f, new Color(0, 1, 0));
         h = Input.GetAxisRaw("Horizontal");
         curPos = transform.position;//현재위치
         if(h != 0 && !isDash && !isJump)
@@ -85,6 +87,7 @@ public class Player : LivingEntity
             Dash();//대쉬
             Move();//이동
             StaminaCheck();
+            CheckFallDamage();
             dashtime += Time.deltaTime;
         }
     }
@@ -261,22 +264,39 @@ public class Player : LivingEntity
         HealthSlider.value = Health;
     }
 
-    private void SetLastPos()
+    //private void SetLastPos()
+    //{
+    //    lastYpos = transform.position.y;
+    //    isFallDamage = false;
+    //    Debug.Log("떨어짐");
+    //}
+
+    private void FallDamage(float time)
     {
-        lastYpos = transform.position.y;
-        isFallDamage = false;
-        Debug.Log("떨어짐");
+       if(time >= 1.5f)
+        {
+            damaged(70f);
+        }
+        else
+        {
+            damaged(35f);
+        }
     }
     private void CheckFallDamage()
     {
-        float Ydiff = Mathf.Abs(lastYpos - transform.position.y);
-        if (!isFallDamage && Ydiff > 30f)
+        RaycastHit2D FloorRay = Physics2D.Raycast(transform.position, Vector2.down, 1f, LayerMask.GetMask("Floor"));
+        if(FloorRay.collider == null)
         {
-            isFallDamage = true;
-            damaged(25f);
-            Debug.Log("착지함");
+            falltime += Time.deltaTime;
         }
-        isFallDamage = true;
+        else if(FloorRay.collider != null)
+        {
+            if(falltime > 1.0f)
+            {
+                FallDamage(falltime);
+            }
+            falltime = 0f;
+        }
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
@@ -284,10 +304,10 @@ public class Player : LivingEntity
         {
             isJump = false;
             animator.SetBool("isJump", false);
-            if (!isFallDamage)
-            {
-                CheckFallDamage();
-            }
+            //if (!isFallDamage)
+            //{
+            //    CheckFallDamage();  
+            //}
         }
         if (col.gameObject.tag == "Wall")
         {
@@ -312,10 +332,10 @@ public class Player : LivingEntity
         {
             isWall = false;
         }
-        if(col.gameObject.tag == "Floor")
-        {
-            SetLastPos();
-        }
+        //if(col.gameObject.tag == "Floor")
+        //{
+        //    SetLastPos();
+        //}
     }
 }
 //Vector3 nextPos = new Vector3(h, 0, 0) * Speed * Time.deltaTime;//키입력에 따른 다음 위치
