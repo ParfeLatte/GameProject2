@@ -5,16 +5,15 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static Insomnia.Defines;
 
 namespace Insomnia {
-    enum ProcessErrorType {
-        Success = 0,
-        Failed = 1,
-        Loading = 2,
-        SyntaxError = 3,
-    }
-
     public class TerminalUI : MonoBehaviour {
+        #region Components
+        private Terminal m_parentTerminal = null;
+
+        #endregion
+
         #region Elements
         private TMP_InputField m_consoleInput = null;
         private TMP_Text m_consoleWindow = null;
@@ -41,8 +40,15 @@ namespace Insomnia {
             m_consoleWindow = GetComponentInChildren<TMP_Text>();
         }
 
+        public void SetTerminal(Terminal terminal) {
+            if(terminal == null)
+                return;
+
+            m_parentTerminal = terminal;
+        }
+
         public void OnKeyDown_Enter() {
-            string command = m_consoleInput.text;
+            string command = m_consoleInput.text.ToUpper();
             m_consoleInput.text = null;
             m_consoleInput.ActivateInputField();
 
@@ -50,10 +56,10 @@ namespace Insomnia {
             commandContainer.Add(command);
             CalculateLastIndex();
 
-            ProcessErrorType success = ProcessCommand(command);
-            if(success == ProcessErrorType.SyntaxError) commandContainer.Add($"<color=red>Syntax Error: Check the Command - {command.Split(' ')[0]}</color>");
-            if(success == ProcessErrorType.Loading    ) commandContainer.Add($"<color=yellow>Command Timeout: Wait for the Signal : </color>");
-            if(success == ProcessErrorType.Failed     ) commandContainer.Add($"<color=red>Command Failed: ^%!$@#!^%@$#%^!$@#</color>");
+            CommandError success = ProcessCommand(command);
+            if(success == CommandError.SyntaxError) commandContainer.Add($"<color=red>Syntax Error: Check the Command - {command.Split(' ')[0]}</color>");
+            if(success == CommandError.Loading    ) commandContainer.Add($"<color=yellow>Command Timeout: Wait for the Signal : </color>");
+            if(success == CommandError.Failed     ) commandContainer.Add($"<color=red>Command Failed: ^%!$@#!^%@$#%^!$@#</color>");
 
             DisplayCommand();
         }
@@ -97,25 +103,30 @@ namespace Insomnia {
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        private ProcessErrorType ProcessCommand(string command) {
-            bool syntaxError = false;
-            string[] splitted = command.ToUpper().Split(' ');
+        private CommandError ProcessCommand(string command) {
+            string[] splitted = command.Split(' ');
+            if(splitted[0].Equals("EXIT")) {
+                StopAllCoroutines();
+                m_loading = false;
+            }
 
-            if(m_loading && splitted[0] != "/EXIT")
-                return ProcessErrorType.Loading;
+            if(m_loading && splitted[0].Equals("EXIT") == false)
+                return CommandError.Loading;
 
             TerminalCommand validCommand = m_commands.SingleOrDefault(x => x.CheckCommand(splitted[0]));
             //Single은 무조건 하나가 있어야 되지만 SingleOrDefault는 하나만 있거나 없을 수 있다. 없을 경우 null을 return;
 
-            if(validCommand == null)
-                return ProcessErrorType.SyntaxError;
+            if(command == string.Empty) 
+                return CommandError.Success;
 
-            Debug.Assert(validCommand != null, "ValidCommand is null");
-            KeyValuePair<float, List<string>> result = validCommand.RunCommand(this, command);
-            if(result.Key >= 0.1f)
-                StartCoroutine(CoLoadData(result));
+            if(validCommand == null && command != string.Empty)
+                return CommandError.SyntaxError;
 
-            return ProcessErrorType.Success;
+            IEnumerator<KeyValuePair<float, List<string>>> result = validCommand.RunCommand(m_parentTerminal, command);
+
+            StartCoroutine(CoLoadData(result));                
+
+            return CommandError.Success;
         }
 
         /// <summary>
@@ -123,26 +134,41 @@ namespace Insomnia {
         /// </summary>
         /// <param name="loadingTime"></param>
         /// <returns></returns>
-        private IEnumerator CoLoadData(KeyValuePair<float, List<string>> result) {
-            float processInterval = 0;
+        private IEnumerator CoLoadData(IEnumerator<KeyValuePair<float, List<string>>> result) {
+            float processInterval = 0f;
             int loadingCommand = m_maxIndex;
             string commandOrigin = new string(commandContainer[loadingCommand]);
-            m_loading = true;
 
-            while(processInterval <= result.Key) {
-                yield return null;
-                processInterval += Time.deltaTime;
-                commandContainer[loadingCommand] = MakeProcessVisual(commandOrigin, (int)Mathf.Round(processInterval));
+            while(true) {
+                if(result.MoveNext() == false)
+                    break;
+
+                KeyValuePair<float, List<string>> current = result.Current;
+                processInterval = 0f;
+                if(current.Key >= 0.1f)
+                    m_loading = true;
+
+
+                while(processInterval <= current.Key) {
+                    yield return null;
+                    processInterval += Time.deltaTime;
+                    if(commandContainer.Count != 0)
+                        commandContainer[loadingCommand] = MakeProcessVisual(commandOrigin, (int)Mathf.Round(processInterval));
+                    DisplayCommand();
+                }
+
+                if(current.Value != null) {
+                    if(current.Value.Count > 0)
+                        commandContainer.AddRange(current.Value);
+                }
+
                 DisplayCommand();
             }
 
-            if(result.Value != null)
-                commandContainer.AddRange(result.Value);
-            commandContainer[loadingCommand] = commandOrigin;
+            if(commandContainer.Count != 0)
+                commandContainer[loadingCommand] = commandOrigin;
             DisplayCommand();
             m_loading = false;
-            Debug.Log("Command Finished");
-            yield break;
         }
 
         private string MakeProcessVisual(string origin, int processInterval) {

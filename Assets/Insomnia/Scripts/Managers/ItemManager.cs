@@ -9,61 +9,73 @@ using static Insomnia.Defines;
 
 namespace Insomnia {
     public class ItemManager : Singleton<ItemManager> {
-        [SerializeField] private List<Item> m_itemDatas = new List<Item>();
+        [SerializeField] private List<SearchableBase> m_itemDatas = new List<SearchableBase>();
 
-        public void AddItemData(Item item) {
+        public void AddSearchable(SearchableBase item) {
             if(m_itemDatas.Contains(item) == true)
                 return;
 
             m_itemDatas.Add(item); 
         }
 
-        public void RemoveItemData(Item item) {
+        public void RemoveItemData(SearchableBase item) {
             if(m_itemDatas.Contains(item) == false)
                 return;
 
             m_itemDatas.Remove(item);
         }
 
-        public ItemData[] GetItemDatas(string itemID, bool isForQuery = false) {
-            SearchableBase[] items;
+        public KeyValuePair<CommandError, ObjectData[]> GetItemDatasForList(Terminal terminal, string itemID, string locationID) {
+            SearchableBase[] items = default(SearchableBase[]);
+            ObjectData[] ret = default(ObjectData[]);
+            CommandError errorType = CommandError.Success;
 
-            if(isForQuery) 
-                items = m_itemDatas.Where(x => x.CheckValidID(itemID)).ToArray();
-            else {
-                if(itemID == null)
-                    items = default(SearchableBase[]);
-                if(itemID == "all")
-                    items = m_itemDatas.ToArray();
+            if(itemID == null)
+                items = default(SearchableBase[]);
+            if(itemID == "ALL") {
+                if(locationID != string.Empty)
+                    errorType = CommandError.SyntaxError_ExceptionalParam;
                 else
-                    items = m_itemDatas.Where(x => x.Contains(itemID)).ToArray();
+                    items = m_itemDatas.ToArray();
+            }
+            if(itemID != "ALL") {
+                if(locationID == string.Empty)
+                    items = m_itemDatas
+                    .Where(x => x.Contains(itemID) || x.CheckValidID(itemID)).ToArray();
+                else
+                    items = m_itemDatas
+                    .Where(x => (x.CheckValidLocation(locationID) && (x.Contains(itemID) || x.CheckValidID(itemID)))).ToArray();
             }
 
-            ItemData[] ret = new ItemData[items.Length];
+            if(items != null) {
+                ret = new ObjectData[items.Length];
+                for(int i = 0; i < items.Length; i++) {
+                    ret[i] = items[i].GetItemData();
+                }
+            }
+
+            return new KeyValuePair<CommandError, ObjectData[]>(errorType, ret);
+        }
+
+        public KeyValuePair<CommandError, ObjectData[]> GetItemDataForQuery(Terminal terminal, string itemID, string lcoationID) {
+            SearchableBase[] items = default(SearchableBase[]);
+            ObjectData[] ret = default(ObjectData[]);
+            CommandError errorType = CommandError.Success;
+
+            items = new SearchableBase[1]{ m_itemDatas.SingleOrDefault(x => x.CheckValidID(itemID)) };
+            if(items.Length <= 0)
+                errorType = CommandError.InvalidID;
+
+            ret = new ObjectData[items.Length];
             for(int i = 0; i < items.Length; i++) {
                 ret[i] = items[i].GetItemData();
             }
 
-            return ret;
+            return new KeyValuePair<CommandError, ObjectData[]>(errorType, ret);
         }
 
-        public ItemData[] GetItemDatas(string itemID, string locationID, bool isForQuery = false) {
-            //로케이션ID로 아이템 찾는 기능 만들기
-            SearchableBase[] items = default(SearchableBase[]);
-            ItemData[] ret = default(ItemData[]);
-            if(isForQuery) {
-                items = m_itemDatas.Where(x => x.CheckValidID(itemID) && x.CheckValidLocation(locationID)).ToArray();
-            }
-            else {
-                if(itemID == null)
-                    items = default(SearchableBase[]);
-                if(itemID == "all") {
-
-                }
-
-            }
-
-            return ret;
+        public bool CheckItemExists(string itemID) {
+            return m_itemDatas.Any(x => x.CheckValidID(itemID));
         }
     }
 } 

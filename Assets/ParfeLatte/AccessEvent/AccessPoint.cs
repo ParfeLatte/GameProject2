@@ -9,13 +9,13 @@ public class AccessPoint : MonoBehaviour
     public GameManager gameManager;
     public KeyCardEvent Event;
 
-    public int accessLevel;//키카드 레벨
+    public int accessLevel; //키카드 레벨
 
-    public bool isEvent;//이벤트가 실행중인지
-    public bool isEnd;//이벤트를 끝냈는지
-    public bool CanAccess;//카드에 접근가능한지
+    public bool isEvent;    //이벤트가 실행중인지
+    public bool isEnd;      //이벤트를 끝냈는지
+    public bool CanAccess;  //카드에 접근가능한지
 
-    private bool isPlayer;//플레이어가 접근했는지
+    private bool isPlayer;  //플레이어가 접근했는지
 
     void Awake()
     {

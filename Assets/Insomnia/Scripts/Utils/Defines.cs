@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Insomnia {
     public class Defines : MonoBehaviour {
+        #region Enums
         public enum ObjectType {
             None,
             Terminal,       //≈ÕπÃ≥Œ
@@ -19,7 +21,20 @@ namespace Insomnia {
 
         }
 
-        public struct ItemData {
+        public enum CommandError {
+            Success = 0,
+            Failed = 1,
+            Loading = 2,
+            SyntaxError = 3,
+            SyntaxError_ExceptionalParam = 4,
+            NoDataFound = 5,
+            InvalidID = 6,
+
+        }
+        #endregion
+
+        #region Structs
+        public struct ObjectData {
             public string ID;
             public string Location;
             public string Description;
@@ -27,5 +42,22 @@ namespace Insomnia {
             public ObjectType ObjectType;
             public StatusType Status;
         }
+
+        #endregion
+
+        #region Interfaces
+        public interface ISceneChangeEffector {
+            void OnSceneChangeStart(IEnumerator<Action> coroutine);
+            void OnSceneChangeFinish();
+        }
+
+        #endregion
+
+
+
+
+
+
+
     }
 }

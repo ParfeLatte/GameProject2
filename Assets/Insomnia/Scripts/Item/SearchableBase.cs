@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-//using TMPro.EditorUtilities;
 using UnityEngine;
 using static Insomnia.Defines;
 
@@ -24,14 +23,10 @@ namespace Insomnia {
 
         #endregion
 
-        protected ItemData m_objectData;
-
-        private void Start() {
-            //ItemManager.Instance?.AddItemData(this);
-        }
+        protected ObjectData m_objectData;
 
         /// <summary>
-        /// ID¿¡ Æ÷ÇÔµÇ´ÂÁö Ã¼Å©ÇÏ´Â ÇÔ¼ö.
+        /// IDï¿½ï¿½ ï¿½ï¿½ï¿½ÔµÇ´ï¿½ï¿½ï¿½ Ã¼Å©ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½.
         /// </summary>
         /// <param name="objectCode"></param>
         /// <returns></returns>
@@ -39,14 +34,14 @@ namespace Insomnia {
             if(objectCode == null)
                 return false;
 
-            if(m_ID.Contains(objectCode.ToUpper()) || m_Location.Contains(objectCode.ToUpper()))
+            if(m_ID.Contains(objectCode))
                 return true;
 
             return false;
         }
 
         /// <summary>
-        /// ¿ÀºêÁ§Æ®ÀÇ ID¿Í ÀÏÄ¡ÇÏ´ÂÁö Ã¼Å©ÇÏ´Â ÇÔ¼ö
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ IDï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ï´ï¿½ï¿½ï¿½ Ã¼Å©ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
         /// </summary>
         /// <param name="objectID"></param>
         /// <returns></returns>
@@ -54,11 +49,11 @@ namespace Insomnia {
             if(objectID == null)
                 return false;
 
-            return m_ID.Equals(objectID.ToUpper());
+            return m_ID.Equals(objectID);
         }
 
         /// <summary>
-        /// ¿ÀºêÁ§Æ®ÀÇ Location°ú ÀÏÄ¡ÇÏ´ÂÁö Ã¼Å©ÇÏ´Â ÇÔ¼ö
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Locationï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ï´ï¿½ï¿½ï¿½ Ã¼Å©ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
         /// </summary>
         /// <param name="objectLocation"></param>
         /// <returns></returns>
@@ -66,15 +61,37 @@ namespace Insomnia {
             if(objectLocation == null)
                 return false;
 
-            return m_Location.Equals(objectLocation.ToUpper());
+            return m_Location.Equals(objectLocation);
         }
 
         /// <summary>
-        /// ¿ÀºêÁ§Æ®ÀÇ <see cref="ItemData"/>¹ÝÈ¯ÇÏ´Â ÇÔ¼ö.
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ <see cref="ObjectData"/>ï¿½ï¿½È¯ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½.
         /// </summary>
         /// <returns></returns>
-        public virtual ItemData GetItemData() {
+        public virtual ObjectData GetItemData() {
             return m_objectData;
+        }
+
+        protected virtual void Awake() {
+            m_ID = m_IDFormat + '_' + Random.Range(0, 1000).ToString("000");
+            m_position = transform.position;
+
+            m_objectData = new ObjectData() {
+                ID = m_ID,
+                Location = m_Location,
+                Description = m_Description,
+                Position = m_position,
+                ObjectType = m_ObjectType,
+                Status = m_Status
+            };
+        }
+
+        protected virtual void Start() {
+            while(true) {
+                m_ID = m_IDFormat + '_' + Random.Range(0, 1000).ToString("000");
+                if(ItemManager.Instance.CheckItemExists(m_ID) == false)
+                    break;
+            }
         }
 
         private void OnDisable() {
