@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Insomnia/Scenes/Test.unity
+    guid: d22b153cdb9587e438b4244108dbef85
+  - enabled: 1
     path: Assets/CHOI/Lab.unity
     guid: f4153578f3cd3d1438ec6acda692fdd0
+  - enabled: 1
+    path: Assets/Insomnia/Scenes/Loading.unity
+    guid: a3ea5d17459926b4fb6049881281171d
   m_configObjects: {}

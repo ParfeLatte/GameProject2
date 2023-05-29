@@ -20,6 +20,9 @@ public class HealPoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(GameManager.IsPause)
+            return;
+
         if (healCount > 0)
         {
             if (CanHeal && Input.GetKeyDown(KeyCode.U))
@@ -35,6 +38,17 @@ public class HealPoint : MonoBehaviour
                     Debug.Log("최대체력이므로 회복하지 않습니다.");
                 }
             }
+        }
+
+        if(healCount <= 0)
+            return;
+
+        if(player.Health >= 100f)
+            return;
+
+        if(CanHeal && Input.GetKeyDown(KeyCode.U)) {
+            player.RestoreHealth(Heal);
+            healCount--;
         }
     }
 

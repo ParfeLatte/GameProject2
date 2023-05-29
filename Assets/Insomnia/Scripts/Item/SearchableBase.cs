@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro.EditorUtilities;
 using UnityEngine;
 using static Insomnia.Defines;
 
@@ -24,11 +23,7 @@ namespace Insomnia {
 
         #endregion
 
-        protected ItemData m_objectData;
-
-        private void Start() {
-            //ItemManager.Instance?.AddItemData(this);
-        }
+        protected ObjectData m_objectData;
 
         /// <summary>
         /// ID에 포함되는지 체크하는 함수.
@@ -39,7 +34,7 @@ namespace Insomnia {
             if(objectCode == null)
                 return false;
 
-            if(m_ID.Contains(objectCode.ToUpper()) || m_Location.Contains(objectCode.ToUpper()))
+            if(m_ID.Contains(objectCode))
                 return true;
 
             return false;
@@ -54,7 +49,7 @@ namespace Insomnia {
             if(objectID == null)
                 return false;
 
-            return m_ID.Equals(objectID.ToUpper());
+            return m_ID.Equals(objectID);
         }
 
         /// <summary>
@@ -66,15 +61,37 @@ namespace Insomnia {
             if(objectLocation == null)
                 return false;
 
-            return m_Location.Equals(objectLocation.ToUpper());
+            return m_Location.Equals(objectLocation);
         }
 
         /// <summary>
-        /// 오브젝트의 <see cref="ItemData"/>반환하는 함수.
+        /// 오브젝트의 <see cref="ObjectData"/>반환하는 함수.
         /// </summary>
         /// <returns></returns>
-        public virtual ItemData GetItemData() {
+        public virtual ObjectData GetItemData() {
             return m_objectData;
+        }
+
+        protected virtual void Awake() {
+            m_ID = m_IDFormat + '_' + Random.Range(0, 1000).ToString("000");
+            m_position = transform.position;
+
+            m_objectData = new ObjectData() {
+                ID = m_ID,
+                Location = m_Location,
+                Description = m_Description,
+                Position = m_position,
+                ObjectType = m_ObjectType,
+                Status = m_Status
+            };
+        }
+
+        protected virtual void Start() {
+            while(true) {
+                m_ID = m_IDFormat + '_' + Random.Range(0, 1000).ToString("000");
+                if(ItemManager.Instance.CheckItemExists(m_ID) == false)
+                    break;
+            }
         }
 
         private void OnDisable() {

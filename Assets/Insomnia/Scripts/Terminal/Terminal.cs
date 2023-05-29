@@ -1,32 +1,19 @@
+using Insomnia;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Insomnia {
-    public class Terminal : Interactable {
-        [SerializeField] private SpriteRenderer _lapTop = null;
-        [SerializeField] private Sprite[] _lapTopSprites = null;
-        [SerializeField] private TerminalUI m_terminalUI = null;
+public class Terminal : SearchableBase {
+    [SerializeField] private TerminalUI m_terminalUI = null;
 
-        protected override void Awake() {
-            base.Awake();
-        }
+    public TerminalUI UI { get => m_terminalUI; }
 
-        public override void StandbyInteract() {
-            _lapTop.sprite = _lapTopSprites[1];
-        }
+    protected override void Awake() {
+        base.Awake();
+        m_terminalUI.SetTerminal(this);
+    }
 
-        public override void ReleaseInteract() {
-            _lapTop.sprite = _lapTopSprites[0];
-        }
-
-        public override void OnInteractStart() {
-            m_terminalUI.OpenTerminal();
-        }
-
-        public override void OnInteractEnd() {
-            m_terminalUI.CloseTerminal();
-        }
+    private void Start() {
+        ItemManager.Instance.AddSearchable(this);
     }
 }
-

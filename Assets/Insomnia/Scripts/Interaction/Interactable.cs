@@ -20,6 +20,9 @@ namespace Insomnia {
         }
 
         private void OnTriggerExit2D(Collider2D collision) {
+            if(_interactor == null)
+                return;
+
             if(_interactor.gameObject != collision.gameObject)
                 return;
 
