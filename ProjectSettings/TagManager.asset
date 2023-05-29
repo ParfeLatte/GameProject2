@@ -54,3 +54,9 @@ TagManager:
   - name: Door
     uniqueID: 197525895
     locked: 0
+  - name: Monster
+    uniqueID: 4227523247
+    locked: 0
+  - name: Player
+    uniqueID: 3508731223
+    locked: 0

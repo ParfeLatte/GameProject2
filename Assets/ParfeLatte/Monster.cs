@@ -21,9 +21,13 @@ public class Monster : LivingEntity
     public float CoolTime;//공격 쿨타임
     public float AttackTime;//공격시간
     public float FallTime;
+    public float AttackTiming;//공격판정시간
     public float Dist;//몬스터와 플레이어 사이 거리
     public float YDist;//y축 거리
     public float Dir;//이동방향
+    public float AttackDist;//공격거리
+    public float ColDist;//플레이어와의 최소거리
+    public float DyingTime;//죽는모션까지 걸리는 시간
     public Vector3 dirVec;//레이 방향
 
     public Player player;//플레이어 코드
@@ -33,7 +37,7 @@ public class Monster : LivingEntity
     public bool isPlayerDash;//플레이어가 대쉬했는지 확인
     public bool isPlayerStop;//플레이어가 멈췄는가?
     public bool isAttack;//공격중인가?
-    public bool isFall;//넘어졋나?
+    public bool isFall;//넘어졋나?  
     public bool isWall;//벽에 부딪혔는가?
     public bool isEventMob;//이벤트 몬스터가 아니라면 false
 
@@ -97,16 +101,16 @@ public class Monster : LivingEntity
         }
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.blue;
-    //    Gizmos.DrawWireCube(AttackPos.position, boxSize);
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(AttackPos.position, boxSize);
+    }
 
     private void AttackCheck()
     {
-        RaycastHit2D GateHit= Physics2D.Raycast(RayPos, dirVec, 1.75f, LayerMask.GetMask("Gate"));//Ray를 발사하여 플레이어가 범위내에 있는지 확인
-        RaycastHit2D rayHit = Physics2D.Raycast(RayPos, dirVec, 1.75f, LayerMask.GetMask("Player"));//Ray를 발사하여 플레이어가 범위내에 있는지 확인
+        RaycastHit2D GateHit= Physics2D.Raycast(RayPos, dirVec, AttackDist, LayerMask.GetMask("Gate"));//Ray를 발사하여 플레이어가 범위내에 있는지 확인
+        RaycastHit2D rayHit = Physics2D.Raycast(RayPos, dirVec, AttackDist, LayerMask.GetMask("Player"));//Ray를 발사하여 플레이어가 범위내에 있는지 확인
         if (rayHit.collider != null)//레이에 충돌한 대상이 있으면
         {
             Player player = rayHit.collider.GetComponent<Player>();//플레이어 컴포넌트 할당
@@ -145,7 +149,7 @@ public class Monster : LivingEntity
         isMobMove = false;//잠시 움직임을 멈추고
         animator.SetBool("isMove", false);//애니메이션 파라미터에서 isMove를 false로 바꾸고
         animator.SetTrigger("Attack");//attack Trigger를 발동해서 공격 애니메이션 재생
-        Invoke("Attack", 0.4f);//애니메이션에서 휘두르는 모션에 맞게 공격
+        Invoke("Attack", AttackTiming);//애니메이션에서 휘두르는 모션에 맞게 공격
         AttackTime = 0;//다시 쿨타임
         Invoke("MoveAgain", 0.55f);//공격후에 다시 움직이도록
     }
@@ -193,7 +197,7 @@ public class Monster : LivingEntity
     }
     private void OnWake()
     {
-        Debug.DrawRay(RayPos, dirVec * 1.75f, new Color(0, 1, 0));//레이캐스트 표시(거리 확인용)
+        Debug.DrawRay(RayPos, dirVec * AttackDist, new Color(0, 1, 0));//레이캐스트 표시(거리 확인용)
         float xdistance = player.transform.position.x - gameObject.transform.position.x;
         if (isMobMove == true)
         {
@@ -239,7 +243,7 @@ public class Monster : LivingEntity
                     dirVec = new Vector3(-1, 0f, 0f);//Ray 발사방향
                     MonsterRenderer.flipX = true;//스프라이트 반전 O(왼쪽보게)
                 }
-                if (Dist <= 1.3f)
+                if (Dist <= ColDist)
                 {
                     Dir = 0;
                 }
@@ -379,7 +383,7 @@ public class Monster : LivingEntity
         isMobMove = false;//움직임 멈춤
         isDead = true;//사망했음
         animator.SetTrigger("Die");//애니메이터에 Die 트리거를 전달해서 사망 애니메이션 재생
-        Invoke("Destroy", 1.2f);//잠시후에 오브젝트 비활성화
+        Invoke("Destroy", DyingTime);//잠시후에 오브젝트 비활성화
     }
 
     private void Destroy()
