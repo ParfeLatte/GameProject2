@@ -41,6 +41,8 @@ public class Monster : LivingEntity
     public bool isWall;//벽에 부딪혔는가?
     public bool isEventMob;//이벤트 몬스터가 아니라면 false
 
+    public GameObject HammerHitEffect;
+
     public Vector3 lastPlayerPosition;//위치 비교용
 
 
@@ -109,7 +111,7 @@ public class Monster : LivingEntity
 
     private void AttackCheck()
     {
-        RaycastHit2D GateHit= Physics2D.Raycast(RayPos, dirVec, AttackDist, LayerMask.GetMask("Gate"));//Ray를 발사하여 플레이어가 범위내에 있는지 확인
+        RaycastHit2D GateHit = Physics2D.Raycast(RayPos, dirVec, AttackDist, LayerMask.GetMask("Gate"));//Ray를 발사하여 플레이어가 범위내에 있는지 확인
         RaycastHit2D rayHit = Physics2D.Raycast(RayPos, dirVec, AttackDist, LayerMask.GetMask("Player"));//Ray를 발사하여 플레이어가 범위내에 있는지 확인
         if (rayHit.collider != null)//레이에 충돌한 대상이 있으면
         {
@@ -122,19 +124,19 @@ public class Monster : LivingEntity
             }
             //Debug.Log("공격합니다.");
         }
-        else if(GateHit.collider != null)
+        else if (GateHit.collider != null)
         {
             GateHP gatehp = GateHit.collider.GetComponent<GateHP>();
             Gate = gatehp;
-            if(Gate != null && AttackTime >= CoolTime)
+            if (Gate != null && AttackTime >= CoolTime)
             {
                 DoAttack();
             }
-            else if(Gate == null)
+            else if (Gate == null)
             {
                 return;
             }
-        }   
+        }
         else
         {
             AttackPlayer = null;
@@ -154,7 +156,7 @@ public class Monster : LivingEntity
         Invoke("MoveAgain", 0.55f);//공격후에 다시 움직이도록
     }
 
-        private void Attack()
+    private void Attack()
     {
         Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(AttackPos.position, boxSize, 0);//오버랩 박스를 이용
         foreach (Collider2D collider in collider2Ds)
@@ -163,7 +165,7 @@ public class Monster : LivingEntity
             {
                 player.damaged(damage);//플레이어의 damaged 함수 호출해서 데미지를 줌
             }
-            else if(Gate != null && collider.tag == "Gate")
+            else if (Gate != null && collider.tag == "Gate")
             {
                 Gate.damaged(damage);//게이트에 피해를 줌
             }
@@ -171,7 +173,7 @@ public class Monster : LivingEntity
     }//범위내 공격
 
     public void MoveAgain()
-    { 
+    {
         animator.SetBool("isMove", true);//이동 애니메이션 셋
         isMobMove = true;//다시 움직임
     }
@@ -230,7 +232,7 @@ public class Monster : LivingEntity
                 Debug.Log("떠돌아다니는중");
             }
             else
-            {       
+            {
                 if (xdistance > 0)
                 {
                     Dir = 1;//방향 오른쪽
@@ -256,8 +258,8 @@ public class Monster : LivingEntity
     private float Think()
     {
         int NextMove = UnityEngine.Random.Range(0, 3);
-        if(NextMove == 0){ return 1f; }
-        else if(NextMove == 1) { return -1f; }
+        if (NextMove == 0) { return 1f; }
+        else if (NextMove == 1) { return -1f; }
         else { return 0f; }
     }
 
@@ -279,13 +281,13 @@ public class Monster : LivingEntity
             //Debug.Log("계속 움직이는 중입니다.");
         }//계속 움직임을 확인
     }//멈췄는지를 확인함 0.4초간 움직이지 않아야 멈춘걸로 임시판정 
-    
+
     public void AreaCheck(int state)
     {
         switch (state)
         {
             case 0://깊은수면 상태일때 검사
-                if(Dist <= 20)
+                if (Dist <= 20)
                 {
                     SleepState = 1;//중간수면으로
                     animator.SetInteger("SleepState", 1);
@@ -331,7 +333,7 @@ public class Monster : LivingEntity
 
     public void FallCheck()
     {
-        if(FallTime > 0.1f)
+        if (FallTime > 0.1f)
         {
             animator.SetBool("isFalling", true);
             isMobMove = false;
@@ -345,11 +347,11 @@ public class Monster : LivingEntity
         isFall = false;
         FallTime = 0f;
     }
-    
+
     public void CheckEventMob()
     {
         CheckEvent = GetComponent<EventMonster>();
-        if(CheckEvent != null)
+        if (CheckEvent != null)
         {
             isEventMob = true;
         }
@@ -362,11 +364,12 @@ public class Monster : LivingEntity
     public override void damaged(float damage)
     {
         Health -= damage;//체력에서 데미지만큼 깎음
-        //Debug.Log("몬스터가 데미지를 입었습니다.");
+        HammerHitEffect.SetActive(true);
+        Invoke("ReadyEffect", 0.2f);
         //모션
         //사운드
 
-        if(SleepState != 3)
+        if (SleepState != 3)
         {
             MonsterAwake();//수면중일때 공격당하면 기상
         }
@@ -376,6 +379,11 @@ public class Monster : LivingEntity
             Die();//사망
         }//체력이 0이 되거나 0아래로 떨어졌고 죽지 않았다면
         //피격시 실행할 내용
+    }
+
+    private void ReadyEffect()
+    {
+        HammerHitEffect.SetActive(false);
     }
 
     public override void Die()

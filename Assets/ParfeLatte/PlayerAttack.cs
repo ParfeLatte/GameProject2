@@ -37,7 +37,7 @@ public class PlayerAttack : MonoBehaviour
         if (!isAttack)//이미 공격중일때를 대비한 예외처리
         {
             isAttack = true;//공격중이다!
-            AttackMonster();//공격 실행(데미지 넣는 처리)
+            Invoke("AttackMonster", 0.2f);//공격 실행(데미지 넣는 처리)
         }
     }
 

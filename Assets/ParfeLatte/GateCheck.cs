@@ -75,8 +75,8 @@ public class GateCheck : MonoBehaviour
     public void DestroyGate()
     {
         isDestroy = true;
-        col.enabled = false;
-        interactobj.enabled = false;
+        col.enabled = false;    
+        interactobj.enabled = false;    
         GateOpen();
     }
 

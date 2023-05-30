@@ -37,16 +37,18 @@ public class ElevatorButton : Interactable
 
     private void ElevUp()
     {
+        MoveInform.SetActive(false);
         isKey = false;
         elevator.Up();
-        MoveInform.SetActive(false);
+        
     }
     
     private void ElevDown()
     {
+        MoveInform.SetActive(false);
         isKey = false;
         elevator.Down();
-        MoveInform.SetActive(false);
+        
     }
     private void CheckUpDown()
     {
