@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Lab.unity
     guid: f4153578f3cd3d1438ec6acda692fdd0
+  - enabled: 1
+    path: Assets/Scenes/Loading.unity
+    guid: a3ea5d17459926b4fb6049881281171d
+  - enabled: 1
+    path: Assets/Scenes/EscapeFailed.unity
+    guid: f1373a2d6fafa1344a7e8d2d21b52d3c
   m_configObjects: {}

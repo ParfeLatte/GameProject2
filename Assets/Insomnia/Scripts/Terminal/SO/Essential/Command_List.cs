@@ -8,11 +8,12 @@ namespace Insomnia {
     public class Command_List : TerminalCommand {
         #region Formats
         private static string m_listStartFormat = "ID\t\tObjectType\t\tSTATUS";
-        private static string m_listFormat = "{0}\t\t{1}\t\t\t{2}";
+        private static string m_listFormat = "{0, -12}\t{1, -23}\t{2}";
         private static string m_listWaitFormat = "Loading For Data: {0} Location: {1}";
         private static string m_listSynParamError = "<color=red>Command Error: Not authorized params detected</color>";
         private static string m_listInvalidIDError = "<color=red>Command Error: Invalid ID</color>";
         #endregion
+
         public override IEnumerator<KeyValuePair<float, List<string>>> RunCommand(Terminal terminal, string command) {
             m_commandResult.Clear();
             string[] keys = command.Split(' ');
@@ -26,7 +27,7 @@ namespace Insomnia {
             string locationID = string.Empty;
 
             for(int i = 1; i < keys.Length; i++) {
-                if(keys[i].Contains("AREA_"))
+                if(keys[i].Contains("ZONE_"))
                     locationID = keys[i];
                 else
                     itemID = keys[i];

@@ -90,6 +90,9 @@ public class KeyCardEvent : MonoBehaviour
 
     void Update()
     {
+        if(GameManager.IsPause)
+            return;
+
         SpawnTimer += Time.deltaTime;
         if (AP.isEvent)
         {

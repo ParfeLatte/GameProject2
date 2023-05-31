@@ -22,7 +22,10 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.Dir == 1) {
+        if(GameManager.IsPause)
+            return;
+
+        if(player.Dir == 1) {
             this.transform.localPosition = new Vector3(curPos.x, curPos.y, curPos.z);//공격 범위 위치 조절(플레이어 오른쪽)
         }
         if (player.Dir == -1)

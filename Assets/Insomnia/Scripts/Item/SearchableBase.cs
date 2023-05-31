@@ -75,6 +75,14 @@ namespace Insomnia {
         protected virtual void Awake() {
             m_ID = m_IDFormat + '_' + Random.Range(0, 1000).ToString("000");
             m_position = transform.position;
+        }
+
+        protected virtual void Start() {
+            while(true) {
+                m_ID = m_IDFormat + '_' + Random.Range(0, 1000).ToString("000");
+                if(ItemManager.Instance.CheckItemExists(m_ID) == false)
+                    break;
+            }
 
             m_objectData = new ObjectData() {
                 ID = m_ID,
@@ -84,14 +92,8 @@ namespace Insomnia {
                 ObjectType = m_ObjectType,
                 Status = m_Status
             };
-        }
 
-        protected virtual void Start() {
-            while(true) {
-                m_ID = m_IDFormat + '_' + Random.Range(0, 1000).ToString("000");
-                if(ItemManager.Instance.CheckItemExists(m_ID) == false)
-                    break;
-            }
+            ItemManager.Instance.AddSearchable(this);
         }
 
         private void OnDisable() {

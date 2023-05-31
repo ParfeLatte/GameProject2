@@ -53,7 +53,7 @@
     <UnityVersion>2021.3.11f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\UI\UITextScale.cs" />
@@ -65,23 +65,27 @@
     <Compile Include="Assets\ParfeLatte\MonsterAttack.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Buffers\LightMainBuffer2D.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Light\ShadowEngine\Algorithm\LegacyCPU.cs" />
-    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Command_Save.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_Save.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Components\LightTilemap2D\Types\Hexagon.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Settings\LightingSettings.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Input\PlayerInput\Mouse\MouseAction.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Components\Lightmap\Light2D.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Camera\CameraLightmap.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Interaction\Interactable.cs" />
-    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Command_Clear.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_Clear.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Misc\MeshObject.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Components\LightTilemap2D\Types\Isometric.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Lightmap\NoSort.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Special\Command_Rundown_Contract.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\SceneHandler\FailedSceneAction.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\Demos - SmartLighting2D\Export Demo\MainDemoManager.cs" />
     <Compile Include="Assets\ParfeLatte\Lift\LiftUpButton.cs" />
     <Compile Include="Assets\ParfeLatte\MobSpawner.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Depth\Rendering.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Managers\UIManager.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Components\Mesh2D.cs" />
-    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Command_List.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\UI\Loading\ProgressBar.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_List.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Depth\Pass.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Input\Base\AnalogInputActor.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\LightShapes\Extensions\Collider3DShape.cs" />
@@ -129,7 +133,7 @@
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Components\LightTilemapOcclusion\OcclusionTileset.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Utilities\2\Vector2Extension.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Material\Lighting2DMaterials.cs" />
-    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Command_Command.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_Command.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Lightmap\Objects\LightSprite.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Light\ShadowEngine\Extensions\Tile.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Misc\SpriteTransform.cs" />
@@ -174,6 +178,7 @@
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Material\Extended\BumpMask.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Lightmap\Objects\ParticleRenderer.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Utils\Defines.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\UI\Fade\FadeUI.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Settings\Presets\LightmapPresets.cs" />
     <Compile Include="Assets\ParfeLatte\EndTutorial.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Utilities\2\Polygon2\Polygon2ListCollider2D.cs" />
@@ -210,6 +215,7 @@
     <Compile Include="Assets\ParfeLatte\GameUI.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Input\PlayerInput\Keyboard\KeyboardAxisActor.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Light\Mask\SpriteRenderer2D.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\SceneHandler\SceneController.cs" />
     <Compile Include="Assets\ParfeLatte\ChangeScene.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Components\LightCollider\LightCollider2D.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Components\LightCollider2D\LayerManager.cs" />
@@ -219,6 +225,7 @@
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Components\GUI\LightEventListenerGUI.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Day\Masks\SpriteRenderer2D.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\Demos - SmartLighting2D\Demos - Scriptable\Demo 1 - Light Sprite\LightSpriteSample.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\SceneHandler\SceneChangeEffect.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Light\ShadowEngine\Algorithm\Fast.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Components\LightTilemap2D\Types\Base.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Utilities\2\Polygon2\Polygon2ListCollider3D.cs" />
@@ -236,7 +243,7 @@
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Light\Mask\UnityTilemap.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Utilities\2D\Mathd.cs" />
     <Compile Include="Assets\ParfeLatte\AccessEvent\KeyCardEvent.cs" />
-    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Command_Exit.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_Exit.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Utilities\2D\DoublePair2D.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\SceneView\SceneView.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Camera\LightmapMaterials.cs" />
@@ -319,13 +326,14 @@
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Utilities\2D\Vector2D.cs" />
     <Compile Include="Assets\ParfeLatte\Lift\ElevatorCall.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\SpriteExtension\PhysicsShapeManager.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Terminal\Terminal.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\LightShapes\Extensions\SkinnedMeshRendererShape.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Triangulation\Advanced Triangulator\DelaunayTriangle.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Input\Base\InputListener.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Graphics\MaterialManager.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Event Handling\Object.cs" />
     <Compile Include="Assets\ParfeLatte\GateCheck.cs" />
-    <Compile Include="Assets\Insomnia\Scripts\Terminal\Terminal.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Terminal\Terminal_Interactable.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Settings\Lighting2D.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Lightmap\Objects\Particle.cs" />
     <Compile Include="Assets\Assetss\FunkyCode\SmartLighting2D\Scripts\Rendering\Light\ShadowEngine\Algorithm\SoftDefault.cs" />
@@ -338,7 +346,7 @@
     <Compile Include="Assets\Assetss\FunkyCode\SmartUtilities2D\Scripts\Utilities\2\Polygon2\Polygon2Collider3D.cs" />
     <Compile Include="Assets\Assetss\Effect_Vol.5\Script\SpriteAnimation.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Utils\Singleton.cs" />
-    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Command_Query.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_Query.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Character\Object\PlayerLocomotion.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1072,6 +1080,171 @@
     </Reference>
     <Reference Include="System.Xml.Serialization">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.11f1\Editor\Data\NetStandard\compat\2.1.0\shims\netfx\System.Xml.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InternalAPIEngineBridge.001">
+      <HintPath>Library\ScriptAssemblies\Unity.InternalAPIEngineBridge.001.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VSCode.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.PixelPerfect">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.PixelPerfect.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+    </Reference>
+    <Reference Include="PsdPlugin">
+      <HintPath>Library\ScriptAssemblies\PsdPlugin.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.State.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Searcher.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.IK.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.IK.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Path.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Path.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Rider.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.IK.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.IK.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ShaderGraph.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Common.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Common.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.Flow.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Flow.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Tilemap.Extras">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Animation.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Animation.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Tilemap.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="PPv2URPConverters">
+      <HintPath>Library\ScriptAssemblies\PPv2URPConverters.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualStudio.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Timeline">
+      <HintPath>Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.Core.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Core.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Psdimporter.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Psdimporter.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InternalAPIEditorBridge.001">
+      <HintPath>Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.001.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.Flow">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PlasticSCM.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Tilemap.Extras.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Services.Core">
+      <HintPath>Library\ScriptAssemblies\Unity.Services.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.Core">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics">
+      <HintPath>Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Services.Core.Analytics">
+      <HintPath>Library\ScriptAssemblies\Unity.Services.Core.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst">
+      <HintPath>Library\ScriptAssemblies\Unity.Burst.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.Shared.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Shared.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Services.Core.Environments">
+      <HintPath>Library\ScriptAssemblies\Unity.Services.Core.Environments.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Animation.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Animation.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.PixelPerfect.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.PixelPerfect.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Timeline.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Common.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Common.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.SpriteShape.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.SpriteShape.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.SpriteShape.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.State">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

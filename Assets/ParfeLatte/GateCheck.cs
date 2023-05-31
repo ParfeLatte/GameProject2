@@ -1,31 +1,37 @@
+using Insomnia;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GateCheck : MonoBehaviour
+public class GateCheck : SearchableBase
 {
-    public GameObject Gate;//¹®
-    public GameManager Manager;//°ÔÀÓ¸Å´ÏÀú
+    public GameObject Gate;//ï¿½ï¿½
+    public GameManager Manager;//ï¿½ï¿½ï¿½Ó¸Å´ï¿½ï¿½ï¿½
 
     private InteractObj interactobj;
     private BoxCollider2D col;
 
-    public bool isOpen;//¿­·È´ÂÁö
-    public bool isDestroy;//ÆÄ±«µÇ¾ú´ÂÁö
-    public bool GateStat;// false´Â ´ÝÈû, true´Â ¿­¸²
-    public int GateLv;//¹®ÀÇÀÇ Á¢±Ù·¹º§
+    public bool isOpen;//ï¿½ï¿½ï¿½È´ï¿½ï¿½ï¿½
+    public bool isDestroy;//ï¿½Ä±ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½
+    public bool GateStat;// falseï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, trueï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public int GateLv;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ù·ï¿½ï¿½ï¿½
 
     private Animator animator;
 
-    private void Awake()
-    {
+    protected override void Awake() {
+        base.Awake();
         animator = GetComponent<Animator>();
         col = GetComponent<BoxCollider2D>();
         interactobj = GetComponent<InteractObj>();
-        animator.enabled = true;//¾Ö´Ï¸ÞÀÌÅÍ¸¦ ÄÑ¼­ ¹® ¾Ö´Ï¸ÞÀÌ¼Ç Àç»ý°¡´É
-        Gate.SetActive(true);//¸øÁö³ª°¡µµ·Ï ÄÝ¶óÀÌ´õ ¿ÀºêÁ§Æ®ÀÎ ¹®À» ÄÔ
-        isOpen = false;//´ÝÈû
+        animator.enabled = true;//ï¿½Ö´Ï¸ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½Ñ¼ï¿½ ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        Gate.SetActive(true);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+        isOpen = false;//ï¿½ï¿½ï¿½ï¿½
         isDestroy = false;
+    }
+
+
+    protected override void Start() {
+        base.Start();
     }
     private void OpenClose()
     {
@@ -44,30 +50,35 @@ public class GateCheck : MonoBehaviour
 
     void Update()
     {
-        if (isDestroy) return;
-        OpenClose();//¿­°í´ÝÀ½À» È®ÀÎÇÔ
+        if(GameManager.IsPause)
+            return;
+
+        if(isDestroy)
+            return;
+
+        OpenClose();//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.tag == "Player")
         {
-            isOpen = Manager.CheckGateOpen(GateLv);//ÇÃ·¹ÀÌ¾î ÅÂ±×ÀÇ ¿ÀºêÁ§Æ®°¡ µé¾î¿À¸é ¹®¿­¸®´ÂÁö È®ÀÎ
+            isOpen = Manager.CheckGateOpen(GateLv);//ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Â±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         }
     }
 
     private void GateOpen()
     {
-        animator.SetBool("isOpen", true);//¹®¿­¸²
-        Gate.SetActive(false);//ÄÝ¶óÀÌ´õ°¡ ÀÖ´Â ¿ÀºêÁ§Æ®ÀÎ ¹®À» ºñÈ°¼ºÈ­ ÇØ¼­ Áö³ª°¥ ¼ö ÀÖÀ½
+        animator.SetBool("isOpen", true);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        Gate.SetActive(false);//ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­ ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         GateStat = true;
-        Debug.Log(GateLv + "Lv °ÔÀÌÆ® Á¢±Ù ½ÂÀÎ, ¹®ÀÌ ¿­¸³´Ï´Ù.");
+        Debug.Log(GateLv + "Lv ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
     }
 
     private void GateClose()
     {
-        Gate.SetActive(true);//¸øÁö³ª°¡µµ·Ï ´Ù½Ã È°¼ºÈ­
-        animator.SetBool("isOpen", false);//¿ªÀç»ýÀ¸·Î ¹®´Ý´Â ¾Ö´Ï¸ÞÀÌ¼Ç Àç»ý
+        Gate.SetActive(true);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ È°ï¿½ï¿½È­
+        animator.SetBool("isOpen", false);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý´ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½
         GateStat = false;
     }
 
@@ -84,7 +95,7 @@ public class GateCheck : MonoBehaviour
     {
         if (col.tag == "Player")
         {
-            isOpen = false;//¹üÀ§ ³»¿¡¼­ ¹þ¾î³ª¸é ¹®À» ´ÝÀ½
+            isOpen = false;//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½î³ªï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
     }
 }

@@ -1,13 +1,15 @@
+using Insomnia;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TargetObject : MonoBehaviour
+public class TargetObject : SearchableBase
 {
     public GameManager GameMgr;
 
     private void Awake()
     {
+        base.Awake();
         if (GameMgr.isTarget)
         {
             gameObject.SetActive(false);
@@ -16,6 +18,10 @@ public class TargetObject : MonoBehaviour
         {
             gameObject.SetActive(true);
         }
+    }
+
+    protected override void Start() {
+        base.Start();
     }
 
     private void OnTriggerEnter2D(Collider2D col)

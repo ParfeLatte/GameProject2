@@ -80,6 +80,9 @@ public class Monster : LivingEntity
     // Update is called once per frame
     void Update()
     {
+        if(GameManager.IsPause)
+            return;
+
         Dist = Mathf.Abs(Player.transform.position.x - gameObject.transform.position.x);//플레이어와 몬스터 사이 거리
         YDist = Mathf.Abs(Player.transform.position.y - gameObject.transform.position.y);//플레이어와  몬스터의 y축 거리 
         if (YDist < 5)

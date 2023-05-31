@@ -1,70 +1,78 @@
+using Insomnia;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static Insomnia.Defines;
 
-public class Player : LivingEntity
+public class Player : LivingEntity, IDataIO
 {
-    public float AttackTime;//°ø°ÝÇÑ½Ã°£
-    public float CoolTime;//ÄðÅ¸ÀÓ
-    public float movetime;//ÀÌµ¿ÇÑ ½Ã°£ Ã¼Å©
+    public float AttackTime;//ï¿½ï¿½ï¿½ï¿½ï¿½Ñ½Ã°ï¿½
+    public float CoolTime;//ï¿½ï¿½Å¸ï¿½ï¿½
+    public float movetime;//ï¿½Ìµï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ Ã¼Å©
     public float stoptime;//
-    public float JumpForce;//Á¡ÇÁ·Â
-    public float Dir;//ÀÌµ¿¹æÇâ(´ë½¬³ª Á¡ÇÁ½Ã¿¡ ¹æÇâ ¸ø¹Ù²Ù°ÔÇÔ)
-    public float h;//GeTAxisRaw·Î ¹Þ´Â °ª
-    public float stamina;//½ºÅ×¹Ì³ª
-    public float dashtime;//´ë½¬ÇÑÁö ¾ó¸¶³ª Áö³µ´ÂÁö Ã¼Å©ÇØ¼­ ½ºÅ×¹Ì³Ê Ã¤¿ò
-    public float lastYpos;//Á¡ÇÁ³ª ¶¥¿¡¼­ ¶³¾îÁ³À» ¶§ ¸¶Áö¸· y°ª
-    public float CurYpos;//ÂøÁö ½Ã¿¡ ºñ±³ÇÒ y°ª
+    public float JumpForce;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public float Dir;//ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ë½¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ù²Ù°ï¿½ï¿½ï¿½)
+    public float h;//GeTAxisRawï¿½ï¿½ ï¿½Þ´ï¿½ ï¿½ï¿½
+    public float stamina;//ï¿½ï¿½ï¿½×¹Ì³ï¿½
+    public float dashtime;//ï¿½ë½¬ï¿½ï¿½ï¿½ï¿½ ï¿½ó¸¶³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½×¹Ì³ï¿½ Ã¤ï¿½ï¿½
+    public float lastYpos;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ yï¿½ï¿½
+    public float CurYpos;//ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¿ï¿½ ï¿½ï¿½ï¿½ï¿½ yï¿½ï¿½
     public float Falltime;
 
-    public bool isDash;//´ë½¬Çß´ÂÁö Ã¼Å©
-    public bool isMove;//¿òÁ÷¿´´ÂÁö Ã¼Å©
-    public bool isWall;//º®¿¡ ºÎµúÇû´ÂÁö Ã¼Å©
-    public bool isJump;//Á¡ÇÁÇß´ÂÁö Ã¼Å©
-    public bool isCharge;//°ø°ÝÃæÀüÁßÀÎÁö
-    public bool isFall;//³«µ©¹Þ¾Ò´ÂÁö
+    public bool isDash;//ï¿½ë½¬ï¿½ß´ï¿½ï¿½ï¿½ Ã¼Å©
+    public bool isMove;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
+    public bool isWall;//ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
+    public bool isJump;//ï¿½ï¿½ï¿½ï¿½ï¿½ß´ï¿½ï¿½ï¿½ Ã¼Å©
+    public bool isCharge;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public bool isFall;//ï¿½ï¿½ï¿½ï¿½ï¿½Þ¾Ò´ï¿½ï¿½ï¿½
 
-    public Slider HealthSlider;//Ã¼·ÂUI
-    public Slider StaminaSlider;//½ºÅ×¹Ì³ÊUI
+    public Slider HealthSlider;//Ã¼ï¿½ï¿½UI
+    public Slider StaminaSlider;//ï¿½ï¿½ï¿½×¹Ì³ï¿½UI
     
 
     //public PlayerAttack Attack;
-    public PlayerAttack Attack;//°ø°ÝÀ» ½ÇÇàÇØÁÖ´Â ½ºÅ©¸³Æ®(°ø°Ý ¹üÀ§ ¿ÀºêÁ§Æ®¿¡ ÇÒ´çµÇ¾î ÀÖÀ¸¸ç ¿©±â¼­ °ø°ÝÀ» ½ÇÇàÇÔ)
+    public PlayerAttack Attack;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®(ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ò´ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â¼­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
     
-    private GameObject Enemy;//¸ó½ºÅÍ
+    private GameObject Enemy;//ï¿½ï¿½ï¿½ï¿½
 
 
-    private Rigidbody2D PR;//ÇÃ·¹ÀÌ¾î ¸®Áöµå¹Ùµð
-    private SpriteRenderer PlayerRenderer;//½ºÇÁ¶óÀÌÆ® ÁÂ¿ì ¹Ù²Ü¶§ »ç¿ëÇßÀ½
-    private Animator animator;//¾Ö´Ï¸ÞÀÌÅÍ
+    private Rigidbody2D PR;//ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ùµï¿½
+    private SpriteRenderer PlayerRenderer;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Â¿ï¿½ ï¿½Ù²Ü¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private Animator animator;//ï¿½Ö´Ï¸ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    private float ChargeTime;//°ø°Ý Â÷Â¡½Ã°£
-    private Vector3 curPos;//ÇöÀç À§Ä¡
-    private Vector3 dirVec;//¹Ù¶óº¸´Â ¹æÇâ
+    private float ChargeTime;//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â¡ï¿½Ã°ï¿½
+    private Vector3 curPos;//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
+    private Vector3 dirVec;//ï¿½Ù¶óº¸´ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     private Vector2 boxsize = new Vector2(1f, 1f);
 
     void Awake()
     {
-        PR = GetComponent<Rigidbody2D>();//ÇÒ´ç
-        animator = GetComponent<Animator>();//ÇÒ´ç
-        PlayerRenderer = GetComponent<SpriteRenderer>();//ÇÒ´ç
-        SetStatus(100, 10, 8);//½ºÅÈÀ» ¼³Á¤ÇÔ Ã¼·Â, µ¥¹ÌÁö, ÀÌµ¿¼Óµµ
-        Health = MaxHealth;//½ÃÀÛÇÒ¶§ ÇöÀç Ã¼·ÂÀ» ÃÖ´ë Ã¼·ÂÀ¸·Î ¼³Á¤ÇØÁÜ
+        PR = GetComponent<Rigidbody2D>();//ï¿½Ò´ï¿½
+        animator = GetComponent<Animator>();//ï¿½Ò´ï¿½
+        PlayerRenderer = GetComponent<SpriteRenderer>();//ï¿½Ò´ï¿½
+        SetStatus(100, 10, 8);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½Ìµï¿½ï¿½Óµï¿½
+        Health = MaxHealth;//ï¿½ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         gameObject.SetActive(true);
         stamina = 100f;
         HealthSlider.value = Health;
         StaminaSlider.value = stamina;
     }
 
+    private void Start() {
+        GameManager.Instance.AddPlayer(this);
+    }
+
     // Update is called once per frame
     void Update()
     {
-        //Debug.DrawRay(transform.position, Vector2.down, new Color(0, 1, 0));
+        if(GameManager.IsPause)
+            return;
+
         h = Input.GetAxisRaw("Horizontal");
-        curPos = transform.position;//ÇöÀçÀ§Ä¡
+        curPos = transform.position;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡
         if(h != 0 && !isDash && !isJump)
         {
             Dir = h;
@@ -76,7 +84,7 @@ public class Player : LivingEntity
         {
             isMove = false;
             animator.SetBool("isMove", false);
-        }//¿òÁ÷ÀÌ´ÂÁö È®ÀÎÇÔ
+        }//ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½
 
         AttackTime += Time.deltaTime;
         
@@ -84,13 +92,13 @@ public class Player : LivingEntity
         {
             Falltime += Time.deltaTime;
         }
-        flipSpr();//ÁÂ¿ì¹ÝÀü
+        flipSpr();//ï¿½Â¿ï¿½ï¿½ï¿½ï¿½
         if (!isDead)
         {
-            AttackCheck();//°ø°Ý
-            Jump();//Á¡ÇÁ
-            Dash();//´ë½¬
-            Move();//ÀÌµ¿
+            AttackCheck();//ï¿½ï¿½ï¿½ï¿½
+            Jump();//ï¿½ï¿½ï¿½ï¿½
+            Dash();//ï¿½ë½¬
+            Move();//ï¿½Ìµï¿½
             StaminaCheck();
             CheckFallDamage();
             dashtime += Time.deltaTime;
@@ -103,89 +111,89 @@ public class Player : LivingEntity
             {
                 animator.SetBool("isCharge", true);
             }
-            if (Input.GetKey(KeyCode.J) && AttackTime >= CoolTime)//Å°´Â ÀÓ½ÃÀÓ J¸¦ ´©¸£´Â ÁßÀÏ¶§
+            if (Input.GetKey(KeyCode.J) && AttackTime >= CoolTime)//Å°ï¿½ï¿½ ï¿½Ó½ï¿½ï¿½ï¿½ Jï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¶ï¿½
             {
                 ChargeTime += Time.deltaTime;
                 h = 0;
 
                 isCharge = true;
-                //Debug.Log("°ø°Ý Â÷Â¡Áß");
+                //Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â¡ï¿½ï¿½");
             }
-            if (Input.GetKeyUp(KeyCode.J) && isCharge && AttackTime >= CoolTime)//Å°¸¦ ¶ÃÀ»¶§
+            if (Input.GetKeyUp(KeyCode.J) && isCharge && AttackTime >= CoolTime)//Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             {
                 isCharge = false;
                 animator.SetBool("isCharge", false);
-                if (ChargeTime < 1f)//Â÷Â¡ ½Ã°£ÀÌ 1ÃÊ ÀÌÇÏÀÌ¸é ±âº»°ø°Ý
+                if (ChargeTime < 1f)//ï¿½ï¿½Â¡ ï¿½Ã°ï¿½ï¿½ï¿½ 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½âº»ï¿½ï¿½ï¿½ï¿½
                 {
-                    //Debug.Log("±âº» °ø°Ý");
-                    Attack.GetAttack(damage);//PlayerAttack ½ºÅ©¸³Æ®¿¡ µ¥¹ÌÁö¸¦ Àü´ÞÇØÁÖ°í PlayerAttack¿¡¼­´Â °ø°ÝÀ» ½ÇÇàÇÔ
-                    animator.SetTrigger("Attack");//°ø°Ý ¾Ö´Ï¸ÞÀÌ¼Ç Àç»ý
+                    //Debug.Log("ï¿½âº» ï¿½ï¿½ï¿½ï¿½");
+                    Attack.GetAttack(damage);//PlayerAttack ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö°ï¿½ PlayerAttackï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                    animator.SetTrigger("Attack");//ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½
                     AttackTime = 0;
                 }
-                else if (ChargeTime >= 1.0f)//Â÷Â¡ ½Ã°£ÀÌ 1ÃÊ ÀÌ»óÀÌ¸é °­°ø
+                else if (ChargeTime >= 1.0f)//ï¿½ï¿½Â¡ ï¿½Ã°ï¿½ï¿½ï¿½ 1ï¿½ï¿½ ï¿½Ì»ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½
                 {
-                    //Debug.Log("°­È­ °ø°Ý");
-                    Attack.GetAttack(damage * 3.0f);//À§¿Í °°À¸³ª 3¹èÀÇ µ¥¹ÌÁö¸¦ °¡ÇÔ
-                    animator.SetTrigger("Attack");//°ø°Ý ¾Ö´Ï¸ÞÀÌ¼Ç Àç»ý
+                    //Debug.Log("ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½");
+                    Attack.GetAttack(damage * 3.0f);//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                    animator.SetTrigger("Attack");//ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½
                     AttackTime = 0;
-                    //°­°ø ¸ð¼Ç
+                    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
                 }
-                ChargeTime = 0;//Â÷Â¡ Å¸ÀÓ ÃÊ±âÈ­
+                ChargeTime = 0;//ï¿½ï¿½Â¡ Å¸ï¿½ï¿½ ï¿½Ê±ï¿½È­
             }
-    }//°ø°Ý Ã¼Å©, °ø°Ý¹öÆ°À» ´©¸£°í ÀÖÀ¸¸é Â÷Â¡ÇÔ!
+    }//ï¿½ï¿½ï¿½ï¿½ Ã¼Å©, ï¿½ï¿½ï¿½Ý¹ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â¡ï¿½ï¿½!
 
     private void flipSpr()
     {
         if (!isDash && !isJump) {
             if (h == 1)
             {
-                PlayerRenderer.flipX = false;//¿À¸¥ÂÊÀ» ¹Ù¶óº¸µµ·Ï
+                PlayerRenderer.flipX = false;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¶óº¸µï¿½ï¿½ï¿½
                 
             }
             else if (h == -1)
             {
-                PlayerRenderer.flipX = true;//¿ÞÂÊÀ» ¹Ù¶óº¸µµ·Ï
+                PlayerRenderer.flipX = true;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¶óº¸µï¿½ï¿½ï¿½
             }
         }
-    }//¹æÇâ¿¡ ¸Â°Ô ½ºÇÁ¶óÀÌÆ® µÚÁýÀ½
+    }//ï¿½ï¿½ï¿½â¿¡ ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private void Jump()
     {
         if (Input.GetKeyDown(KeyCode.W) && !isJump)
         {
-            isJump = true;//Á¡ÇÁÇß´Ù
-            PR.velocity = Vector2.up * JumpForce;//¼ø°£ ¼Ó·ÂÀ» À§·Î Á¡ÇÁ·Â¸¸Å­ ÁÜ
-            SetDirection(Dir);//Á¡ÇÁ½Ã ÀÌµ¿°¡´ÉÇÑ ¹æÇâ(¹Ý´ë·Î ¹æÇâ Á¶Àý ¸øÇÏ°Ô)
+            isJump = true;//ï¿½ï¿½ï¿½ï¿½ï¿½ß´ï¿½
+            PR.velocity = Vector2.up * JumpForce;//ï¿½ï¿½ï¿½ï¿½ ï¿½Ó·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â¸ï¿½Å­ ï¿½ï¿½
+            SetDirection(Dir);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½Ý´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½)
             animator.SetBool("isJump", true);
-            //Invoke("JumpReset", 0.8f);//1ÃÊ µÚ¿¡ Á¡ÇÁ¸®¼Â(¼öÁ¤ÇÒ¼öµµÀÖÀ½)
-            //Debug.Log("½ºÆäÀÌ½º¹Ù ´­¸²");
+            //Invoke("JumpReset", 0.8f);//1ï¿½ï¿½ ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+            //Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
         }
         else if (isJump)
         {
             if (h == Dir)
             {
-                h = Dir;//Á¡ÇÁ½Ã ÀÌµ¿°¡´ÉÇÑ ¹æÇâ
+                h = Dir;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             }
             else
             {
-                h = 0;//Á¡ÇÁ½Ã ¹æÇâ ÀüÈ¯À» ¸øÇÏ°Ô²û
+                h = 0;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½ï¿½Ï°Ô²ï¿½
             }
         }
-    }//Á¡ÇÁ¸¦ Ã³¸®ÇÏ´Â ÇÔ¼ö
+    }//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
 
     private void Move()
     {
         if (!isDash || !isWall || !isCharge)
         {
-            Vector2 newVel = new Vector2(h * MaxSpeed, PR.velocity.y);//ÇÃ·¹ÀÌ¾î ÀÌµ¿¼Óµµ
-            PR.velocity = newVel;//¸®Áöµå¹Ùµð¿¡ ¼Óµµ µî·Ï
-        }//´ë½¬ÁßÀÌ ¾Æ´Ò¶§ ÀÌµ¿¼Óµµ¸¦ ÀÌ°É·Î Á¤ÇØÁÜ
-    }//¿òÁ÷ÀÓÀ» Ã³¸®ÇÏ´Â ÇÔ¼ö
+            Vector2 newVel = new Vector2(h * MaxSpeed, PR.velocity.y);//ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ìµï¿½ï¿½Óµï¿½
+            PR.velocity = newVel;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ùµï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½
+        }//ï¿½ë½¬ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ò¶ï¿½ ï¿½Ìµï¿½ï¿½Óµï¿½ï¿½ï¿½ ï¿½Ì°É·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    }//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
 
     private void Dash()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isDash && stamina >= 25f)
         {
-            isDash = true;//´ë½¬Çß´Ù¸¦ Ã¼Å©
+            isDash = true;//ï¿½ë½¬ï¿½ß´Ù¸ï¿½ Ã¼Å©
             animator.SetBool("isDash", true);
             stamina -= 25f;
             dashtime = 0f;
@@ -193,10 +201,10 @@ public class Player : LivingEntity
         }
         else if (isDash)
         {
-            Vector3 DashPos = new Vector3(Dir, 0, 0) * 2 * MaxSpeed * Time.deltaTime;//´ë½¬ÇÒ¶§ ´ÙÀ½À§Ä¡
-            transform.position = curPos + DashPos;//´õÇØ¼­ À§Ä¡º¯°æ
+            Vector3 DashPos = new Vector3(Dir, 0, 0) * 2 * MaxSpeed * Time.deltaTime;//ï¿½ë½¬ï¿½Ò¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡
+            transform.position = curPos + DashPos;//ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½
         }
-    }//´ë½¬ ÇÔ¼ö
+    }//ï¿½ë½¬ ï¿½Ô¼ï¿½
     
     private void StaminaCheck()
     {
@@ -209,11 +217,11 @@ public class Player : LivingEntity
             }
         }
         StaminaSlider.value = stamina;
-    }//½ºÅ×¹Ì³ª È¸º¹°Ë»ç 
+    }//ï¿½ï¿½ï¿½×¹Ì³ï¿½ È¸ï¿½ï¿½ï¿½Ë»ï¿½ 
 
     public void SetDirection(float h) 
     {
-        Dir = h;//¸¶Áö¸· ¹æÇâ ÀúÀå(Ã¼Å©ÇÒ¶§ »ç¿ë)
+        Dir = h;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(Ã¼Å©ï¿½Ò¶ï¿½ ï¿½ï¿½ï¿½)
     }
 
     public bool GetMoveCheck()
@@ -224,25 +232,25 @@ public class Player : LivingEntity
     public bool GetDashCheck()
     {
         return isDash;
-    }//´ë½¬ÇßÀ½À» Ã¼Å©ÇØ¼­ º¸³»ÁÜ
+    }//ï¿½ë½¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     private void DashReset()
     {
         isDash = false;
         animator.SetBool("isDash", false);
-    }//´ë½¬ÀÌÈÄ ÃÊ±âÈ­
+    }//ï¿½ë½¬ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
 
     //private void JumpReset()
     //{
     //    isJump = false;
-    //}//Á¡ÇÁ ÀÌÈÄ ÃÊ±âÈ­
+    //}//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
 
     public override void Die()
     {
 
         base.Die();
-        animator.SetTrigger("Die");//¾Ö´Ï¸ÞÀÌÅÍ¿¡ Die Æ®¸®°Å¸¦ Àü´ÞÇØ¼­ »ç¸Á ¾Ö´Ï¸ÞÀÌ¼Ç Àç»ý
-        Invoke("Dead", 1.2f);//Àá½ÃÈÄ¿¡ ¿ÀºêÁ§Æ® ºñÈ°¼ºÈ­
+        animator.SetTrigger("Die");//ï¿½Ö´Ï¸ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ Die Æ®ï¿½ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½
+        Invoke("Dead", 1.2f);//ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È°ï¿½ï¿½È­
     }
 
     public override void RestoreHealth(float newHealth)
@@ -260,8 +268,9 @@ public class Player : LivingEntity
 
     private void Dead()
     {
-        gameObject.SetActive(false);//¿ÀºêÁ§Æ® ºñÈ°¼ºÈ­
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //gameObject.SetActive(false);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È°ï¿½ï¿½È­
+        ItemManager.Instance.RemoveAllItemDatas(this);
+        SceneController.Instance.ChangeSceneTo("EscapeFailed", true);
     }
 
     private void HealthCheck()
@@ -273,7 +282,7 @@ public class Player : LivingEntity
     //{
     //    lastYpos = transform.position.y;
     //    isFallDamage = false;
-    //    Debug.Log("¶³¾îÁü");
+    //    Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
     //}
 
     private void FallDamage(float time)
@@ -294,14 +303,14 @@ public class Player : LivingEntity
         Collider2D col = Physics2D.OverlapBox(transform.position, boxsize, 0, LayerMask.GetMask("Floor"));
         if(col != null)
         {
-            Debug.Log("Áö¸é¿¡ ÀÖ½À´Ï´Ù");
+            Debug.Log("ï¿½ï¿½ï¿½é¿¡ ï¿½Ö½ï¿½ï¿½Ï´ï¿½");
             FallDamage(Falltime);
             Falltime = 0f;
             isFall = false;
         }
         else if(col == null)
         {
-            Debug.Log("°øÁß¿¡ ¶ä");
+            Debug.Log("ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½");
             isFall = true;
         }
     }
@@ -342,6 +351,42 @@ public class Player : LivingEntity
             isWall = false;
         }
     }
+
+    private void OnApplicationQuit() {
+        RemoveData();
+    }
+
+    public void SaveData() {
+        string jsonData = JsonUtility.ToJson(transform.position);
+        PlayerPrefs.SetString("PlayerPosition", jsonData);
+        PlayerPrefs.SetFloat("PlayerHealth", Health);
+        PlayerPrefs.SetFloat("PlayerStamina", stamina);
+    }
+
+    public void LoadData() {
+        if((PlayerPrefs.HasKey("PlayerPosition") && PlayerPrefs.HasKey("PlayerHealth") && PlayerPrefs.HasKey("PlayerStamina") ) == false)
+            return;
+
+        string positionData = PlayerPrefs.GetString("PlayerPosition");
+        if(positionData == string.Empty || positionData == "")
+            return;
+
+        Vector3 position = JsonUtility.FromJson<Vector3>(positionData);
+        if(position == null)
+            return;
+
+        transform.position = position;
+
+        Health = PlayerPrefs.GetFloat("PlayerHealth");
+        stamina = PlayerPrefs.GetFloat("PlayerStamina");
+    }
+
+    public void RemoveData() {
+        PlayerPrefs.DeleteKey("PlayerPosition");
+        PlayerPrefs.DeleteKey("PlayerHealth");
+        PlayerPrefs.DeleteKey("PlayerStamina");
+        PlayerPrefs.Save();
+    }
 }
-//Vector3 nextPos = new Vector3(h, 0, 0) * Speed * Time.deltaTime;//Å°ÀÔ·Â¿¡ µû¸¥ ´ÙÀ½ À§Ä¡
-//transform.position = curPos + nextPos;//ÇöÀçÀ§Ä¡¿Í ´ÙÀ½À§Ä¡¸¦ ´õÇÔÀ¸·Î½á ÀÌµ¿(ÀÌÀü ·ÎÁ÷ Áö±ÝÀº »ç¿ë¾ÈÇÔ)
+//Vector3 nextPos = new Vector3(h, 0, 0) * Speed * Time.deltaTime;//Å°ï¿½Ô·Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
+//transform.position = curPos + nextPos;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î½ï¿½ ï¿½Ìµï¿½(ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)

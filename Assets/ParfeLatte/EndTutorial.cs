@@ -15,6 +15,9 @@ public class EndTutorial : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(GameManager.IsPause)
+            return;
+
         if(isinterect && Input.GetKeyDown(KeyCode.F))
         {
             SceneManager.LoadScene("Lab");
