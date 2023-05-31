@@ -250,7 +250,7 @@ public class Player : LivingEntity, IDataIO
 
         base.Die();
         animator.SetTrigger("Die");//�ִϸ����Ϳ� Die Ʈ���Ÿ� �����ؼ� ��� �ִϸ��̼� ���
-        Invoke("Dead", 1.2f);//����Ŀ� ������Ʈ ��Ȱ��ȭ
+        Invoke("Dead", 0.8f);//����Ŀ� ������Ʈ ��Ȱ��ȭ
     }
 
     public override void RestoreHealth(float newHealth)

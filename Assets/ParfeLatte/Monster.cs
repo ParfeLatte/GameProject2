@@ -42,6 +42,7 @@ public class Monster : LivingEntity
     public bool isEventMob;//이벤트 몬스터가 아니라면 false
 
     public GameObject HammerHitEffect;
+    public GameObject BloodEffect;
 
     public Vector3 lastPlayerPosition;//위치 비교용
 
@@ -49,6 +50,8 @@ public class Monster : LivingEntity
     private Rigidbody2D MR;
     private Animator animator;
     private SpriteRenderer MonsterRenderer;
+    private SpriteRenderer Hammer;
+    private SpriteRenderer Blood;
     private EventMonster CheckEvent;
 
     private Vector3 curPos;//현재위치
@@ -63,6 +66,8 @@ public class Monster : LivingEntity
         MR = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         MonsterRenderer = GetComponent<SpriteRenderer>();
+        Hammer = HammerHitEffect.GetComponent<SpriteRenderer>();
+        Blood = BloodEffect.GetComponent<SpriteRenderer>();
         CheckEventMob();
         Player = GameObject.Find("Player");
         SleepState = 0;//깊은수면 상태로 스폰
@@ -222,14 +227,14 @@ public class Monster : LivingEntity
                 {
                     Dir = 1;//방향 오른쪽
                     dirVec = new Vector3(1f, 0f, 0f);//Ray 발사방향
-                    MonsterRenderer.flipX = false;//스프라이트 반전x(오른쪽 봄)
+                    SpriteSwapRight();
                     animator.SetBool("isIdle", false);
                 }
                 else if (Dir == -1f)
                 {
                     Dir = -1;//방향 왼쪽
                     dirVec = new Vector3(-1, 0f, 0f);//Ray 발사방향
-                    MonsterRenderer.flipX = true;//스프라이트 반전 O(왼쪽보게)
+                    SpriteSwapLeft();
                     animator.SetBool("isIdle", false);
                 }
                 Debug.Log("떠돌아다니는중");
@@ -240,13 +245,13 @@ public class Monster : LivingEntity
                 {
                     Dir = 1;//방향 오른쪽
                     dirVec = new Vector3(1f, 0f, 0f);//Ray 발사방향
-                    MonsterRenderer.flipX = false;//스프라이트 반전x(오른쪽 봄)
+                    SpriteSwapRight();
                 }
                 else if ((xdistance < 0))
                 {
                     Dir = -1;//방향 왼쪽
                     dirVec = new Vector3(-1, 0f, 0f);//Ray 발사방향
-                    MonsterRenderer.flipX = true;//스프라이트 반전 O(왼쪽보게)
+                    SpriteSwapLeft();
                 }
                 if (Dist <= ColDist)
                 {
@@ -257,7 +262,22 @@ public class Monster : LivingEntity
             transform.position = curPos + NextPos;//플레이어 향해서 이동(추적)
         }
     }//깨어있는 동안 행동하는 루틴
+    
+    private void SpriteSwapRight()
+    {
+        MonsterRenderer.flipX = false;//스프라이트 반전x(오른쪽 봄)
+        Hammer.flipX = true;
+        Blood.flipX = true;
+    }
 
+    private void SpriteSwapLeft()
+    {
+        MonsterRenderer.flipX = true;//스프라이트 반전x(오른쪽 봄)
+        Hammer.flipX = false;
+        Blood.flipX = false;
+    }
+
+    
     private float Think()
     {
         int NextMove = UnityEngine.Random.Range(0, 3);
@@ -368,6 +388,7 @@ public class Monster : LivingEntity
     {
         Health -= damage;//체력에서 데미지만큼 깎음
         HammerHitEffect.SetActive(true);
+        BloodEffect.SetActive(true);
         Invoke("ReadyEffect", 0.2f);
         //모션
         //사운드
@@ -387,6 +408,7 @@ public class Monster : LivingEntity
     private void ReadyEffect()
     {
         HammerHitEffect.SetActive(false);
+        BloodEffect.SetActive(false);
     }
 
     public override void Die()
