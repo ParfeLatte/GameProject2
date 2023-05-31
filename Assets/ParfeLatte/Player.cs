@@ -17,13 +17,14 @@ public class Player : LivingEntity
     public float dashtime;//대쉬한지 얼마나 지났는지 체크해서 스테미너 채움
     public float lastYpos;//점프나 땅에서 떨어졌을 때 마지막 y값
     public float CurYpos;//착지 시에 비교할 y값
+    public float Falltime;
 
     public bool isDash;//대쉬했는지 체크
     public bool isMove;//움직였는지 체크
     public bool isWall;//벽에 부딪혔는지 체크
     public bool isJump;//점프했는지 체크
     public bool isCharge;//공격충전중인지
-    public bool isFallDamage;//낙뎀받았는지
+    public bool isFall;//낙뎀받았는지
 
     public Slider HealthSlider;//체력UI
     public Slider StaminaSlider;//스테미너UI
@@ -43,6 +44,7 @@ public class Player : LivingEntity
     private Vector3 curPos;//현재 위치
     private Vector3 dirVec;//바라보는 방향
 
+    private Vector2 boxsize = new Vector2(1f, 1f);
 
     void Awake()
     {
@@ -60,6 +62,7 @@ public class Player : LivingEntity
     // Update is called once per frame
     void Update()
     {
+        //Debug.DrawRay(transform.position, Vector2.down, new Color(0, 1, 0));
         h = Input.GetAxisRaw("Horizontal");
         curPos = transform.position;//현재위치
         if(h != 0 && !isDash && !isJump)
@@ -68,7 +71,7 @@ public class Player : LivingEntity
             dirVec = new Vector3(h, 0f, 0f);
             isMove = true;
             animator.SetBool("isMove", true);
-        }
+        }   
         else if(h == 0)
         {
             isMove = false;
@@ -77,6 +80,10 @@ public class Player : LivingEntity
 
         AttackTime += Time.deltaTime;
         
+        if (isFall)
+        {
+            Falltime += Time.deltaTime;
+        }
         flipSpr();//좌우반전
         if (!isDead)
         {
@@ -85,17 +92,18 @@ public class Player : LivingEntity
             Dash();//대쉬
             Move();//이동
             StaminaCheck();
+            CheckFallDamage();
             dashtime += Time.deltaTime;
         }
     }
 
     private void AttackCheck()
     {
-            if (Input.GetKeyDown(KeyCode.Z) && AttackTime >= CoolTime && !isCharge)
+            if (Input.GetKeyDown(KeyCode.J) && AttackTime >= CoolTime && !isCharge)
             {
                 animator.SetBool("isCharge", true);
             }
-            if (Input.GetKey(KeyCode.Z) && AttackTime >= CoolTime)//키는 임시임 J를 누르는 중일때
+            if (Input.GetKey(KeyCode.J) && AttackTime >= CoolTime)//키는 임시임 J를 누르는 중일때
             {
                 ChargeTime += Time.deltaTime;
                 h = 0;
@@ -103,7 +111,7 @@ public class Player : LivingEntity
                 isCharge = true;
                 //Debug.Log("공격 차징중");
             }
-            if (Input.GetKeyUp(KeyCode.Z) && isCharge && AttackTime >= CoolTime)//키를 뗐을때
+            if (Input.GetKeyUp(KeyCode.J) && isCharge && AttackTime >= CoolTime)//키를 뗐을때
             {
                 isCharge = false;
                 animator.SetBool("isCharge", false);
@@ -142,7 +150,7 @@ public class Player : LivingEntity
     }//방향에 맞게 스프라이트 뒤집음
     private void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow) && !isJump)
+        if (Input.GetKeyDown(KeyCode.W) && !isJump)
         {
             isJump = true;//점프했다
             PR.velocity = Vector2.up * JumpForce;//순간 속력을 위로 점프력만큼 줌
@@ -261,22 +269,47 @@ public class Player : LivingEntity
         HealthSlider.value = Health;
     }
 
-    private void SetLastPos()
+    //private void SetLastPos()
+    //{
+    //    lastYpos = transform.position.y;
+    //    isFallDamage = false;
+    //    Debug.Log("떨어짐");
+    //}
+
+    private void FallDamage(float time)
     {
-        lastYpos = transform.position.y;
-        isFallDamage = false;
-        Debug.Log("떨어짐");
+        if(time < 1f) return;
+
+        if(time >= 1.5f)
+        {
+            damaged(100f);
+        }
+        else if(time >= 1f)
+        {
+            damaged(50f);
+        }
     }
     private void CheckFallDamage()
     {
-        float Ydiff = Mathf.Abs(lastYpos - transform.position.y);
-        if (!isFallDamage && Ydiff > 30f)
+        Collider2D col = Physics2D.OverlapBox(transform.position, boxsize, 0, LayerMask.GetMask("Floor"));
+        if(col != null)
         {
-            isFallDamage = true;
-            damaged(25f);
-            Debug.Log("착지함");
+            Debug.Log("지면에 있습니다");
+            FallDamage(Falltime);
+            Falltime = 0f;
+            isFall = false;
         }
-        isFallDamage = true;
+        else if(col == null)
+        {
+            Debug.Log("공중에 뜸");
+            isFall = true;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(transform.position, boxsize);
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
@@ -284,10 +317,6 @@ public class Player : LivingEntity
         {
             isJump = false;
             animator.SetBool("isJump", false);
-            if (!isFallDamage)
-            {
-                CheckFallDamage();
-            }
         }
         if (col.gameObject.tag == "Wall")
         {
@@ -311,10 +340,6 @@ public class Player : LivingEntity
         if(col.gameObject.tag == "Wall")
         {
             isWall = false;
-        }
-        if(col.gameObject.tag == "Floor")
-        {
-            SetLastPos();
         }
     }
 }

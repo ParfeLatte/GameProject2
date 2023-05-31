@@ -7,6 +7,7 @@ public class Elevator : MonoBehaviour
     public GameObject elevator;
     public GameObject elevatorDoor;
     public Animator elevAnim;
+    public InteractObj UI;
     public int floor;//몇 층인지
     public bool Reverse;//true일때 아래로, false일때 위로
     public bool isMove;//움직이는지 안움직이는지
@@ -34,6 +35,7 @@ public class Elevator : MonoBehaviour
     public void Move()
     {
         isMove = true;
+        UI.HideInteractUI();
         elevatorDoor.SetActive(true);
         elevAnim.SetBool("isOpen", false);
     }
@@ -45,6 +47,7 @@ public class Elevator : MonoBehaviour
             if (transform.position.y >= StopPos.position.y)
             {
                 isMove = false;
+                UI.ShowInteractUI();
                 elevatorDoor.SetActive(false);
                 elevAnim.SetBool("isOpen", true);
             }
@@ -54,6 +57,7 @@ public class Elevator : MonoBehaviour
             if(transform.position.y <= StopPos.position.y)
             {
                 isMove = false;
+                UI.ShowInteractUI();
                 elevatorDoor.SetActive(false);
                 elevAnim.SetBool("isOpen", true);
             }
@@ -63,6 +67,7 @@ public class Elevator : MonoBehaviour
     {
         if(floor == 3)
         {
+            UI.ShowInteractUI();
             return;
         }
         else if (floor == 1)
@@ -84,6 +89,7 @@ public class Elevator : MonoBehaviour
     {
         if(floor == 1)
         {
+            UI.ShowInteractUI();
             return;
         }
         if(floor == 3)

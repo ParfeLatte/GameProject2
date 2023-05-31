@@ -21,9 +21,13 @@ public class Monster : LivingEntity
     public float CoolTime;//공격 쿨타임
     public float AttackTime;//공격시간
     public float FallTime;
+    public float AttackTiming;//공격판정시간
     public float Dist;//몬스터와 플레이어 사이 거리
     public float YDist;//y축 거리
     public float Dir;//이동방향
+    public float AttackDist;//공격거리
+    public float ColDist;//플레이어와의 최소거리
+    public float DyingTime;//죽는모션까지 걸리는 시간
     public Vector3 dirVec;//레이 방향
 
     public Player player;//플레이어 코드
@@ -33,8 +37,11 @@ public class Monster : LivingEntity
     public bool isPlayerDash;//플레이어가 대쉬했는지 확인
     public bool isPlayerStop;//플레이어가 멈췄는가?
     public bool isAttack;//공격중인가?
-    public bool isFall;//넘어졋나?
+    public bool isFall;//넘어졋나?  
     public bool isWall;//벽에 부딪혔는가?
+    public bool isEventMob;//이벤트 몬스터가 아니라면 false
+
+    public GameObject HammerHitEffect;
 
     public Vector3 lastPlayerPosition;//위치 비교용
 
@@ -42,6 +49,7 @@ public class Monster : LivingEntity
     private Rigidbody2D MR;
     private Animator animator;
     private SpriteRenderer MonsterRenderer;
+    private EventMonster CheckEvent;
 
     private Vector3 curPos;//현재위치
     private Vector2 AddPos = new Vector2(0, 3f);//pivot을 아래로 고정했으므로 레이 검사때 위로
@@ -55,6 +63,7 @@ public class Monster : LivingEntity
         MR = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         MonsterRenderer = GetComponent<SpriteRenderer>();
+        CheckEventMob();
         Player = GameObject.Find("Player");
         SleepState = 0;//깊은수면 상태로 스폰
         SetStatus(SetHealth, SetDamage, SetSpeed);//일단 일반몹기준
@@ -94,16 +103,16 @@ public class Monster : LivingEntity
         }
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.blue;
-    //    Gizmos.DrawWireCube(AttackPos.position, boxSize);
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(AttackPos.position, boxSize);
+    }
 
     private void AttackCheck()
     {
-        RaycastHit2D GateHit= Physics2D.Raycast(RayPos, dirVec, 1.75f, LayerMask.GetMask("Gate"));//Ray를 발사하여 플레이어가 범위내에 있는지 확인
-        RaycastHit2D rayHit = Physics2D.Raycast(RayPos, dirVec, 1.75f, LayerMask.GetMask("Player"));//Ray를 발사하여 플레이어가 범위내에 있는지 확인
+        RaycastHit2D GateHit = Physics2D.Raycast(RayPos, dirVec, AttackDist, LayerMask.GetMask("Gate"));//Ray를 발사하여 플레이어가 범위내에 있는지 확인
+        RaycastHit2D rayHit = Physics2D.Raycast(RayPos, dirVec, AttackDist, LayerMask.GetMask("Player"));//Ray를 발사하여 플레이어가 범위내에 있는지 확인
         if (rayHit.collider != null)//레이에 충돌한 대상이 있으면
         {
             Player player = rayHit.collider.GetComponent<Player>();//플레이어 컴포넌트 할당
@@ -115,19 +124,19 @@ public class Monster : LivingEntity
             }
             //Debug.Log("공격합니다.");
         }
-        else if(GateHit.collider != null)
+        else if (GateHit.collider != null)
         {
             GateHP gatehp = GateHit.collider.GetComponent<GateHP>();
             Gate = gatehp;
-            if(Gate != null && AttackTime >= CoolTime)
+            if (Gate != null && AttackTime >= CoolTime)
             {
                 DoAttack();
             }
-            else if(Gate == null)
+            else if (Gate == null)
             {
                 return;
             }
-        }   
+        }
         else
         {
             AttackPlayer = null;
@@ -142,12 +151,12 @@ public class Monster : LivingEntity
         isMobMove = false;//잠시 움직임을 멈추고
         animator.SetBool("isMove", false);//애니메이션 파라미터에서 isMove를 false로 바꾸고
         animator.SetTrigger("Attack");//attack Trigger를 발동해서 공격 애니메이션 재생
-        Invoke("Attack", 0.4f);//애니메이션에서 휘두르는 모션에 맞게 공격
+        Invoke("Attack", AttackTiming);//애니메이션에서 휘두르는 모션에 맞게 공격
         AttackTime = 0;//다시 쿨타임
         Invoke("MoveAgain", 0.55f);//공격후에 다시 움직이도록
     }
 
-        private void Attack()
+    private void Attack()
     {
         Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(AttackPos.position, boxSize, 0);//오버랩 박스를 이용
         foreach (Collider2D collider in collider2Ds)
@@ -156,7 +165,7 @@ public class Monster : LivingEntity
             {
                 player.damaged(damage);//플레이어의 damaged 함수 호출해서 데미지를 줌
             }
-            else if(Gate != null && collider.tag == "Gate")
+            else if (Gate != null && collider.tag == "Gate")
             {
                 Gate.damaged(damage);//게이트에 피해를 줌
             }
@@ -164,7 +173,7 @@ public class Monster : LivingEntity
     }//범위내 공격
 
     public void MoveAgain()
-    { 
+    {
         animator.SetBool("isMove", true);//이동 애니메이션 셋
         isMobMove = true;//다시 움직임
     }
@@ -190,30 +199,11 @@ public class Monster : LivingEntity
     }
     private void OnWake()
     {
-        Debug.DrawRay(RayPos, dirVec * 1.75f, new Color(0, 1, 0));//레이캐스트 표시(거리 확인용)
+        Debug.DrawRay(RayPos, dirVec * AttackDist, new Color(0, 1, 0));//레이캐스트 표시(거리 확인용)
         float xdistance = player.transform.position.x - gameObject.transform.position.x;
         if (isMobMove == true)
         {
-            if (YDist <= 5)
-            {
-                if (xdistance > 0)
-                {
-                    Dir = 1;//방향 오른쪽
-                    dirVec = new Vector3(1f, 0f, 0f);//Ray 발사방향
-                    MonsterRenderer.flipX = false;//스프라이트 반전x(오른쪽 봄)
-                }
-                else if ((xdistance < 0))
-                {
-                    Dir = -1;//방향 왼쪽
-                    dirVec = new Vector3(-1, 0f, 0f);//Ray 발사방향
-                    MonsterRenderer.flipX = true;//스프라이트 반전 O(왼쪽보게)
-                }
-                if (Dist <= 1.3f)
-                {
-                    Dir = 0;
-                }
-            }
-            else if(YDist > 5)
+            if (YDist > 5 && !isEventMob)
             {
                 ThinkTime += Time.deltaTime;
                 if (ThinkTime >= 5f)
@@ -232,7 +222,7 @@ public class Monster : LivingEntity
                     MonsterRenderer.flipX = false;//스프라이트 반전x(오른쪽 봄)
                     animator.SetBool("isIdle", false);
                 }
-                else if(Dir == -1f)
+                else if (Dir == -1f)
                 {
                     Dir = -1;//방향 왼쪽
                     dirVec = new Vector3(-1, 0f, 0f);//Ray 발사방향
@@ -240,6 +230,25 @@ public class Monster : LivingEntity
                     animator.SetBool("isIdle", false);
                 }
                 Debug.Log("떠돌아다니는중");
+            }
+            else
+            {
+                if (xdistance > 0)
+                {
+                    Dir = 1;//방향 오른쪽
+                    dirVec = new Vector3(1f, 0f, 0f);//Ray 발사방향
+                    MonsterRenderer.flipX = false;//스프라이트 반전x(오른쪽 봄)
+                }
+                else if ((xdistance < 0))
+                {
+                    Dir = -1;//방향 왼쪽
+                    dirVec = new Vector3(-1, 0f, 0f);//Ray 발사방향
+                    MonsterRenderer.flipX = true;//스프라이트 반전 O(왼쪽보게)
+                }
+                if (Dist <= ColDist)
+                {
+                    Dir = 0;
+                }
             }
             Vector3 NextPos = new Vector3(Dir, 0, 0) * MaxSpeed * Time.deltaTime;
             transform.position = curPos + NextPos;//플레이어 향해서 이동(추적)
@@ -249,8 +258,8 @@ public class Monster : LivingEntity
     private float Think()
     {
         int NextMove = UnityEngine.Random.Range(0, 3);
-        if(NextMove == 0){ return 1f; }
-        else if(NextMove == 1) { return -1f; }
+        if (NextMove == 0) { return 1f; }
+        else if (NextMove == 1) { return -1f; }
         else { return 0f; }
     }
 
@@ -272,13 +281,13 @@ public class Monster : LivingEntity
             //Debug.Log("계속 움직이는 중입니다.");
         }//계속 움직임을 확인
     }//멈췄는지를 확인함 0.4초간 움직이지 않아야 멈춘걸로 임시판정 
-    
+
     public void AreaCheck(int state)
     {
         switch (state)
         {
             case 0://깊은수면 상태일때 검사
-                if(Dist <= 20)
+                if (Dist <= 20)
                 {
                     SleepState = 1;//중간수면으로
                     animator.SetInteger("SleepState", 1);
@@ -324,7 +333,7 @@ public class Monster : LivingEntity
 
     public void FallCheck()
     {
-        if(FallTime > 0.1f)
+        if (FallTime > 0.1f)
         {
             animator.SetBool("isFalling", true);
             isMobMove = false;
@@ -338,15 +347,29 @@ public class Monster : LivingEntity
         isFall = false;
         FallTime = 0f;
     }
-    
+
+    public void CheckEventMob()
+    {
+        CheckEvent = GetComponent<EventMonster>();
+        if (CheckEvent != null)
+        {
+            isEventMob = true;
+        }
+        else
+        {
+            isEventMob = false;
+        }
+    }//이벤트 몬스터인지 체크
+
     public override void damaged(float damage)
     {
         Health -= damage;//체력에서 데미지만큼 깎음
-        //Debug.Log("몬스터가 데미지를 입었습니다.");
+        HammerHitEffect.SetActive(true);
+        Invoke("ReadyEffect", 0.2f);
         //모션
         //사운드
 
-        if(SleepState != 3)
+        if (SleepState != 3)
         {
             MonsterAwake();//수면중일때 공격당하면 기상
         }
@@ -358,12 +381,17 @@ public class Monster : LivingEntity
         //피격시 실행할 내용
     }
 
+    private void ReadyEffect()
+    {
+        HammerHitEffect.SetActive(false);
+    }
+
     public override void Die()
     {
         isMobMove = false;//움직임 멈춤
         isDead = true;//사망했음
         animator.SetTrigger("Die");//애니메이터에 Die 트리거를 전달해서 사망 애니메이션 재생
-        Invoke("Destroy", 1.2f);//잠시후에 오브젝트 비활성화
+        Invoke("Destroy", DyingTime);//잠시후에 오브젝트 비활성화
     }
 
     private void Destroy()

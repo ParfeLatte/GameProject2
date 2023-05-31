@@ -5,10 +5,13 @@ using UnityEngine;
 public class LiftTest : MonoBehaviour
 {
     public GameObject Lift;
+    public InteractObj UI;
     public bool Reverse;//true일때 아래로, false일때 위로
     public bool isMove;//움직이는지 안움직이는지
     public List<GameObject> Objects = new List<GameObject>();
     Vector3 nextpos = new Vector3(0, 4f, 0);
+
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -31,11 +34,13 @@ public class LiftTest : MonoBehaviour
     public void Move()
     {
         isMove = true;
+        UI.HideInteractUI();
     }
 
     public void Stop()
     {
         isMove = false;
+        UI.ShowInteractUI();
     }
 
     public void Up()

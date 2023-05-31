@@ -7,6 +7,9 @@ public class GateCheck : MonoBehaviour
     public GameObject Gate;//문
     public GameManager Manager;//게임매니저
 
+    private InteractObj interactobj;
+    private BoxCollider2D col;
+
     public bool isOpen;//열렸는지
     public bool isDestroy;//파괴되었는지
     public bool GateStat;// false는 닫힘, true는 열림
@@ -17,6 +20,8 @@ public class GateCheck : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        col = GetComponent<BoxCollider2D>();
+        interactobj = GetComponent<InteractObj>();
         animator.enabled = true;//애니메이터를 켜서 문 애니메이션 재생가능
         Gate.SetActive(true);//못지나가도록 콜라이더 오브젝트인 문을 켬
         isOpen = false;//닫힘
@@ -24,7 +29,7 @@ public class GateCheck : MonoBehaviour
     }
     private void OpenClose()
     {
-        if (isOpen && Input.GetKeyDown(KeyCode.F) && !isDestroy)
+        if (isOpen && Input.GetKeyDown(KeyCode.F))
         {
             switch (GateStat) {
                 case false:
@@ -39,6 +44,7 @@ public class GateCheck : MonoBehaviour
 
     void Update()
     {
+        if (isDestroy) return;
         OpenClose();//열고닫음을 확인함
     }
 
@@ -64,9 +70,13 @@ public class GateCheck : MonoBehaviour
         animator.SetBool("isOpen", false);//역재생으로 문닫는 애니메이션 재생
         GateStat = false;
     }
+
+    
     public void DestroyGate()
     {
         isDestroy = true;
+        col.enabled = false;    
+        interactobj.enabled = false;    
         GateOpen();
     }
 

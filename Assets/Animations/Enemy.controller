@@ -81,32 +81,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &-6920804416830593960
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Monster_Deepsleep
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 7170b84cc6ac3dc42890a12b9073a257, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1102 &-6605690856076837485
 AnimatorState:
   serializedVersion: 6
@@ -401,9 +375,6 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -641860362728310989}
     m_Position: {x: -50, y: 360, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -6920804416830593960}
-    m_Position: {x: 850, y: 30, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 164926139307881752}
     m_Position: {x: 430, y: 500, z: 0}

@@ -45,6 +45,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: NoLight
+    uniqueID: 475374219
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Door
+    uniqueID: 197525895
+    locked: 0
+  - name: Monster
+    uniqueID: 4227523247
+    locked: 0
+  - name: Player
+    uniqueID: 3508731223
     locked: 0
