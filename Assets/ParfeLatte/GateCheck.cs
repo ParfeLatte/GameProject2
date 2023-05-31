@@ -1,8 +1,9 @@
+using Insomnia;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GateCheck : MonoBehaviour
+public class GateCheck : SearchableBase
 {
     public GameObject Gate;//문
     public GameManager Manager;//게임매니저
@@ -14,13 +15,18 @@ public class GateCheck : MonoBehaviour
 
     private Animator animator;
 
-    private void Awake()
-    {
+    protected override void Awake() {
+        base.Awake();
         animator = GetComponent<Animator>();
         animator.enabled = true;//애니메이터를 켜서 문 애니메이션 재생가능
         Gate.SetActive(true);//못지나가도록 콜라이더 오브젝트인 문을 켬
         isOpen = false;//닫힘
         isDestroy = false;
+    }
+
+
+    protected override void Start() {
+        base.Start();
     }
     private void OpenClose()
     {
@@ -39,6 +45,9 @@ public class GateCheck : MonoBehaviour
 
     void Update()
     {
+        if(GameManager.IsPause)
+            return;
+
         OpenClose();//열고닫음을 확인함
     }
 

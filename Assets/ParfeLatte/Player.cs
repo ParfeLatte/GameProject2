@@ -1,10 +1,12 @@
+using Insomnia;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static Insomnia.Defines;
 
-public class Player : LivingEntity
+public class Player : LivingEntity, IDataIO
 {
     public float AttackTime;//공격한시간
     public float CoolTime;//쿨타임
@@ -57,9 +59,16 @@ public class Player : LivingEntity
         StaminaSlider.value = stamina;
     }
 
+    private void Start() {
+        GameManager.Instance.AddPlayer(this);
+    }
+
     // Update is called once per frame
     void Update()
     {
+        if(GameManager.IsPause)
+            return;
+
         h = Input.GetAxisRaw("Horizontal");
         curPos = transform.position;//현재위치
         if(h != 0 && !isDash && !isJump)
@@ -252,8 +261,9 @@ public class Player : LivingEntity
 
     private void Dead()
     {
-        gameObject.SetActive(false);//오브젝트 비활성화
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //gameObject.SetActive(false);//오브젝트 비활성화
+        ItemManager.Instance.RemoveAllItemDatas(this);
+        SceneController.Instance.ChangeSceneTo("EscapeFailed", true);
     }
 
     private void HealthCheck()
@@ -316,6 +326,42 @@ public class Player : LivingEntity
         {
             SetLastPos();
         }
+    }
+
+    private void OnApplicationQuit() {
+        RemoveData();
+    }
+
+    public void SaveData() {
+        string jsonData = JsonUtility.ToJson(transform.position);
+        PlayerPrefs.SetString("PlayerPosition", jsonData);
+        PlayerPrefs.SetFloat("PlayerHealth", Health);
+        PlayerPrefs.SetFloat("PlayerStamina", stamina);
+    }
+
+    public void LoadData() {
+        if((PlayerPrefs.HasKey("PlayerPosition") && PlayerPrefs.HasKey("PlayerHealth") && PlayerPrefs.HasKey("PlayerStamina") ) == false)
+            return;
+
+        string positionData = PlayerPrefs.GetString("PlayerPosition");
+        if(positionData == string.Empty || positionData == "")
+            return;
+
+        Vector3 position = JsonUtility.FromJson<Vector3>(positionData);
+        if(position == null)
+            return;
+
+        transform.position = position;
+
+        Health = PlayerPrefs.GetFloat("PlayerHealth");
+        stamina = PlayerPrefs.GetFloat("PlayerStamina");
+    }
+
+    public void RemoveData() {
+        PlayerPrefs.DeleteKey("PlayerPosition");
+        PlayerPrefs.DeleteKey("PlayerHealth");
+        PlayerPrefs.DeleteKey("PlayerStamina");
+        PlayerPrefs.Save();
     }
 }
 //Vector3 nextPos = new Vector3(h, 0, 0) * Speed * Time.deltaTime;//키입력에 따른 다음 위치

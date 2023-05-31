@@ -24,7 +24,10 @@ public class Elevator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isMove)
+        if(GameManager.IsPause)
+            return;
+
+        if(isMove)
         {
             ElevMove();
             StopCheck();

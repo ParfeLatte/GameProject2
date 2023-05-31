@@ -25,6 +25,13 @@ namespace Insomnia {
             m_itemDatas.Remove(item);
         }
 
+        public void RemoveAllItemDatas(Player player) {
+            if(player.isDead == false)
+                return;
+
+            m_itemDatas.Clear();
+        }
+
         public KeyValuePair<CommandError, ObjectData[]> GetItemDatasForList(Terminal terminal, string itemID, string locationID) {
             SearchableBase[] items = default(SearchableBase[]);
             ObjectData[] ret = default(ObjectData[]);

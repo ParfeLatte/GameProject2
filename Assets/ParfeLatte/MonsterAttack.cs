@@ -14,7 +14,10 @@ public class MonsterAttack : MonoBehaviour
 
     void Update()
     {
-        if (monster.Dir == 1)
+        if(GameManager.IsPause)
+            return;
+
+        if(monster.Dir == 1)
         {
             this.transform.localPosition = new Vector3(curPos.x, curPos.y, curPos.z);//공격 범위 위치 조절(플레이어 오른쪽)
         }

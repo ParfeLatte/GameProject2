@@ -11,7 +11,10 @@ public class ElevatorButton : Interactable
 
     private void Update()
     {
-        if (isKey)
+        if(GameManager.IsPause)
+            return;
+
+        if(isKey)
         {
             CheckUpDown();
         }

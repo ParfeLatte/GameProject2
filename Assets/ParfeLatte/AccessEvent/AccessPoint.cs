@@ -1,9 +1,11 @@
+using Insomnia;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Insomnia.Defines;
 
-public class AccessPoint : MonoBehaviour
+public class AccessPoint : SearchableBase, IDataIO
 {
     public KeyCard keycard;
     public GameManager gameManager;
@@ -17,8 +19,9 @@ public class AccessPoint : MonoBehaviour
 
     private bool isPlayer;  //플레이어가 접근했는지
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         isEvent = false;
         isEnd = false;
         CanAccess = false;
@@ -26,9 +29,16 @@ public class AccessPoint : MonoBehaviour
         accessLevel = keycard.AccessLevel;
     }
 
+    protected override void Start() {
+        base.Start();
+        LoadData();
+    }
+
     void Update()
     {
-        
+        if(GameManager.IsPause)
+            return;
+
         if(isPlayer && Input.GetKeyDown(KeyCode.F)){
             switch (accessLevel)
             {
@@ -72,6 +82,7 @@ public class AccessPoint : MonoBehaviour
         isEvent = false;//이벤트가 끝남
         CanAccess = true;//키카드에 접근가능
         Debug.Log("이벤트가 끝났습니다.\n키카드에 승인가능합니다.");
+        SaveData();
     }
 
     private void StartEvent()
@@ -87,6 +98,7 @@ public class AccessPoint : MonoBehaviour
         {
             StartEvent();//이벤트 발생!!
             Debug.Log("이벤트 시작");
+            SaveData();
         }
         else if (isEvent && !CanAccess)
         {
@@ -99,6 +111,7 @@ public class AccessPoint : MonoBehaviour
             KeyCardCheck();//키카드를 획득했음을 게임매니저에 전달
             Debug.Log(accessLevel +"Lv키카드를 획득했습니다.");
             gameObject.SetActive(false);//키카드 제거(오브젝트에서)
+            SaveData();
         }
     }
 
@@ -117,5 +130,42 @@ public class AccessPoint : MonoBehaviour
         {
             isPlayer = false;//엑세스 확인(첫 접근에는 이벤트 시작, 이벤트 중에는 접근 불가능, 이벤트 끝난 후에 키카드 획득 가능)
         }
+    }
+
+    private void OnApplicationQuit() {
+        RemoveData();
+    }
+
+    public void SaveData() {
+        string jsonData = JsonUtility.ToJson(this);
+        PlayerPrefs.SetString(gameObject.name, jsonData );
+        PlayerPrefs.Save();
+
+
+        //public bool isEvent;
+        //public bool isEnd;
+        //public bool CanAccess;
+
+        PlayerPrefs.SetInt(gameObject.name, 1);
+        PlayerPrefs.SetInt(gameObject.name + "_isEvent", isEvent ? 1 : 0);
+        PlayerPrefs.SetInt(gameObject.name + "_isEnd", isEnd ? 1 : 0);
+        PlayerPrefs.SetInt(gameObject.name + "_CanAccess", CanAccess ? 1 : 0);
+        PlayerPrefs.SetInt(gameObject.name + "_activeSelf", gameObject.activeSelf ? 1 : 0);
+        PlayerPrefs.Save();
+}
+
+public void LoadData() {
+        if(PlayerPrefs.HasKey(gameObject.name) == false) 
+            return;
+
+        gameObject.SetActive(PlayerPrefs.GetInt(gameObject.name + "_activeSelf") == 1 ? true : false);
+        isEvent = PlayerPrefs.GetInt(gameObject.name + "_isEvent") == 1 ? true : false;
+        isEnd = PlayerPrefs.GetInt(gameObject.name + "_isEnd") == 1 ? true : false;
+        CanAccess = PlayerPrefs.GetInt(gameObject.name + "_CanAccess") == 1 ? true : false;
+    }
+
+    public void RemoveData() {
+        PlayerPrefs.DeleteKey(gameObject.name);
+        PlayerPrefs.Save();
     }
 }

@@ -18,6 +18,9 @@ public class LiftTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(GameManager.IsPause)
+            return;
+
         if(Reverse && isMove)
         {
             Down();

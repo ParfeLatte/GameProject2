@@ -4,6 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Insomnia {
+    [Serializable]
+    public enum SceneType {
+        Main,
+        Tutorial,
+        Lab,
+        Loading,
+        EscapeFailed,
+    }
+
+
     public class Defines : MonoBehaviour {
         #region Enums
         public enum ObjectType {
@@ -31,6 +41,8 @@ namespace Insomnia {
             InvalidID = 6,
 
         }
+
+
         #endregion
 
         #region Structs
@@ -49,6 +61,12 @@ namespace Insomnia {
         public interface ISceneChangeEffector {
             void OnSceneChangeStart(IEnumerator<Action> coroutine);
             void OnSceneChangeFinish();
+        }
+
+        public interface IDataIO {
+            public void SaveData();
+            public void LoadData();
+            public void RemoveData();
         }
 
         #endregion

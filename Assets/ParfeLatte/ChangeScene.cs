@@ -1,3 +1,4 @@
+using Insomnia;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,26 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class ChangeScene : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     
     public void changeToGame()
     {
-        SceneManager.LoadScene("Lab");
+        //SceneManager.LoadScene("Lab");
+        SceneController.Instance.ChangeSceneTo("Lab");
     }
 
     public void changeToTutorial()
     {
-        SceneManager.LoadScene("Tutorial");
+        SceneController.Instance.ChangeSceneTo("Tutorial");
     }
 
     public void changeToMain()

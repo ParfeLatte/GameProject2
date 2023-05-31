@@ -13,7 +13,7 @@ public class Terminal : SearchableBase {
         m_terminalUI.SetTerminal(this);
     }
 
-    private void Start() {
-        ItemManager.Instance.AddSearchable(this);
+    protected override void Start() {
+        base.Start();
     }
 }

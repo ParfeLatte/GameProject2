@@ -134,22 +134,22 @@ namespace Insomnia {
         /// </summary>
         /// <param name="loadingTime"></param>
         /// <returns></returns>
-        private IEnumerator CoLoadData(IEnumerator<KeyValuePair<float, List<string>>> result) {
+        private IEnumerator CoLoadData(IEnumerator<KeyValuePair<float, List<string>>> runCommand) {
             float processInterval = 0f;
             int loadingCommand = m_maxIndex;
             string commandOrigin = new string(commandContainer[loadingCommand]);
 
             while(true) {
-                if(result.MoveNext() == false)
+                if(runCommand.MoveNext() == false)
                     break;
 
-                KeyValuePair<float, List<string>> current = result.Current;
+                KeyValuePair<float, List<string>> result = runCommand.Current;
                 processInterval = 0f;
-                if(current.Key >= 0.1f)
+                if(result.Key >= 0.1f)
                     m_loading = true;
 
 
-                while(processInterval <= current.Key) {
+                while(processInterval <= result.Key) {
                     yield return null;
                     processInterval += Time.deltaTime;
                     if(commandContainer.Count != 0)
@@ -157,9 +157,9 @@ namespace Insomnia {
                     DisplayCommand();
                 }
 
-                if(current.Value != null) {
-                    if(current.Value.Count > 0)
-                        commandContainer.AddRange(current.Value);
+                if(result.Value != null) {
+                    if(result.Value.Count > 0)
+                        commandContainer.AddRange(result.Value);
                 }
 
                 DisplayCommand();
