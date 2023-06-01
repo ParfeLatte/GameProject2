@@ -11,11 +11,12 @@ public class LiftTest : MonoBehaviour
     public List<GameObject> Objects = new List<GameObject>();
     Vector3 nextpos = new Vector3(0, 4f, 0);
 
+    private ElevatorSound Sound;
 
     // Start is called before the first frame update
     void Awake()
     {
-        
+        Sound = GetComponent<ElevatorSound>();
     }
 
     // Update is called once per frame
@@ -37,12 +38,14 @@ public class LiftTest : MonoBehaviour
     public void Move()
     {
         isMove = true;
+        Sound.MoveSound();
         UI.HideInteractUI();
     }
 
     public void Stop()
     {
         isMove = false;
+        Sound.StopSound();
         UI.ShowInteractUI();
     }
 
