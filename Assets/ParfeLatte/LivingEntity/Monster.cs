@@ -33,7 +33,8 @@ public class Monster : LivingEntity
     public Vector3 dirVec;//레이 방향
 
     public Player player;//플레이어 코드
-    public GateHP Gate;
+    public GameObject Gate;
+    public GateHP Gatehp;
     //public MonsterAttack Attack;//공격 실행 스크립트
 
     public bool isPlayerDash;//플레이어가 대쉬했는지 확인
@@ -60,7 +61,7 @@ public class Monster : LivingEntity
     private Vector3 curPos;//현재위치
     private Vector2 AddPos = new Vector2(0, 3f);//pivot을 아래로 고정했으므로 레이 검사때 위로
     private Vector2 RayPos;//레이 방향
-    private GameObject AttackPlayer;//공격대상
+    public GameObject AttackPlayer;//공격대상
 
     private bool isMobMove = false;//몬스터가 움직이는지
 
@@ -124,7 +125,6 @@ public class Monster : LivingEntity
 
     private void AttackCheck()
     {
-        RaycastHit2D GateHit = Physics2D.Raycast(RayPos, dirVec, AttackDist, LayerMask.GetMask("Gate"));//Ray를 발사하여 플레이어가 범위내에 있는지 확인
         RaycastHit2D rayHit = Physics2D.Raycast(RayPos, dirVec, AttackDist, LayerMask.GetMask("Player"));//Ray를 발사하여 플레이어가 범위내에 있는지 확인
         if (rayHit.collider != null)//레이에 충돌한 대상이 있으면
         {
@@ -137,10 +137,16 @@ public class Monster : LivingEntity
             }
             //Debug.Log("공격합니다.");
         }
-        else if (GateHit.collider != null)
+        else
         {
-            GateHP gatehp = GateHit.collider.GetComponent<GateHP>();
-            Gate = gatehp;
+            AttackPlayer = null;
+        }
+
+        RaycastHit2D GateHit = Physics2D.Raycast(RayPos, dirVec, AttackDist, LayerMask.GetMask("Gate"));//Ray를 발사하여 플레이어가 범위내에 있는지 확인
+        if (GateHit.collider != null)
+        {
+            Gatehp = GateHit.collider.GetComponentInChildren<GateHP>();
+            Gate = GateHit.collider.gameObject;
             if (Gate != null && AttackTime >= CoolTime)
             {
                 DoAttack();
@@ -152,7 +158,6 @@ public class Monster : LivingEntity
         }
         else
         {
-            AttackPlayer = null;
             Gate = null;
             //Debug.Log("사정거리내에 아무도 없음");
             //Debug.Log("계속 추적합니다");
@@ -180,9 +185,9 @@ public class Monster : LivingEntity
                 player.damaged(damage);//플레이어의 damaged 함수 호출해서 데미지를 줌
                 Sound.PlayAttackSound(MobType);
             }
-            else if (Gate != null && collider.tag == "Gate")
+            else if (Gate != null && collider.tag == "Wall")
             {
-                Gate.damaged(damage);//게이트에 피해를 줌
+                Gatehp.damaged(damage);//게이트에 피해를 줌
             }
         }
     }//범위내 공격
@@ -450,8 +455,8 @@ public class Monster : LivingEntity
     {
         if (col.gameObject.tag == "Wall")
         {
-            Dir = 0;
             isWall = true;
+            Dir = 0;
         }
         if(col.gameObject.tag == "Floor" && isFall)
         {

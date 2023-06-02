@@ -46,7 +46,7 @@ public class AccessPoint : SearchableBase, IDataIO
                     TargetCheck();
                     break;
                 default:
-                    CheckAccess();//플레이어가 범위 내에 있을때 U를 눌렀으면 접근시도
+                    CheckAccess();//플레이어가 범위 내에 있을때 F를 눌렀으면 접근시도
                     break;
             }
         }
