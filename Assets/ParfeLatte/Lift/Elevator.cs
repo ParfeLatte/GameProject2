@@ -15,9 +15,12 @@ public class Elevator : MonoBehaviour
     public List<Transform> Floors = new List<Transform>();//Ãþ À§Ä¡
     public Transform StopPos;
     Vector3 nextpos = new Vector3(0, 8f, 0);
+
+    private ElevatorSound Sound;
     // Start is called before the first frame update
     void Awake()
     {
+        Sound = GetComponent<ElevatorSound>();
         elevatorDoor.SetActive(false);
         elevAnim.SetBool("isOpen", true);
     }
@@ -39,6 +42,8 @@ public class Elevator : MonoBehaviour
     {
         isMove = true;
         UI.HideInteractUI();
+        Sound.CloseSound();
+        Sound.MoveSound();
         elevatorDoor.SetActive(true);
         elevAnim.SetBool("isOpen", false);
     }
@@ -50,9 +55,11 @@ public class Elevator : MonoBehaviour
             if (transform.position.y >= StopPos.position.y)
             {
                 isMove = false;
-                UI.ShowInteractUI();
+                Sound.StopSound();
+                Sound.OpenSound();
                 elevatorDoor.SetActive(false);
                 elevAnim.SetBool("isOpen", true);
+                UI.ShowInteractUI();
             }
         }
         else if(Reverse)
@@ -60,9 +67,11 @@ public class Elevator : MonoBehaviour
             if(transform.position.y <= StopPos.position.y)
             {
                 isMove = false;
-                UI.ShowInteractUI();
+                Sound.StopSound();
+                Sound.OpenSound();
                 elevatorDoor.SetActive(false);
                 elevAnim.SetBool("isOpen", true);
+                UI.ShowInteractUI();
             }
         }
     }
