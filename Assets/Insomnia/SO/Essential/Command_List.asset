@@ -15,6 +15,9 @@ MonoBehaviour:
   m_command: LIST
   m_loadingTime: 3
   m_Description: "LIST\t\tShow the full floor inventory, displaying all essential
-    equipment available on the floor\n\t\tUsage: LIST [FILTER]\n\t\tAttributes:\n\t\t[FILTER]
-    \t\t\tOptional filter to get a smaller list of objects\n\t\tExample: LIST HSU
-    ZONE_1, will only display data from Zone_1 containing 'HSU'\n"
+    equipment available on the floor\r\n\t\tUsage: LIST [FILTER]\r\n\t\tAttributes:\r\n\t\t[FILTER]\t\tOptional
+    filter to get a smaller list of objects\r\n\t\tExample: LIST HSU ZONE_1, will
+    only display data from Zone_1 containing 'HSU'\r\n"
+  onCommandSuccess:
+    m_PersistentCalls:
+      m_Calls: []

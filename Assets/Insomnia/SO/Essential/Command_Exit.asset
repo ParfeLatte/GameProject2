@@ -15,3 +15,6 @@ MonoBehaviour:
   m_command: EXIT
   m_loadingTime: 0
   m_Description: "EXIT\t\tExit the terminal screen\n"
+  onCommandSuccess:
+    m_PersistentCalls:
+      m_Calls: []

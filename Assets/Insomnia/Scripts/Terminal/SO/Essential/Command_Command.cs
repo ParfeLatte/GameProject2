@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Insomnia {
-    [CreateAssetMenu(menuName ="Command/TerminalControl/Command", fileName ="Command_Command")]
+    [CreateAssetMenu(menuName ="Command/Essential/Command", fileName ="Command_Command")]
     public class Command_Command : TerminalCommand {
 
         public override IEnumerator<KeyValuePair<float, List<string>>> RunCommand(Terminal terminal, string command) {

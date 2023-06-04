@@ -98,7 +98,6 @@ public class AccessPoint : SearchableBase, IDataIO
         {
             StartEvent();//이벤트 발생!!
             Debug.Log("이벤트 시작");
-            SaveData();
         }
         else if (isEvent && !CanAccess)
         {
@@ -159,7 +158,6 @@ public void LoadData() {
             return;
 
         gameObject.SetActive(PlayerPrefs.GetInt(gameObject.name + "_activeSelf") == 1 ? true : false);
-        isEvent = PlayerPrefs.GetInt(gameObject.name + "_isEvent") == 1 ? true : false;
         isEnd = PlayerPrefs.GetInt(gameObject.name + "_isEnd") == 1 ? true : false;
         CanAccess = PlayerPrefs.GetInt(gameObject.name + "_CanAccess") == 1 ? true : false;
     }

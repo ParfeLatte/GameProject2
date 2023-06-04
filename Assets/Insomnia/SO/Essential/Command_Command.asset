@@ -15,3 +15,6 @@ MonoBehaviour:
   m_command: COMMANDS
   m_loadingTime: 0
   m_Description: "COMMANDS\t\tShow this command list\n"
+  onCommandSuccess:
+    m_PersistentCalls:
+      m_Calls: []

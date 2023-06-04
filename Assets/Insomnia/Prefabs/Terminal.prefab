@@ -169,7 +169,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &2490827058030680466
@@ -238,7 +238,21 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 32 lines
+  m_text: '--------------------------------------------------
+
+    TERMINAL 05 v8.48
+
+    --------------------------------------------------
+
+    Type
+    "EXIT" to exit.
+
+    Type "HELP" to get help using the terminal.
+
+    Type "COMMANDS"
+    to get a list of all available commands.
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f698ff5620fa3d44a6abe5f4d990323, type: 2}
   m_sharedMaterial: {fileID: -7816526921824489243, guid: 8f698ff5620fa3d44a6abe5f4d990323, type: 2}
@@ -304,7 +318,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &2490827058092620808
@@ -439,7 +453,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &2490827058094009427
@@ -575,7 +589,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &2490827058094009425
@@ -712,7 +726,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02ee75c31c0f244bb154c2e384a4d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_commands: []
+  m_commands:
+  - {fileID: 11400000, guid: 0882229691dc1e14a83892957e748042, type: 2}
+  - {fileID: 11400000, guid: f403914221b42b44fbaf8ecfc514239a, type: 2}
+  - {fileID: 11400000, guid: 5c69894dffcc5334b9132045f69e2bc6, type: 2}
+  - {fileID: 11400000, guid: 8867d925de75cc54ca3de0c09af5f0e7, type: 2}
+  - {fileID: 11400000, guid: 9d201dc8ddc37c6499b5bc3b999ed562, type: 2}
+  - {fileID: 11400000, guid: 6c32e456d7facd54aac4925ec9af2cc4, type: 2}
 --- !u!1 &2490827058457085136
 GameObject:
   m_ObjectHideFlags: 0
