@@ -301,13 +301,13 @@ public class Player : LivingEntity, IDataIO
 
     private void FallDamage(float time)
     {
-        if(time < 1f) return;
+        if(time < 1.12f) return;
 
         if(time >= 1.5f)
         {
             damaged(100f);
         }
-        else if(time >= 1f)
+        else if(time >= 1.12f)
         {
             damaged(50f);
         }
