@@ -15,3 +15,6 @@ MonoBehaviour:
   m_command: CLS
   m_loadingTime: 0
   m_Description: "CLS\t\tClear the terminal screen\n"
+  onCommandSuccess:
+    m_PersistentCalls:
+      m_Calls: []

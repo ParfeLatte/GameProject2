@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_command: SAVE
   m_loadingTime: 5
-  m_Description: 
+  m_Description: "SAVE\t\tCreate Checkpoint from this terminal.\r\n\t\tUsage: SAVE\r\n\t\tExample:
+    SAVE\r\n"
   onCommandSuccess:
     m_PersistentCalls:
       m_Calls: []

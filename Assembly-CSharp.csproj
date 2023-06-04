@@ -124,6 +124,7 @@
     <Compile Include="Assets\Insomnia\Scripts\Utils\Singleton.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_Query.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Character\Object\PlayerLocomotion.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_Help.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

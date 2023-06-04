@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_command: QUERY
   m_loadingTime: 4
-  m_Description: "QUERY\t\tQuery for detailed information about an object in the
-    floor inventory\n\t\tUsage: QUERY [ID]\n\t\tAttributes:\n\t\t[ID]\t\t\tThe ID
-    of the inventory object\n\t\tExample: QUERY HSU_123\n"
+  m_Description: "QUERY\t\tQuery for detailed information about an object int the
+    floor inventory\r\n\t\tUsage: QUERY [ID]\r\n\t\tAttributes:\r\n\t\t[ID]\t\tThe
+    ID of the inventory object\r\n\t\tExample: QUERY HSU_123\r\n"
+  onCommandSuccess:
+    m_PersistentCalls:
+      m_Calls: []

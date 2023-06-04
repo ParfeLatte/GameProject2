@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_command: RUNDOWN_CONTRACT
   m_loadingTime: 0
-  m_Description: "RUNDOWN_CONTRACT\t\tStart requested Rundown.\n\t\tUsage: RUNDOWN_CONTRACT
-    [RUNDOWN]\n\t\tAttributes:\n\t\t[RUNDOWN] Contracted Rundowns' name\n\t\tExample:
-    RUNDOWN_CONTRACT LAB, load rundown immediately"
+  m_Description: "RUNDOWN_CONTRACT\t\tRequest starting Rundown.\r\n\t\tUsage: RUNDOWN_CONTRACT
+    [RUNDOWN]\r\n\t\tAttributes:\r\n\t\t[RUNDOWN] Name of rundown to request.\r\n\t\tExample:
+    RUNDOWN_CONTRACT LAB, Request Rundown Lab\r\n"
   onCommandSuccess:
     m_PersistentCalls:
       m_Calls: []
