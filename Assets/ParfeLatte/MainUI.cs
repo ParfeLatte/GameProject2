@@ -1,3 +1,4 @@
+using Insomnia;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,27 +7,35 @@ using UnityEngine.UI;
 public class MainUI : MonoBehaviour
 {
     public GameObject TutorialCheckPanel;
-    
+    [SerializeField] private Button m_loadButton = null;
 
-    void Start()
-    {
-        
+    private void Awake() {
+        if(m_loadButton == null)
+            return;
+
+        if(PlayerPrefs.HasKey("PlayerPosition"))
+            m_loadButton.interactable = true;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void OnClick_NewGame() {
+        PlayerPrefs.DeleteAll();
+        SceneController.Instance.ChangeSceneTo("Lab");
     }
 
-    public void TutorialPanel()
-    {
-        TutorialCheckPanel.SetActive(true);
+    public void OnClick_Load() {
+        SceneController.Instance.ChangeSceneTo("Lab");
     }
-    
-    public void PanelOff()
-    {
-        TutorialCheckPanel.SetActive(false);
+
+    public void OnClick_Option() {
+
+    }
+
+    public void OnClick_TutorialStart() {
+        SceneController.Instance.ChangeSceneTo("Tutorial");
+    }
+
+    public void OnClick_Exit() {
+        Application.Quit();
     }
 
     public void GameQuit()

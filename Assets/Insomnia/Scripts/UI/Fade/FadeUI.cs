@@ -60,6 +60,10 @@ namespace Insomnia {
             m_curEffectFinished = true;
             yield break;
         }
+
+        protected override void ForceInit() {
+            m_fadeImage.color = m_fadeOutColor;
+        }
     }
 }
 

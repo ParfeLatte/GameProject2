@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Insomnia {
-    public class UIManager : Singleton<UIManager> {
+    public class UIManager : ImmortalSingleton<UIManager> {
         private FadeUI m_fade = null;
         public static FadeUI Fade { get => _instance.m_fade; }
 

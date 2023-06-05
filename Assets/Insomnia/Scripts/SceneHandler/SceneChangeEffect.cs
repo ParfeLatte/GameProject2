@@ -9,6 +9,7 @@ namespace Insomnia {
     public abstract class SceneChangeEffect : MonoBehaviour {
         protected static SceneController m_controller = null;
         protected bool m_curEffectFinished = true;
+        [SerializeField] protected bool m_skipFirst = false;
         [SerializeField] private bool m_autoRegister = true;
         [SerializeField] private bool m_isTemporal = true;
 
@@ -24,8 +25,20 @@ namespace Insomnia {
 
         #region Unity Event Functions
         private void Awake() {
+            //if(m_isExists) {
+            //    Destroy(gameObject);
+            //    return;
+            //}
+            //m_isExists = true;
             Awake_Child();
             Init();
+        }
+
+        protected virtual void OnEnable() {
+            if(m_skipFirst)
+                ForceInit();
+
+            FinishEffect();
         }
 
         private void Init() {
@@ -79,6 +92,7 @@ namespace Insomnia {
         public abstract void FinishEffect();
 
         protected abstract IEnumerator CoEffect(object targetValue);
+        protected abstract void ForceInit();
 
         #endregion
     }

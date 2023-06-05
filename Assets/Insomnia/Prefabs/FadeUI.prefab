@@ -116,7 +116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_autoRegister: 1
   m_isTemporal: 0
-  m_fadeImage: {fileID: 0}
+  m_fadeImage: {fileID: 6129695617971553082}
   m_fadeInColor: {r: 0, g: 0, b: 0, a: 1}
   m_fadeOutColor: {r: 0, g: 0, b: 0, a: 0}
   m_fadeDuration: 1

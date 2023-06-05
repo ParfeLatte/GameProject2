@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Insomnia.Defines;
 
-public class GameManager : Singleton<GameManager>, IDataIO
+public class GameManager : ImmortalSingleton<GameManager>, IDataIO
 {
     struct GameManagerSaveData {
         public List<bool> accessLv;

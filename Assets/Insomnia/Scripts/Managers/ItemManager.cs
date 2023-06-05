@@ -8,7 +8,7 @@ using System;
 using static Insomnia.Defines;
 
 namespace Insomnia {
-    public class ItemManager : Singleton<ItemManager> {
+    public class ItemManager : MortalSingleton<ItemManager> {
         [SerializeField] private List<SearchableBase> m_itemDatas = new List<SearchableBase>();
 
         public void AddSearchable(SearchableBase item) {

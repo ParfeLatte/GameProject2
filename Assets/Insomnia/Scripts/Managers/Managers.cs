@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Insomnia {
-    public class Managers : Singleton<Managers> {
+    public class Managers : ImmortalSingleton<Managers> {
         private static InputManager _input;
         public static InputManager Input { get => _input; }
 

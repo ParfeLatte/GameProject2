@@ -9,11 +9,11 @@ using UnityEngine.SceneManagement;
 using static Insomnia.Defines;
 
 namespace Insomnia {
-    public class SceneController : Singleton<SceneController> {
+    public class SceneController : ImmortalSingleton<SceneController> {
         private AsyncOperation m_loadNextScene = null;
         private Queue<Action> m_completed = new Queue<Action>();
         private SceneChangeEffect m_changeEffect = null;
-        private bool m_isEffectTemp = false;
+        private SceneChangeEffect m_waitingEffect = null;
         private bool m_isLoading = false;
 
         #region Properties
@@ -29,18 +29,33 @@ namespace Insomnia {
         }
         public bool IsLoading { get => m_isLoading; }
 
+        public SceneChangeEffect Effect {
+            get => m_changeEffect;
+            set {
+                if(value == null) {
+                    m_changeEffect = m_waitingEffect;
+                    m_waitingEffect = null;
+                    if(m_changeEffect != null)
+                        m_changeEffect.gameObject.SetActive(true);
+                }
+                else {
+                    if(m_changeEffect == null) 
+                        m_changeEffect = value;
+                    else 
+                        m_waitingEffect = value;
+                }
+            }
+        }
+
         public static Queue<Action> LoadSceneCompleted { get => _instance.m_completed; }
 
         #endregion
 
         public bool AddSceneChangeEffect(SceneChangeEffect effect) {
-            if(m_changeEffect != null)
-                return false;
-
-            m_changeEffect = effect;
-            m_isEffectTemp = true;
+            Effect = effect;
             effect.transform.SetParent(transform);
-            return true;
+
+            return ReferenceEquals(Effect, effect);
         }
 
         public bool ChangeSceneTo(string sceneName, bool skipLoadingScene = false, bool autoSceneChange = true) {
@@ -60,15 +75,15 @@ namespace Insomnia {
                 prevScene = SceneManager.GetActiveScene();
 
                 //씬 전환 효과 시작
-                if(m_changeEffect != null) {
+                if(Effect != null) {
                     //있다면 씬 전환 효과 시작.
-                    m_changeEffect.StartEffect();
+                    Effect.StartEffect();
 
                     while(true) {
                         yield return null;
 
                         //씬 전환 효과가 끝났는지 계속 체크. Polling
-                        if(m_changeEffect.EffectFinished)
+                        if(Effect.EffectFinished)
                             break;
                     }
                 }
@@ -94,14 +109,14 @@ namespace Insomnia {
                 }
 
                 //씬 전환 효과 종료
-                if(m_changeEffect != null) {
+                if(Effect != null) {
 
-                    m_changeEffect.FinishEffect();
+                    Effect.FinishEffect();
 
                     while(true) {
                         yield return null;
 
-                        if(m_changeEffect.EffectFinished)
+                        if(Effect.EffectFinished)
                             break;
                     }
                 }
@@ -126,15 +141,15 @@ namespace Insomnia {
             }
 
             //씬 전환 효과 시작
-            if(m_changeEffect != null) {
+            if(Effect != null) {
                 //있다면 씬 전환 효과 시작.
-                m_changeEffect.StartEffect();
+                Effect.StartEffect();
 
                 while(true) {
                     yield return null;
 
                     //씬 전환 효과가 끝났는지 계속 체크. Polling
-                    if(m_changeEffect.EffectFinished)
+                    if(Effect.EffectFinished)
                         break;
                 }
             }
@@ -159,8 +174,8 @@ namespace Insomnia {
             m_completed.Clear();
 
             //씬 전환 효과 종료
-            if(m_changeEffect != null) {
-                m_changeEffect.FinishEffect();
+            if(Effect != null) {
+                Effect.FinishEffect();
 
                 while(true) {
                     yield return null;
@@ -170,10 +185,9 @@ namespace Insomnia {
                 }
 
                 //만약 일시적 효과였을 경우 제거한다.
-                if(m_changeEffect.IsTemporal) {
-                    m_changeEffect.gameObject.SetActive(false);
-                    m_changeEffect.transform.SetParent(null);
-                    m_changeEffect = null;
+                if(Effect.IsTemporal) {
+                    Destroy(Effect.gameObject);
+                    Effect = null;
                 }
             }
 
