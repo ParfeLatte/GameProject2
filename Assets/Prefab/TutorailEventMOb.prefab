@@ -163,7 +163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 0
   isDead: 0
-  SetHealth: 30
+  SetHealth: 10
   SetDamage: 5
   SetSpeed: 8.5
   MobType: Normal
@@ -187,6 +187,7 @@ MonoBehaviour:
   dirVec: {x: 0, y: 0, z: 0}
   player: {fileID: 0}
   Gate: {fileID: 0}
+  Gatehp: {fileID: 0}
   isPlayerDash: 0
   isPlayerStop: 0
   isAttack: 0
@@ -196,6 +197,7 @@ MonoBehaviour:
   HammerHitEffect: {fileID: 7885817439666112809}
   BloodEffect: {fileID: 7638672502958849059}
   lastPlayerPosition: {x: 0, y: 0, z: 0}
+  AttackPlayer: {fileID: 0}
 --- !u!114 &8641154581951065992
 MonoBehaviour:
   m_ObjectHideFlags: 0
