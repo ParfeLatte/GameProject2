@@ -70,7 +70,7 @@ public class GateCheck : SearchableBase
     }
 
     private void GateOpen()
-    {
+    { 
         animator.SetBool("isOpen", true);//������
         Sound.OpenSound();
         Gate.SetActive(false);//�ݶ��̴��� �ִ� ������Ʈ�� ���� ��Ȱ��ȭ �ؼ� ������ �� ����
