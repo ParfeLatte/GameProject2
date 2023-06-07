@@ -57,7 +57,7 @@ namespace Insomnia {
             if(items != null) {
                 ret = new ObjectData[items.Length];
                 for(int i = 0; i < items.Length; i++) {
-                    ret[i] = items[i].GetItemData();
+                    ret[i] = items[i].Data;
                 }
             }
 
@@ -75,10 +75,21 @@ namespace Insomnia {
 
             ret = new ObjectData[items.Length];
             for(int i = 0; i < items.Length; i++) {
-                ret[i] = items[i].GetItemData();
+                ret[i] = items[i].Data;
             }
 
             return new KeyValuePair<CommandError, ObjectData[]>(errorType, ret);
+        }
+
+        public string GetItemID(string leakedKey) {
+            if(leakedKey == null || leakedKey == string.Empty)
+                return string.Empty;
+            SearchableBase item = m_itemDatas.SingleOrDefault(x => x.Contains(leakedKey));
+
+            if(item == null)
+                return string.Empty;
+
+            return item.IDFormat;
         }
 
         public bool CheckItemExists(string itemID) {

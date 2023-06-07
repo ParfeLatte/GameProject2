@@ -14,6 +14,14 @@ namespace Insomnia {
 
         [SerializeField] private UnityEvent onCommandSuccess = null;
 
+        public string Command { get => m_command; }
+        public float LoadingTime { get => m_loadingTime; }
+        public string Description { get => m_Description; }
+
+        public virtual bool ContainsKeyword(string comparand) {
+            return m_command.Contains(comparand);
+        }
+
         /// <summary>
         /// 입력한 커맨드의 첫번째 토큰을 비교하는 함수.
         /// </summary>
@@ -21,14 +29,6 @@ namespace Insomnia {
         /// <returns>return true if command is valid. else false.</returns>
         public virtual bool CheckCommand(string splitted) {
             return m_command.Equals(splitted);
-        }
-
-        /// <summary>
-        /// 커맨드에 대한 설명을 만환하는 함수.
-        /// </summary>
-        /// <returns></returns>
-        public virtual string GetDescription() {
-            return m_Description;
         }
 
         /// <summary>

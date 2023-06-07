@@ -7,8 +7,8 @@ using static Insomnia.Defines;
 namespace Insomnia {
     public class Item : SearchableBase {
 
-        private void Start() {
-            ItemManager.Instance.AddSearchable(this);
+        protected override void Start() {
+            base.Start();
         }
     }
 }
