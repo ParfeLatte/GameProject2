@@ -1,12 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Insomnia {
     public class Interactor : MonoBehaviour {
-        private Interactable _curInteract = null;
+        [Header("Settings")]
         [SerializeField] private KeyCode _interactKey = KeyCode.F;
         [SerializeField] private bool _isUsingInputActor = false;
+        private Interactable _curInteract = null;
+
+        [Header("Events")]
+        public UnityEvent onInteractStandby = null;
+        public UnityEvent onInteractRelease = null;
+        public UnityEvent onInteractStart = null;
+        public UnityEvent onInteractEnd = null;
 
         private void Update() {
             if(_isUsingInputActor)
@@ -26,6 +34,7 @@ namespace Insomnia {
 
             _curInteract = interactable;
             _curInteract.StandbyInteract();
+            onInteractStandby?.Invoke();
         }
 
         public virtual void ReleaseInteract(Interactable interactable) {
@@ -37,6 +46,7 @@ namespace Insomnia {
 
             _curInteract.ReleaseInteract();
             _curInteract = null;
+            onInteractRelease?.Invoke();
         }
 
         public virtual void OnInteractStart() {
@@ -44,6 +54,7 @@ namespace Insomnia {
                 return;
 
             _curInteract.OnInteractStart();
+            onInteractStart?.Invoke();
         }
 
         public virtual void OnInteractEnd() {
@@ -51,6 +62,7 @@ namespace Insomnia {
                 return;
 
             _curInteract.OnInteractEnd();
+            onInteractEnd?.Invoke();
         }
     }
 }

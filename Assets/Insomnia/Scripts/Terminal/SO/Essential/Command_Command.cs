@@ -10,7 +10,7 @@ namespace Insomnia {
             m_commandResult.Clear();
 
             for(int i = 0; i < terminal.UI.Commands.Count; i++) {
-                m_commandResult.Add(terminal.UI.Commands[i].GetDescription());
+                m_commandResult.Add(terminal.UI.Commands[i].Description);
             }
 
             yield return new KeyValuePair<float, List<string>>(m_loadingTime, m_commandResult);

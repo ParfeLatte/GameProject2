@@ -49,6 +49,8 @@ public class Player : LivingEntity, IDataIO
 
     private Vector2 boxsize = new Vector2(1f, 1f);
 
+    public bool CanMove { get; set; } = true;
+
     void Awake()
     {
         PR = GetComponent<Rigidbody2D>();//�Ҵ�
@@ -71,6 +73,9 @@ public class Player : LivingEntity, IDataIO
     void Update()
     {
         if(GameManager.IsPause)
+            return;
+
+        if(CanMove == false)
             return;
 
         h = Input.GetAxisRaw("Horizontal");

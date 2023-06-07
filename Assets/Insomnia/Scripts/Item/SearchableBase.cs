@@ -12,18 +12,18 @@ namespace Insomnia {
         [SerializeField] protected Vector3 m_position = Vector3.zero;
         [SerializeField] protected ObjectType m_ObjectType;
         [SerializeField] protected StatusType m_Status;
+        protected ObjectData m_objectData;
 
         #region Properties
-        public virtual string ID { get => m_ID; }
-        public virtual string Location { get => m_Location; }
-        public virtual string Description { get => m_Description; }
-        public virtual Vector3 Position { get => m_position; }
-        public virtual ObjectType ObjectType { get => m_ObjectType; }
-        public virtual StatusType Status { get => m_Status; }
-
+        public string IDFormat { get => m_IDFormat; }
+        public string ID { get => m_ID; }
+        public string Location { get => m_Location; }
+        public string Description { get => m_Description; }
+        public Vector3 Position { get => m_position; }
+        public ObjectType ObjectType { get => m_ObjectType; }
+        public StatusType Status { get => m_Status; }
+        public ObjectData Data { get => m_objectData; }
         #endregion
-
-        protected ObjectData m_objectData;
 
         /// <summary>
         /// ID�� ���ԵǴ��� üũ�ϴ� �Լ�.
@@ -32,6 +32,9 @@ namespace Insomnia {
         /// <returns></returns>
         public bool Contains(string objectCode) {
             if(objectCode == null)
+                return false;
+
+            if(m_ID.StartsWith(objectCode) == false)
                 return false;
 
             if(m_ID.Contains(objectCode))
@@ -62,14 +65,6 @@ namespace Insomnia {
                 return false;
 
             return m_Location.Equals(objectLocation);
-        }
-
-        /// <summary>
-        /// ������Ʈ�� <see cref="ObjectData"/>��ȯ�ϴ� �Լ�.
-        /// </summary>
-        /// <returns></returns>
-        public virtual ObjectData GetItemData() {
-            return m_objectData;
         }
 
         protected virtual void Awake() {
