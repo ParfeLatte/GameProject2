@@ -11,8 +11,8 @@ public class ScannerGizmo : MonoBehaviour {
     [SerializeField] private Color m_gizmoColor = Color.green;
     [SerializeField, Range(0f, 1f)] private float m_baseAlphaThreshold = 0.2f;
     [SerializeField, Range(0f, 1f)] private float m_movAlphaThreshold = 0.1f;
-    [SerializeField, Range(1f, 20f)] private float m_maxRotSpeed = 1f;
-    [SerializeField, Range(1f, 20f)] private float m_minRotSpeed = 1f;
+    [SerializeField, Range(1f, 50f)] private float m_maxRotSpeed = 1f;
+    [SerializeField, Range(1f, 50f)] private float m_minRotSpeed = 1f;
 
     [Header("Stat")]
     [SerializeField] private bool m_rotate = false;
@@ -89,12 +89,14 @@ public class ScannerGizmo : MonoBehaviour {
     private IEnumerator CoStartRotate() {
         while(m_rotate) {
             for(int i = 0; i < m_rotGizmos.Length; i++) {
-                if(Mathf.Abs(m_rotGizmos[i].transform.position.x - m_basePosition.x) >= m_baseNormalDistance)
+                if(Mathf.Abs(m_rotGizmos[i].transform.position.x - m_basePosition.x) >= m_baseNormalDistance - 0.1f)
                     m_rotDirection[i] *= -1;
 
                 float speed  = Mathf.Clamp((1 - (Mathf.Abs(m_rotGizmos[i].transform.position.x - m_basePosition.x) / m_baseNormalDistance)) * m_maxRotSpeed, m_minRotSpeed, m_maxRotSpeed);
 
-                m_rotGizmos[i].transform.position += new Vector3(m_rotDirection[i] * speed * Time.deltaTime, 0f);
+                Vector3 nextPos = m_rotGizmos[i].transform.position + new Vector3(m_rotDirection[i] * speed * Time.deltaTime, 0f);
+                nextPos.x = Mathf.Clamp(nextPos.x, m_basePosition.x - m_baseNormalDistance + 0.1f, m_basePosition.x + m_baseNormalDistance - 0.1f);
+                m_rotGizmos[i].transform.position = nextPos;
                 yield return null;
             }
         }
