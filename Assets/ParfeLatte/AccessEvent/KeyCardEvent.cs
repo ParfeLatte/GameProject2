@@ -6,6 +6,7 @@ using UnityEngine;
 public class KeyCardEvent : MonoBehaviour
 {
     public AccessPoint AP;//엑세스 포인트
+    public GameUI Alert;//배경 빨갛게 
 
     public MobSpawner Spawner;//몬스터 생성
     public Transform SpawnPos;//이벤트 몹 생성위치
@@ -35,12 +36,14 @@ public class KeyCardEvent : MonoBehaviour
     public void SirenOn()
     {
         SirenSound.Play();//사이렌 재생
+        Alert.AlertOn();
         sirenAnimation.enabled = true;
     }
         
     public void SirenOff()
     {
         SirenSound.Stop();//사이렌 정지(이벤트 끝)
+        Alert.AlertOff();
         sirenAnimation.enabled = false;
     }
 

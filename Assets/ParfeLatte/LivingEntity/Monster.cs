@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,49 +8,53 @@ public class Monster : LivingEntity
 
     public string MobType;//Normal, Giant, Boss
 
-    //public GameObject small;//¹üÀ§ 15ÀÇ Äİ¶óÀÌ´õ ¿µ¿ª
-    //public GameObject Big;//¹üÀ§ 30ÀÇ Äİ¶óÀÌ´õ ¿µ¿ª
-    public GameObject Player;//°Å¸®ÃøÁ¤¿ë
-    public Transform AttackPos;//°ø°İ¹üÀ§ À§Ä¡
-    public Vector2 boxSize;//°ø°İ¹üÀ§
+    //public GameObject small;//ë²”ìœ„ 15ì˜ ì½œë¼ì´ë” ì˜ì—­
+    //public GameObject Big;//ë²”ìœ„ 30ì˜ ì½œë¼ì´ë” ì˜ì—­
+    public GameObject Player;//ê±°ë¦¬ì¸¡ì •ìš©
+    public Transform AttackPos;//ê³µê²©ë²”ìœ„ ìœ„ì¹˜
+    public Vector2 boxSize;//ê³µê²©ë²”ìœ„
 
-    public int SleepState;//ÇöÀç ¼ö¸é»óÅÂ 0:±íÀº¼ö¸é, 1:Áß°£¼ö¸é, 2:¾èÀº¼ö¸é, 3:±â»ó!!!
+    public int SleepState;//í˜„ì¬ ìˆ˜ë©´ìƒíƒœ 0:ê¹Šì€ìˆ˜ë©´, 1:ì¤‘ê°„ìˆ˜ë©´, 2:ì–•ì€ìˆ˜ë©´, 3:ê¸°ìƒ!!!
 
-    public float moveTimeOne;//ÇÃ·¹ÀÌ¾î°¡ ¾ó¸¶³ª °É¾ú´ÂÁö È®ÀÎ
-    //public float moveTimeTwo;//ÇÃ·¹ÀÌ¾î°¡ ¾ó¸¶³ª °É¾ú´ÂÁö È®ÀÎ
+    public float moveTimeOne;//í”Œë ˆì´ì–´ê°€ ì–¼ë§ˆë‚˜ ê±¸ì—ˆëŠ”ì§€ í™•ì¸
+    //public float moveTimeTwo;//í”Œë ˆì´ì–´ê°€ ì–¼ë§ˆë‚˜ ê±¸ì—ˆëŠ”ì§€ í™•ì¸
     public float ThinkTime;
-    public float CheckTime;//¹üÀ§ ¾È¿¡ µé¾î¿Â ½Ã°£
-    public float CoolTime;//°ø°İ ÄğÅ¸ÀÓ
-    public float AttackTime;//°ø°İ½Ã°£
+    public float CheckTime;//ë²”ìœ„ ì•ˆì— ë“¤ì–´ì˜¨ ì‹œê°„
+    public float CoolTime;//ê³µê²© ì¿¨íƒ€ì„
+    public float AttackTime;//ê³µê²©ì‹œê°„
+    public float AttackEndTime;//ê¸°ë³¸ 0.55, ë³´ìŠ¤ëª¹??
     public float FallTime;
-    public float AttackTiming;//°ø°İÆÇÁ¤½Ã°£
-    public float Dist;//¸ó½ºÅÍ¿Í ÇÃ·¹ÀÌ¾î »çÀÌ °Å¸®
-    public float YDist;//yÃà °Å¸®
-    public float Dir;//ÀÌµ¿¹æÇâ
-    public float AttackDist;//°ø°İ°Å¸®
-    public float ColDist;//ÇÃ·¹ÀÌ¾î¿ÍÀÇ ÃÖ¼Ò°Å¸®
-    public float DyingTime;//Á×´Â¸ğ¼Ç±îÁö °É¸®´Â ½Ã°£
-    public Vector3 dirVec;//·¹ÀÌ ¹æÇâ
+    public float AttackTiming;//ê³µê²©íŒì •ì‹œê°„
+    public float Dist;//ëª¬ìŠ¤í„°ì™€ í”Œë ˆì´ì–´ ì‚¬ì´ ê±°ë¦¬
+    public float YDist;//yì¶• ê±°ë¦¬
+    public float Dir;//ì´ë™ë°©í–¥
+    public float AttackDist;//ê³µê²©ê±°ë¦¬
+    public float ColDist;//í”Œë ˆì´ì–´ì™€ì˜ ìµœì†Œê±°ë¦¬
+    public float DyingTime;//ì£½ëŠ”ëª¨ì…˜ê¹Œì§€ ê±¸ë¦¬ëŠ” ì‹œê°„
+    public Vector3 dirVec;//ë ˆì´ ë°©í–¥
 
-    public Player player;//ÇÃ·¹ÀÌ¾î ÄÚµå
+    public Player player;//í”Œë ˆì´ì–´ ì½”ë“œ
     public GameObject Gate;
     public GateHP Gatehp;
-    //public MonsterAttack Attack;//°ø°İ ½ÇÇà ½ºÅ©¸³Æ®
+    //public MonsterAttack Attack;//ê³µê²© ì‹¤í–‰ ìŠ¤í¬ë¦½íŠ¸
 
-    public bool isPlayerDash;//ÇÃ·¹ÀÌ¾î°¡ ´ë½¬Çß´ÂÁö È®ÀÎ
-    public bool isPlayerStop;//ÇÃ·¹ÀÌ¾î°¡ ¸ØÃè´Â°¡?
-    public bool isAttack;//°ø°İÁßÀÎ°¡?
-    public bool isFall;//³Ñ¾î º³ª?  
-    public bool isWall;//º®¿¡ ºÎµúÇû´Â°¡?
-    public bool isEventMob;//ÀÌº¥Æ® ¸ó½ºÅÍ°¡ ¾Æ´Ï¶ó¸é false
+    public bool isPlayerDash;//í”Œë ˆì´ì–´ê°€ ëŒ€ì‰¬í–ˆëŠ”ì§€ í™•ì¸
+    public bool isPlayerStop;//í”Œë ˆì´ì–´ê°€ ë©ˆì·„ëŠ”ê°€?
+    public bool isAttack;//ê³µê²©ì¤‘ì¸ê°€?
+    public bool isFall;//ë„˜ì–´ì¡‹ë‚˜?  
+    public bool isWall;//ë²½ì— ë¶€ë”ªí˜”ëŠ”ê°€?
+    public bool isBoss;//ë³´ìŠ¤ëª¹ì¸ê°€?
+    public bool isEventMob;//ì´ë²¤íŠ¸ ëª¬ìŠ¤í„°ê°€ ì•„ë‹ˆë¼ë©´ false
 
     public GameObject HammerHitEffect;
     public GameObject BloodEffect;
 
-    public Vector3 lastPlayerPosition;//À§Ä¡ ºñ±³¿ë
+    public Vector3 lastPlayerPosition;//ìœ„ì¹˜ ë¹„êµìš©
 
 
     private Rigidbody2D MR;
+    private Transform m_Tr;
+    private CapsuleCollider2D m_Col;
     private Animator animator;
     private SpriteRenderer MonsterRenderer;
     private SpriteRenderer Hammer;
@@ -58,16 +62,18 @@ public class Monster : LivingEntity
     private EventMonster CheckEvent;
     private MonsterSound Sound;
 
-    private Vector3 curPos;//ÇöÀçÀ§Ä¡
-    private Vector2 AddPos = new Vector2(0, 3f);//pivotÀ» ¾Æ·¡·Î °íÁ¤ÇßÀ¸¹Ç·Î ·¹ÀÌ °Ë»ç¶§ À§·Î
-    private Vector2 RayPos;//·¹ÀÌ ¹æÇâ
-    public GameObject AttackPlayer;//°ø°İ´ë»ó
+    private Vector3 curPos;//í˜„ì¬ìœ„ì¹˜
+    private Vector2 AddPos = new Vector2(0, 3f);//pivotì„ ì•„ë˜ë¡œ ê³ ì •í–ˆìœ¼ë¯€ë¡œ ë ˆì´ ê²€ì‚¬ë•Œ ìœ„ë¡œ
+    private Vector2 RayPos;//ë ˆì´ ë°©í–¥
+    public GameObject AttackPlayer;//ê³µê²©ëŒ€ìƒ
 
-    private bool isMobMove = false;//¸ó½ºÅÍ°¡ ¿òÁ÷ÀÌ´ÂÁö
+    private bool isMobMove = false;//ëª¬ìŠ¤í„°ê°€ ì›€ì§ì´ëŠ”ì§€
 
     void Awake()
     {
         MR = GetComponent<Rigidbody2D>();
+        m_Tr = GetComponent<Transform>();
+        m_Col = GetComponent<CapsuleCollider2D>();
         animator = GetComponent<Animator>();
         MonsterRenderer = GetComponent<SpriteRenderer>();
         Hammer = HammerHitEffect.GetComponent<SpriteRenderer>();
@@ -75,16 +81,20 @@ public class Monster : LivingEntity
         Sound = GetComponent<MonsterSound>();
         CheckEventMob();
         Player = GameObject.Find("Player");
-        SleepState = 0;//±íÀº¼ö¸é »óÅÂ·Î ½ºÆù
-        SetStatus(SetHealth, SetDamage, SetSpeed);//ÀÏ´Ü ÀÏ¹İ¸÷±âÁØ
-        Health = MaxHealth;//Ã¼·ÂÀ» ÃÖ´ëÃ¼·ÂÀ¸·Î ¼³Á¤
+        SleepState = 0;//ê¹Šì€ìˆ˜ë©´ ìƒíƒœë¡œ ìŠ¤í°
+        SetStatus(SetHealth, SetDamage, SetSpeed);//ì¼ë‹¨ ì¼ë°˜ëª¹ê¸°ì¤€
+        Health = MaxHealth;//ì²´ë ¥ì„ ìµœëŒ€ì²´ë ¥ìœ¼ë¡œ ì„¤ì •
+        if (isBoss)
+        {
+            BossAppear();
+        }
     }
 
     private void OnEnable()
     {
         isDead = false;
-        SetStatus(SetHealth, SetDamage, SetSpeed);//ÀÏ´Ü ÀÏ¹İ¸÷±âÁØ
-        Health = MaxHealth;//Ã¼·ÂÀ» ÃÖ´ëÃ¼·ÂÀ¸·Î ¼³Á¤ 
+        SetStatus(SetHealth, SetDamage, SetSpeed);//ì¼ë‹¨ ì¼ë°˜ëª¹ê¸°ì¤€
+        Health = MaxHealth;//ì²´ë ¥ì„ ìµœëŒ€ì²´ë ¥ìœ¼ë¡œ ì„¤ì • 
     }
 
     // Update is called once per frame
@@ -93,27 +103,32 @@ public class Monster : LivingEntity
         if(GameManager.IsPause)
             return;
 
-        Dist = Mathf.Abs(Player.transform.position.x - gameObject.transform.position.x);//ÇÃ·¹ÀÌ¾î¿Í ¸ó½ºÅÍ »çÀÌ °Å¸®
-        YDist = Mathf.Abs(Player.transform.position.y - gameObject.transform.position.y);//ÇÃ·¹ÀÌ¾î¿Í  ¸ó½ºÅÍÀÇ yÃà °Å¸® 
+        Dist = Mathf.Abs(Player.transform.position.x - gameObject.transform.position.x);//í”Œë ˆì´ì–´ì™€ ëª¬ìŠ¤í„° ì‚¬ì´ ê±°ë¦¬
+        YDist = Mathf.Abs(Player.transform.position.y - gameObject.transform.position.y);//í”Œë ˆì´ì–´ì™€  ëª¬ìŠ¤í„°ì˜ yì¶• ê±°ë¦¬ 
         if (YDist < 5)
         {
             if (SleepState != 3 & !isDead)
             {
-                StateCheck();//ÇöÀç ¼ö¸é»óÅÂÀÌ¹Ç·Î ¼ö¸é»óÅÂ È®ÀÎ
-            }//¼ö¸é½Ã ÆĞÅÏ
+                StateCheck();//í˜„ì¬ ìˆ˜ë©´ìƒíƒœì´ë¯€ë¡œ ìˆ˜ë©´ìƒíƒœ í™•ì¸
+            }//ìˆ˜ë©´ì‹œ íŒ¨í„´
         }
-        curPos = transform.position;//ÇöÀçÀ§Ä¡
-        RayPos = MR.position + AddPos;//·¹ÀÌ¸¦ ¹ß»çÇÏ´Â À§Ä¡
+        curPos = transform.position;//í˜„ì¬ìœ„ì¹˜
+        RayPos = MR.position + AddPos;//ë ˆì´ë¥¼ ë°œì‚¬í•˜ëŠ” ìœ„ì¹˜
         if (SleepState == 3 && !isDead && !isFall) {
-            OnWake();//±ú¾îÀÖÀ»¶§ Çàµ¿ÆĞÅÏ
-            AttackCheck();//°ø°İ¹üÀ§ ³»¿¡ µé¾î¿À¸é °ø°İ
+            OnWake();//ê¹¨ì–´ìˆì„ë•Œ í–‰ë™íŒ¨í„´
+            AttackCheck();//ê³µê²©ë²”ìœ„ ë‚´ì— ë“¤ì–´ì˜¤ë©´ ê³µê²©
             CheckMoveSound();
-            AttackTime += Time.deltaTime;//ÄğÅ¸ÀÓ
-        }//±â»ó½Ã ÆĞÅÏ
+            AttackTime += Time.deltaTime;//ì¿¨íƒ€ì„
+        }//ê¸°ìƒì‹œ íŒ¨í„´
         if (isFall)
         {
             FallTime += Time.deltaTime;
             FallCheck();
+        }
+        if (isAttack && isBoss)
+        {
+            Vector3 DashPos = new Vector3(Dir, 0, 0) * 1.75f * MaxSpeed * Time.deltaTime;//ï¿½ë½¬ï¿½Ò¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡
+            transform.position = curPos + DashPos;//ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½
         }
     }
 
@@ -125,24 +140,24 @@ public class Monster : LivingEntity
 
     private void AttackCheck()
     {
-        RaycastHit2D rayHit = Physics2D.Raycast(RayPos, dirVec, AttackDist, LayerMask.GetMask("Player"));//Ray¸¦ ¹ß»çÇÏ¿© ÇÃ·¹ÀÌ¾î°¡ ¹üÀ§³»¿¡ ÀÖ´ÂÁö È®ÀÎ
-        if (rayHit.collider != null)//·¹ÀÌ¿¡ Ãæµ¹ÇÑ ´ë»óÀÌ ÀÖÀ¸¸é
+        RaycastHit2D rayHit = Physics2D.Raycast(RayPos, dirVec, AttackDist, LayerMask.GetMask("Player"));//Rayë¥¼ ë°œì‚¬í•˜ì—¬ í”Œë ˆì´ì–´ê°€ ë²”ìœ„ë‚´ì— ìˆëŠ”ì§€ í™•ì¸
+        if (rayHit.collider != null)//ë ˆì´ì— ì¶©ëŒí•œ ëŒ€ìƒì´ ìˆìœ¼ë©´
         {
-            Player player = rayHit.collider.GetComponent<Player>();//ÇÃ·¹ÀÌ¾î ÄÄÆ÷³ÍÆ® ÇÒ´ç
-            AttackPlayer = rayHit.collider.gameObject;//°ø°İÇÒ ÇÃ·¹ÀÌ¾î ´ë»ó ÇÒ´ç
-            //Debug.Log("ÇÃ·¹ÀÌ¾î°¡ »çÁ¤°Å¸®³»¿¡ ÀÖÀ½");
-            if (AttackPlayer != null && AttackTime >= CoolTime)//°ø°İ ÄğÅ¸ÀÓÀÌ µ¹¾Ò°í, ÇÃ·¹ÀÌ¾î°¡ ÇÒ´çµÇ¾îÀÖ´Ù¸é
+            Player player = rayHit.collider.GetComponent<Player>();//í”Œë ˆì´ì–´ ì»´í¬ë„ŒíŠ¸ í• ë‹¹
+            AttackPlayer = rayHit.collider.gameObject;//ê³µê²©í•  í”Œë ˆì´ì–´ ëŒ€ìƒ í• ë‹¹
+            //Debug.Log("í”Œë ˆì´ì–´ê°€ ì‚¬ì •ê±°ë¦¬ë‚´ì— ìˆìŒ");
+            if (AttackPlayer != null && AttackTime >= CoolTime)//ê³µê²© ì¿¨íƒ€ì„ì´ ëŒì•˜ê³ , í”Œë ˆì´ì–´ê°€ í• ë‹¹ë˜ì–´ìˆë‹¤ë©´
             {
                 DoAttack();
             }
-            //Debug.Log("°ø°İÇÕ´Ï´Ù.");
+            //Debug.Log("ê³µê²©í•©ë‹ˆë‹¤.");
         }
         else
         {
             AttackPlayer = null;
         }
 
-        RaycastHit2D GateHit = Physics2D.Raycast(RayPos, dirVec, AttackDist, LayerMask.GetMask("Gate"));//Ray¸¦ ¹ß»çÇÏ¿© ÇÃ·¹ÀÌ¾î°¡ ¹üÀ§³»¿¡ ÀÖ´ÂÁö È®ÀÎ
+        RaycastHit2D GateHit = Physics2D.Raycast(RayPos, dirVec, AttackDist, LayerMask.GetMask("Gate"));//Rayë¥¼ ë°œì‚¬í•˜ì—¬ í”Œë ˆì´ì–´ê°€ ë²”ìœ„ë‚´ì— ìˆëŠ”ì§€ í™•ì¸
         if (GateHit.collider != null)
         {
             Gatehp = GateHit.collider.GetComponentInChildren<GateHP>();
@@ -159,43 +174,45 @@ public class Monster : LivingEntity
         else
         {
             Gate = null;
-            //Debug.Log("»çÁ¤°Å¸®³»¿¡ ¾Æ¹«µµ ¾øÀ½");
-            //Debug.Log("°è¼Ó ÃßÀûÇÕ´Ï´Ù");
-        }//¿¹¿ÜÃ³¸®
-    }//°ø°İ
+            //Debug.Log("ì‚¬ì •ê±°ë¦¬ë‚´ì— ì•„ë¬´ë„ ì—†ìŒ");
+            //Debug.Log("ê³„ì† ì¶”ì í•©ë‹ˆë‹¤");
+        }//ì˜ˆì™¸ì²˜ë¦¬
+    }//ê³µê²©
 
     private void DoAttack()
     {
         Sound.StopSound();
-        isMobMove = false;//Àá½Ã ¿òÁ÷ÀÓÀ» ¸ØÃß°í
-        animator.SetBool("isMove", false);//¾Ö´Ï¸ŞÀÌ¼Ç ÆÄ¶ó¹ÌÅÍ¿¡¼­ isMove¸¦ false·Î ¹Ù²Ù°í
-        animator.SetTrigger("Attack");//attack Trigger¸¦ ¹ßµ¿ÇØ¼­ °ø°İ ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı
-        Invoke("Attack", AttackTiming);//¾Ö´Ï¸ŞÀÌ¼Ç¿¡¼­ ÈÖµÎ¸£´Â ¸ğ¼Ç¿¡ ¸Â°Ô °ø°İ
-        AttackTime = 0;//´Ù½Ã ÄğÅ¸ÀÓ
-        Invoke("MoveAgain", 0.55f);//°ø°İÈÄ¿¡ ´Ù½Ã ¿òÁ÷ÀÌµµ·Ï
+        isMobMove = false;//ì ì‹œ ì›€ì§ì„ì„ ë©ˆì¶”ê³ 
+        isAttack = true;
+        animator.SetBool("isMove", false);//ì• ë‹ˆë©”ì´ì…˜ íŒŒë¼ë¯¸í„°ì—ì„œ isMoveë¥¼ falseë¡œ ë°”ê¾¸ê³ 
+        animator.SetTrigger("Attack");//attack Triggerë¥¼ ë°œë™í•´ì„œ ê³µê²© ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ
+        Invoke("Attack", AttackTiming);//ì• ë‹ˆë©”ì´ì…˜ì—ì„œ íœ˜ë‘ë¥´ëŠ” ëª¨ì…˜ì— ë§ê²Œ ê³µê²©
+        AttackTime = 0;//ë‹¤ì‹œ ì¿¨íƒ€ì„
+        Invoke("MoveAgain", AttackEndTime);//ê³µê²©í›„ì— ë‹¤ì‹œ ì›€ì§ì´ë„ë¡
     }
 
     private void Attack()
     {
-        Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(AttackPos.position, boxSize, 0);//¿À¹ö·¦ ¹Ú½º¸¦ ÀÌ¿ë
+        Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(AttackPos.position, boxSize, 0);//ì˜¤ë²„ë© ë°•ìŠ¤ë¥¼ ì´ìš©
         foreach (Collider2D collider in collider2Ds)
         {
-            if (player != null && collider.tag == "Player")//¿À¹ö·¦¹Ú½º·Î °Ë»çÇÑ ¿ÀºêÁ§Æ® Áß¿¡¼­ ÇÃ·¹ÀÌ¾î°¡ ÀÖÀ¸¸é
+            if (player != null && collider.tag == "Player")//ì˜¤ë²„ë©ë°•ìŠ¤ë¡œ ê²€ì‚¬í•œ ì˜¤ë¸Œì íŠ¸ ì¤‘ì—ì„œ í”Œë ˆì´ì–´ê°€ ìˆìœ¼ë©´
             {
-                player.damaged(damage);//ÇÃ·¹ÀÌ¾îÀÇ damaged ÇÔ¼ö È£ÃâÇØ¼­ µ¥¹ÌÁö¸¦ ÁÜ
+                player.damaged(damage);//í”Œë ˆì´ì–´ì˜ damaged í•¨ìˆ˜ í˜¸ì¶œí•´ì„œ ë°ë¯¸ì§€ë¥¼ ì¤Œ
                 Sound.PlayAttackSound(MobType);
             }
             else if (Gate != null && collider.tag == "Wall")
             {
-                Gatehp.damaged(damage);//°ÔÀÌÆ®¿¡ ÇÇÇØ¸¦ ÁÜ
+                Gatehp.damaged(damage);//ê²Œì´íŠ¸ì— í”¼í•´ë¥¼ ì¤Œ
             }
         }
-    }//¹üÀ§³» °ø°İ
+    }//ë²”ìœ„ë‚´ ê³µê²©
 
     public void MoveAgain()
     {
-        animator.SetBool("isMove", true);//ÀÌµ¿ ¾Ö´Ï¸ŞÀÌ¼Ç ¼Â
-        isMobMove = true;//´Ù½Ã ¿òÁ÷ÀÓ
+        animator.SetBool("isMove", true);//ì´ë™ ì• ë‹ˆë©”ì´ì…˜ ì…‹
+        isMobMove = true;//ë‹¤ì‹œ ì›€ì§ì„
+        isAttack = false;
     }
 
     private void StateCheck()
@@ -204,22 +221,22 @@ public class Monster : LivingEntity
         {
             if (SleepState == 1)
             {
-                moveTimeOne += Time.deltaTime;//20ÀÇ ¹üÀ§³»¿¡ ÀÖÀ»¶§ °Ë»çÇÏ´Â ½Ã°£
-            }//±íÀº ¼ö¸éÀÏ¶§ °Ë»çÇÏ´Â ½Ã°£
+                moveTimeOne += Time.deltaTime;//20ì˜ ë²”ìœ„ë‚´ì— ìˆì„ë•Œ ê²€ì‚¬í•˜ëŠ” ì‹œê°„
+            }//ê¹Šì€ ìˆ˜ë©´ì¼ë•Œ ê²€ì‚¬í•˜ëŠ” ì‹œê°„
             if (!player.isMove)
             {
-                StartCoroutine("CheckStop");//ÇÃ·¹ÀÌ¾îÀÇ ¿òÁ÷ÀÓÀÌ ¸ØÃè´ÂÁö °Ë»ç
-            }//¸ØÃèÀ¸¸é ¸ØÃã°Ë»ç
+                StartCoroutine("CheckStop");//í”Œë ˆì´ì–´ì˜ ì›€ì§ì„ì´ ë©ˆì·„ëŠ”ì§€ ê²€ì‚¬
+            }//ë©ˆì·„ìœ¼ë©´ ë©ˆì¶¤ê²€ì‚¬
             else
             {
                 isPlayerStop = false;
-            }//¸ØÃßÁö ¾Ê¾ÒÀ½
-            AreaCheck(SleepState);//¼ö¸é°Ë»ç!
+            }//ë©ˆì¶”ì§€ ì•Šì•˜ìŒ
+            AreaCheck(SleepState);//ìˆ˜ë©´ê²€ì‚¬!
         }
     }
     private void OnWake()
     {
-        Debug.DrawRay(RayPos, dirVec * AttackDist, new Color(0, 1, 0));//·¹ÀÌÄ³½ºÆ® Ç¥½Ã(°Å¸® È®ÀÎ¿ë)
+        Debug.DrawRay(RayPos, dirVec * AttackDist, new Color(0, 1, 0));//ë ˆì´ìºìŠ¤íŠ¸ í‘œì‹œ(ê±°ë¦¬ í™•ì¸ìš©)
         float xdistance = player.transform.position.x - gameObject.transform.position.x;
         if (isMobMove == true)
         {
@@ -237,33 +254,46 @@ public class Monster : LivingEntity
                 }
                 else if (Dir == 1f)
                 {
-                    Dir = 1;//¹æÇâ ¿À¸¥ÂÊ
-                    dirVec = new Vector3(1f, 0f, 0f);//Ray ¹ß»ç¹æÇâ
+                    Dir = 1;//ë°©í–¥ ì˜¤ë¥¸ìª½
+                    dirVec = new Vector3(1f, 0f, 0f);//Ray ë°œì‚¬ë°©í–¥
                     SpriteSwapRight();
                     animator.SetBool("isIdle", false);
                 }
                 else if (Dir == -1f)
                 {
-                    Dir = -1;//¹æÇâ ¿ŞÂÊ
-                    dirVec = new Vector3(-1, 0f, 0f);//Ray ¹ß»ç¹æÇâ
+                    Dir = -1;//ë°©í–¥ ì™¼ìª½
+                    dirVec = new Vector3(-1, 0f, 0f);//Ray ë°œì‚¬ë°©í–¥
                     SpriteSwapLeft();
                     animator.SetBool("isIdle", false);
                 }
-                Debug.Log("¶°µ¹¾Æ´Ù´Ï´ÂÁß");
+                Debug.Log("ë– ëŒì•„ë‹¤ë‹ˆëŠ”ì¤‘");
             }
-            else
+            else if(!isAttack)
             {
                 if (xdistance > 0)
                 {
-                    Dir = 1;//¹æÇâ ¿À¸¥ÂÊ
-                    dirVec = new Vector3(1f, 0f, 0f);//Ray ¹ß»ç¹æÇâ
-                    SpriteSwapRight();
+                    Dir = 1;//ë°©í–¥ ì˜¤ë¥¸ìª½
+                    dirVec = new Vector3(1f, 0f, 0f);//Ray ë°œì‚¬ë°©í–¥
+                    if (isBoss)
+                    {
+                        BossSpriteSwapRight();
+                    }
+                    else {
+                        SpriteSwapRight();
+                    }
                 }
                 else if ((xdistance < 0))
                 {
-                    Dir = -1;//¹æÇâ ¿ŞÂÊ
-                    dirVec = new Vector3(-1, 0f, 0f);//Ray ¹ß»ç¹æÇâ
-                    SpriteSwapLeft();
+                    Dir = -1;//ë°©í–¥ ì™¼ìª½
+                    dirVec = new Vector3(-1, 0f, 0f);//Ray ë°œì‚¬ë°©í–¥
+                    if (isBoss)
+                    {
+                        BossSpriteSwapLeft();
+                    }
+                    else
+                    {
+                        SpriteSwapLeft();
+                    }
                 }
                 if (Dist <= ColDist)
                 {
@@ -271,9 +301,9 @@ public class Monster : LivingEntity
                 }
             }
             Vector3 NextPos = new Vector3(Dir, 0, 0) * MaxSpeed * Time.deltaTime;
-            transform.position = curPos + NextPos;//ÇÃ·¹ÀÌ¾î ÇâÇØ¼­ ÀÌµ¿(ÃßÀû)
+            transform.position = curPos + NextPos;//í”Œë ˆì´ì–´ í–¥í•´ì„œ ì´ë™(ì¶”ì )
         }
-    }//±ú¾îÀÖ´Â µ¿¾È Çàµ¿ÇÏ´Â ·çÆ¾
+    }//ê¹¨ì–´ìˆëŠ” ë™ì•ˆ í–‰ë™í•˜ëŠ” ë£¨í‹´
     
     private void CheckMoveSound()
     {
@@ -289,16 +319,30 @@ public class Monster : LivingEntity
 
     private void SpriteSwapRight()
     {
-        MonsterRenderer.flipX = false;//½ºÇÁ¶óÀÌÆ® ¹İÀüx(¿À¸¥ÂÊ º½)
+        MonsterRenderer.flipX = false;//ìŠ¤í”„ë¼ì´íŠ¸ ë°˜ì „x(ì˜¤ë¥¸ìª½ ë´„)
         Hammer.flipX = true;
         Blood.flipX = true;
     }
 
     private void SpriteSwapLeft()
     {
-        MonsterRenderer.flipX = true;//½ºÇÁ¶óÀÌÆ® ¹İÀüx(¿À¸¥ÂÊ º½)
+        MonsterRenderer.flipX = true;//ìŠ¤í”„ë¼ì´íŠ¸ ë°˜ì „x(ì˜¤ë¥¸ìª½ ë´„)
         Hammer.flipX = false;
         Blood.flipX = false;
+    }
+
+    private void BossSpriteSwapLeft()
+    {
+        MonsterRenderer.flipX = false;//ìŠ¤í”„ë¼ì´íŠ¸ ë°˜ì „x(ì˜¤ë¥¸ìª½ ë´„)
+        Hammer.flipX = false;
+        Blood.flipX = false;
+    }
+
+    private void BossSpriteSwapRight()
+    {
+        MonsterRenderer.flipX = true;//ìŠ¤í”„ë¼ì´íŠ¸ ë°˜ì „x(ì˜¤ë¥¸ìª½ ë´„)
+        Hammer.flipX = true;
+        Blood.flipX = true;
     }
 
     
@@ -315,45 +359,45 @@ public class Monster : LivingEntity
         lastPlayerPosition.x = Player.transform.position.x;
 
         yield return new WaitForSeconds(0.1f);
-        //Debug.Log("°Ë»çÇÕ´Ï´Ù.");
+        //Debug.Log("ê²€ì‚¬í•©ë‹ˆë‹¤.");
         if (lastPlayerPosition.x == Player.transform.position.x)
         {
-            //Debug.Log("¸ØÃè½À´Ï´Ù.");
-            moveTimeOne = 0;//ÇÃ·¹ÀÌ¾î°¡ ¿òÁ÷ÀÎ ½Ã°£ ÃÊ±âÈ­
-            //moveTimeTwo = 0;//ÇÃ·¹ÀÌ¾î°¡ ¿òÁ÷ÀÎ ½Ã°£ ÃÊ±âÈ­
-            isPlayerStop = true;//ÇÃ·¹ÀÌ¾î°¡ ¸ØÃè½À´Ï´Ù.
-        }//¸Ø­ŸÀ¸¹Ç·Î °Ë»çÇÏ´ø ½Ã°£µé ÃÊ±âÈ­
+            //Debug.Log("ë©ˆì·„ìŠµë‹ˆë‹¤.");
+            moveTimeOne = 0;//í”Œë ˆì´ì–´ê°€ ì›€ì§ì¸ ì‹œê°„ ì´ˆê¸°í™”
+            //moveTimeTwo = 0;//í”Œë ˆì´ì–´ê°€ ì›€ì§ì¸ ì‹œê°„ ì´ˆê¸°í™”
+            isPlayerStop = true;//í”Œë ˆì´ì–´ê°€ ë©ˆì·„ìŠµë‹ˆë‹¤.
+        }//ë©ˆì·ƒìœ¼ë¯€ë¡œ ê²€ì‚¬í•˜ë˜ ì‹œê°„ë“¤ ì´ˆê¸°í™”
         else
         {
-            //Debug.Log("°è¼Ó ¿òÁ÷ÀÌ´Â ÁßÀÔ´Ï´Ù.");
-        }//°è¼Ó ¿òÁ÷ÀÓÀ» È®ÀÎ
-    }//¸ØÃè´ÂÁö¸¦ È®ÀÎÇÔ 0.4ÃÊ°£ ¿òÁ÷ÀÌÁö ¾Ê¾Æ¾ß ¸ØÃá°É·Î ÀÓ½ÃÆÇÁ¤ 
+            //Debug.Log("ê³„ì† ì›€ì§ì´ëŠ” ì¤‘ì…ë‹ˆë‹¤.");
+        }//ê³„ì† ì›€ì§ì„ì„ í™•ì¸
+    }//ë©ˆì·„ëŠ”ì§€ë¥¼ í™•ì¸í•¨ 0.4ì´ˆê°„ ì›€ì§ì´ì§€ ì•Šì•„ì•¼ ë©ˆì¶˜ê±¸ë¡œ ì„ì‹œíŒì • 
 
     public void AreaCheck(int state)
     {
         switch (state)
         {
-            case 0://±íÀº¼ö¸é »óÅÂÀÏ¶§ °Ë»ç
+            case 0://ê¹Šì€ìˆ˜ë©´ ìƒíƒœì¼ë•Œ ê²€ì‚¬
                 if (Dist <= 20)
                 {
                     Sound.PlaySleepSound(MobType);
-                    SleepState = 1;//Áß°£¼ö¸éÀ¸·Î
+                    SleepState = 1;//ì¤‘ê°„ìˆ˜ë©´ìœ¼ë¡œ
                     animator.SetInteger("SleepState", 1);
                 }
                 break;
-            case 1://Áß°£ ¼ö¸é »óÅÂÀÏ¶§ °Ë»ç
+            case 1://ì¤‘ê°„ ìˆ˜ë©´ ìƒíƒœì¼ë•Œ ê²€ì‚¬
                 if (Dist <= 20)
                 {
-                    if (moveTimeOne >= 0.8f)//0.8ÃÊ ÀÌ»ó ¿òÁ÷¿´´Ù¸é
+                    if (moveTimeOne >= 0.8f)//0.8ì´ˆ ì´ìƒ ì›€ì§ì˜€ë‹¤ë©´
                     {
                         MonsterAwake();
-                    }//°Å¸®°¡ 30¾È¿¡ µé¾î¿À¸é Ã¼Å©(±íÀº¼ö¸é»óÅÂ)
+                    }//ê±°ë¦¬ê°€ 30ì•ˆì— ë“¤ì–´ì˜¤ë©´ ì²´í¬(ê¹Šì€ìˆ˜ë©´ìƒíƒœ)
 
-                    CheckPlayerDash();//ÇÃ·¹ÀÌ¾î°¡ ´ë½¬ÇßÀ½À» È®ÀÎÇÔ.
+                    CheckPlayerDash();//í”Œë ˆì´ì–´ê°€ ëŒ€ì‰¬í–ˆìŒì„ í™•ì¸í•¨.
                 }
                 else if (Dist >= 20)
                 {
-                    SleepState = 0;//±íÀº ¼ö¸éÀ¸·Î µ¹¾Æ°¨
+                    SleepState = 0;//ê¹Šì€ ìˆ˜ë©´ìœ¼ë¡œ ëŒì•„ê°
                     moveTimeOne = 0;
                     animator.SetInteger("SleepState", 0);
                 }
@@ -363,20 +407,39 @@ public class Monster : LivingEntity
 
     public void CheckPlayerDash()
     {
-        if (player.GetDashCheck() == true)//ÇÃ·¹ÀÌ¾î°¡ ´ë½¬¸¦ Çß´Ù¸é
+        if (player.GetDashCheck() == true)//í”Œë ˆì´ì–´ê°€ ëŒ€ì‰¬ë¥¼ í–ˆë‹¤ë©´
         {
-            MonsterAwake();//±â»ó
+            MonsterAwake();//ê¸°ìƒ
         }
-    }//ÇÃ·¹ÀÌ¾î°¡ ´ë½¬Çß´ÂÁö Ã¼Å©ÇÔ
+    }//í”Œë ˆì´ì–´ê°€ ëŒ€ì‰¬í–ˆëŠ”ì§€ ì²´í¬í•¨
 
     public void MonsterAwake()
     {
-        SleepState = 3;//±ú¾î³­ »óÅÂ
-        animator.SetInteger("SleepState", 3);//¾Ö´Ï¸ŞÀÌ¼ÇÀ» ±â»ó »óÅÂ·Î º¯°æ
+        SleepState = 3;//ê¹¨ì–´ë‚œ ìƒíƒœ
+        animator.SetInteger("SleepState", 3);//ì• ë‹ˆë©”ì´ì…˜ì„ ê¸°ìƒ ìƒíƒœë¡œ ë³€ê²½
         //MonsterRenderer.color = new Color(1, 0f, 0f, 1f);
-        animator.SetBool("isMove", true);//ÇÃ·¹ÀÌ¾î¸¦ ÃßÀûÇØ¿À±â ¶§¹®¿¡ isMove ÆÄ¶ó¹ÌÅÍ°ªÀ» true·Î º¯°æ
-        isMobMove = true;//¸ó½ºÅÍ´Â ¿òÁ÷ÀÎ´Ù.
-        //Debug.Log("±ú¾î³µ½À´Ï´Ù.");
+        animator.SetBool("isMove", true);//í”Œë ˆì´ì–´ë¥¼ ì¶”ì í•´ì˜¤ê¸° ë•Œë¬¸ì— isMove íŒŒë¼ë¯¸í„°ê°’ì„ trueë¡œ ë³€ê²½
+        isMobMove = true;//ëª¬ìŠ¤í„°ëŠ” ì›€ì§ì¸ë‹¤.
+        //Debug.Log("ê¹¨ì–´ë‚¬ìŠµë‹ˆë‹¤.");
+    }
+    
+    public void BossAppear()
+    {
+        ChangeCam.Instance.SwitchCam();
+        Invoke("BossDrop", 0.8f);
+        
+    }
+
+    public void ChangeCamToPlayer()
+    {
+        ChangeCam.Instance.SwitchCam();
+    }
+    public void BossDrop()
+    {
+        m_Tr.position = new Vector3(m_Tr.position.x, m_Tr.position.y - 0.5f, m_Tr.position.z);
+        MR.constraints = RigidbodyConstraints2D.None;
+        MR.constraints = RigidbodyConstraints2D.FreezeRotation;
+        //m_Col.isTrigger = false;
     }
 
     public void FallCheck()
@@ -407,28 +470,28 @@ public class Monster : LivingEntity
         {
             isEventMob = false;
         }
-    }//ÀÌº¥Æ® ¸ó½ºÅÍÀÎÁö Ã¼Å©
+    }//ì´ë²¤íŠ¸ ëª¬ìŠ¤í„°ì¸ì§€ ì²´í¬
 
     public override void damaged(float damage)
     {
-        Health -= damage;//Ã¼·Â¿¡¼­ µ¥¹ÌÁö¸¸Å­ ±ğÀ½
+        Health -= damage;//ì²´ë ¥ì—ì„œ ë°ë¯¸ì§€ë§Œí¼ ê¹ìŒ
         Sound.PlayDamagedSound();
         HammerHitEffect.SetActive(true);
         BloodEffect.SetActive(true);
         Invoke("ReadyEffect", 0.2f);
-        //¸ğ¼Ç
-        //»ç¿îµå
+        //ëª¨ì…˜
+        //ì‚¬ìš´ë“œ
 
         if (SleepState != 3)
         {
-            MonsterAwake();//¼ö¸éÁßÀÏ¶§ °ø°İ´çÇÏ¸é ±â»ó
+            MonsterAwake();//ìˆ˜ë©´ì¤‘ì¼ë•Œ ê³µê²©ë‹¹í•˜ë©´ ê¸°ìƒ
         }
 
         if (Health <= 0 && !isDead)
         {
-            Die();//»ç¸Á
-        }//Ã¼·ÂÀÌ 0ÀÌ µÇ°Å³ª 0¾Æ·¡·Î ¶³¾îÁ³°í Á×Áö ¾Ê¾Ò´Ù¸é
-        //ÇÇ°İ½Ã ½ÇÇàÇÒ ³»¿ë
+            Die();//ì‚¬ë§
+        }//ì²´ë ¥ì´ 0ì´ ë˜ê±°ë‚˜ 0ì•„ë˜ë¡œ ë–¨ì–´ì¡Œê³  ì£½ì§€ ì•Šì•˜ë‹¤ë©´
+        //í”¼ê²©ì‹œ ì‹¤í–‰í•  ë‚´ìš©
     }
 
     private void ReadyEffect()
@@ -439,16 +502,16 @@ public class Monster : LivingEntity
 
     public override void Die()
     {
-        isMobMove = false;//¿òÁ÷ÀÓ ¸ØÃã
-        isDead = true;//»ç¸ÁÇßÀ½
+        isMobMove = false;//ì›€ì§ì„ ë©ˆì¶¤
+        isDead = true;//ì‚¬ë§í–ˆìŒ
         Sound.PlayDeadSound(MobType);
-        animator.SetTrigger("Die");//¾Ö´Ï¸ŞÀÌÅÍ¿¡ Die Æ®¸®°Å¸¦ Àü´ŞÇØ¼­ »ç¸Á ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı
-        Invoke("Destroy", DyingTime);//Àá½ÃÈÄ¿¡ ¿ÀºêÁ§Æ® ºñÈ°¼ºÈ­
+        animator.SetTrigger("Die");//ì• ë‹ˆë©”ì´í„°ì— Die íŠ¸ë¦¬ê±°ë¥¼ ì „ë‹¬í•´ì„œ ì‚¬ë§ ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ
+        Invoke("Destroy", DyingTime);//ì ì‹œí›„ì— ì˜¤ë¸Œì íŠ¸ ë¹„í™œì„±í™”
     }
 
     private void Destroy()
     {
-        gameObject.SetActive(false);//¿ÀºêÁ§Æ® ºñÈ°¼ºÈ­
+        gameObject.SetActive(false);//ì˜¤ë¸Œì íŠ¸ ë¹„í™œì„±í™”
     }
 
     private void OnCollisionEnter2D(Collision2D col)
@@ -461,6 +524,14 @@ public class Monster : LivingEntity
         if(col.gameObject.tag == "Floor" && isFall)
         {
             StopFalling();
+        }
+        else if(col.gameObject.tag == "Floor")
+        {
+            if (isBoss)
+            {
+                m_Col.isTrigger = false;
+                animator.SetTrigger("isGround");
+            }
         }
     }
 
@@ -487,45 +558,59 @@ public class Monster : LivingEntity
             isFall = true;
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+       if (col.gameObject.tag == "Floor")
+       {
+            if (isBoss)
+            {
+                m_Col.isTrigger = false;
+                animator.SetTrigger("isGround");
+                Invoke("ChangeCamToPlayer", 0.8f);
+                MonsterAwake();
+            }
+       }
+    }
 }
-/*ÇÃ·¹ÀÌ¾î¿Í °Å¸®°¡ 30ÀÌÇÏ°¡ µÈ´Ù  -> °Ë»ç½ÃÀÛ -> 2ÃÊ°£ °ÉÀ¸¸é Áß°£¼ö¸é
-				          -> ´ë½¬ÇÏ¸é ¹Ù·Î ±â»ó
-Áß°£¼ö¸é¿¡¼­ 15°Å¸®±îÁö µé¾î¿Ô°í ¾È¿¡¼­ 0.8ÃÊ°£ °É¾ú´Â°¡? ->  ¾èÀº ¼ö¸é -> ¿òÁ÷ÀÌÀÚ¸¶ÀÚ ±â»ó
-->  ¾Æ´Ï¸é ´Ù½Ã  ±íÀº ¼ö¸éÀ¸·Î*/
-//ÃÊ->³ë->»¡->»¡(À¯Áö)
+/*í”Œë ˆì´ì–´ì™€ ê±°ë¦¬ê°€ 30ì´í•˜ê°€ ëœë‹¤  -> ê²€ì‚¬ì‹œì‘ -> 2ì´ˆê°„ ê±¸ìœ¼ë©´ ì¤‘ê°„ìˆ˜ë©´
+				          -> ëŒ€ì‰¬í•˜ë©´ ë°”ë¡œ ê¸°ìƒ
+ì¤‘ê°„ìˆ˜ë©´ì—ì„œ 15ê±°ë¦¬ê¹Œì§€ ë“¤ì–´ì™”ê³  ì•ˆì—ì„œ 0.8ì´ˆê°„ ê±¸ì—ˆëŠ”ê°€? ->  ì–•ì€ ìˆ˜ë©´ -> ì›€ì§ì´ìë§ˆì ê¸°ìƒ
+->  ì•„ë‹ˆë©´ ë‹¤ì‹œ  ê¹Šì€ ìˆ˜ë©´ìœ¼ë¡œ*/
+//ì´ˆ->ë…¸->ë¹¨->ë¹¨(ìœ ì§€)
 
 
-//case 2://Áß°£¼ö¸é »óÅÂÀÏ¶§ °Ë»ç
-//    if (SleepState == 1 && Dist <= 15)//Áß°£¼ö¸é »óÅÂÀÌ°í, ÇÃ·¹ÀÌ¾î°¡ 15ÀÇ ¹üÀ§³»¿¡ ÀÖÀ»¶§
+//case 2://ì¤‘ê°„ìˆ˜ë©´ ìƒíƒœì¼ë•Œ ê²€ì‚¬
+//    if (SleepState == 1 && Dist <= 15)//ì¤‘ê°„ìˆ˜ë©´ ìƒíƒœì´ê³ , í”Œë ˆì´ì–´ê°€ 15ì˜ ë²”ìœ„ë‚´ì— ìˆì„ë•Œ
 //    {
-//        if (moveTimeTwo >= 0.8)//0.8ÃÊ ÀÌ»ó °ÉÀ¸¸é
+//        if (moveTimeTwo >= 0.8)//0.8ì´ˆ ì´ìƒ ê±¸ìœ¼ë©´
 //        {
-//            SleepState = 2;//¾èÀº ¼ö¸é »óÅÂ·Î µé¾î°¨
-//            moveTimeTwo = 0;//2Â÷ °Ë»ç½Ã°£ ÃÊ±âÈ­
-//            animator.SetInteger("SleepState", 2);//¾èÀº ¼ö¸é ¾Ö´Ï¸ŞÀÌ¼ÇÀ¸·Î º¯°æ
-//            //Debug.Log("¾èÀº¼ö¸é »óÅÂ·Î µé¾î°©´Ï´Ù.");
+//            SleepState = 2;//ì–•ì€ ìˆ˜ë©´ ìƒíƒœë¡œ ë“¤ì–´ê°
+//            moveTimeTwo = 0;//2ì°¨ ê²€ì‚¬ì‹œê°„ ì´ˆê¸°í™”
+//            animator.SetInteger("SleepState", 2);//ì–•ì€ ìˆ˜ë©´ ì• ë‹ˆë©”ì´ì…˜ìœ¼ë¡œ ë³€ê²½
+//            //Debug.Log("ì–•ì€ìˆ˜ë©´ ìƒíƒœë¡œ ë“¤ì–´ê°‘ë‹ˆë‹¤.");
 //        }
-//        else if(isPlayerStop)//¸¸¾à ¸ØÃè´Ù¸é
+//        else if(isPlayerStop)//ë§Œì•½ ë©ˆì·„ë‹¤ë©´
 //        {
-//            SleepState = 0;//´Ù½Ã ±íÀº ¼ö¸é »óÅÂ·Î µé¾î°¨
+//            SleepState = 0;//ë‹¤ì‹œ ê¹Šì€ ìˆ˜ë©´ ìƒíƒœë¡œ ë“¤ì–´ê°
 //            //MonsterRenderer.color = new Color(1, 1, 1, 1);
-//            animator.SetInteger("SleepState", 0);//±íÀº ¼ö¸é »óÅÂ·Î ¾Ö´Ï¸ŞÀÌ¼Ç ÀüÈ¯
-//            //Debug.Log("±íÀº ¼ö¸é »óÅÂ·Î µ¹¾Æ°©´Ï´Ù.");
+//            animator.SetInteger("SleepState", 0);//ê¹Šì€ ìˆ˜ë©´ ìƒíƒœë¡œ ì• ë‹ˆë©”ì´ì…˜ ì „í™˜
+//            //Debug.Log("ê¹Šì€ ìˆ˜ë©´ ìƒíƒœë¡œ ëŒì•„ê°‘ë‹ˆë‹¤.");
 //        }
-//    }//Áß°£¼ö¸é »óÅÂÀÌ°í 15¾È¿¡¼­ 0.8ÃÊ°£ ¿òÁ÷¿´³ª?
+//    }//ì¤‘ê°„ìˆ˜ë©´ ìƒíƒœì´ê³  15ì•ˆì—ì„œ 0.8ì´ˆê°„ ì›€ì§ì˜€ë‚˜?
 //    break;
-//case 2://¾èÀº ¼ö¸é »óÅÂÀÏ¶§ °Ë»ç
-//    if (SleepState == 2)//¾èÀº ¼ö¸é»óÅÂÀÏ¶§
+//case 2://ì–•ì€ ìˆ˜ë©´ ìƒíƒœì¼ë•Œ ê²€ì‚¬
+//    if (SleepState == 2)//ì–•ì€ ìˆ˜ë©´ìƒíƒœì¼ë•Œ
 //    {
-//        if (player.GetMoveCheck())//¿òÁ÷¿´´Ù¸é
+//        if (player.GetMoveCheck())//ì›€ì§ì˜€ë‹¤ë©´
 //        {
-//            MonsterAwake();//±â»ó
+//            MonsterAwake();//ê¸°ìƒ
 //        }
-//        else//¿òÁ÷ÀÌÁö ¾Ê¾Ò´Ù¸é
+//        else//ì›€ì§ì´ì§€ ì•Šì•˜ë‹¤ë©´
 //        {
-//            SleepState = 1;//Áß°£ ¼ö¸é »óÅÂ·Î µ¹¾Æ°¨
+//            SleepState = 1;//ì¤‘ê°„ ìˆ˜ë©´ ìƒíƒœë¡œ ëŒì•„ê°
 //            //MonsterRenderer.color = new Color(1, 0.92f, 0.016f, 1);
-//            animator.SetInteger("SleepState", 1);//Áß°£ ¼ö¸é »óÅÂ·Î ¾Ö´Ï¸ŞÀÌ¼Ç º¯°æ
-//            //Debug.Log("Áß°£ ¼ö¸é »óÅÂ·Î µ¹¾Æ°©´Ï´Ù.");
+//            animator.SetInteger("SleepState", 1);//ì¤‘ê°„ ìˆ˜ë©´ ìƒíƒœë¡œ ì• ë‹ˆë©”ì´ì…˜ ë³€ê²½
+//            //Debug.Log("ì¤‘ê°„ ìˆ˜ë©´ ìƒíƒœë¡œ ëŒì•„ê°‘ë‹ˆë‹¤.");
 //        }
-//    }//¾èÀº ¼ö¸é »óÅÂ ÀÌ »óÅÂ¿¡ ÇÃ·¹ÀÌ¾î°¡ °ÉÀ¸¸é ¹Ù·Î ±â»ó
+//    }//ì–•ì€ ìˆ˜ë©´ ìƒíƒœ ì´ ìƒíƒœì— í”Œë ˆì´ì–´ê°€ ê±¸ìœ¼ë©´ ë°”ë¡œ ê¸°ìƒ

@@ -176,6 +176,7 @@ MonoBehaviour:
   CheckTime: 0
   CoolTime: 2
   AttackTime: 0
+  AttackEndTime: 0.55
   FallTime: 0
   AttackTiming: 0.4
   Dist: 0
@@ -187,15 +188,18 @@ MonoBehaviour:
   dirVec: {x: 0, y: 0, z: 0}
   player: {fileID: 0}
   Gate: {fileID: 0}
+  Gatehp: {fileID: 0}
   isPlayerDash: 0
   isPlayerStop: 0
   isAttack: 0
   isFall: 0
   isWall: 0
+  isBoss: 0
   isEventMob: 0
   HammerHitEffect: {fileID: 7885817439666112809}
   BloodEffect: {fileID: 7638672502958849059}
   lastPlayerPosition: {x: 0, y: 0, z: 0}
+  AttackPlayer: {fileID: 0}
 --- !u!114 &8641154581951065992
 MonoBehaviour:
   m_ObjectHideFlags: 0

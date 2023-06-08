@@ -744,6 +744,10 @@
       <Project>{EC5F59A6-FA89-1902-3AD4-E39C903959FA}</Project>
       <Name>Unity.VisualScripting.State.Player</Name>
     </ProjectReference>
+    <ProjectReference Include="Cinemachine.Player.csproj">
+      <Project>{C9A40935-716A-34A9-B96B-F22FF401A509}</Project>
+      <Name>Cinemachine.Player</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

@@ -176,6 +176,7 @@ MonoBehaviour:
   CheckTime: 0
   CoolTime: 2
   AttackTime: 0
+  AttackEndTime: 0.55
   FallTime: 0
   AttackTiming: 0.4
   Dist: 0
@@ -193,6 +194,7 @@ MonoBehaviour:
   isAttack: 0
   isFall: 0
   isWall: 0
+  isBoss: 0
   isEventMob: 0
   HammerHitEffect: {fileID: 7885817439666112809}
   BloodEffect: {fileID: 7638672502958849059}
