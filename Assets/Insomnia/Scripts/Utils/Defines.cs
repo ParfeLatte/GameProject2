@@ -42,6 +42,11 @@ namespace Insomnia {
 
         }
 
+        public enum SoundType : int {
+            Master = 0,
+            BGM,
+            SFX,
+        }
 
         #endregion
 
@@ -53,6 +58,10 @@ namespace Insomnia {
             public Vector3 Position;
             public ObjectType ObjectType;
             public StatusType Status;
+        }
+
+        public struct SoundNotiData{
+            public float[] volumes;
         }
 
         #endregion
@@ -70,11 +79,6 @@ namespace Insomnia {
         }
 
         #endregion
-
-
-
-
-
 
 
     }

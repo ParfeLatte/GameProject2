@@ -3,29 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Insomnia {
-    public class MortalSingleton<T> : MonoBehaviour where T : Component {
-        private static T _instance = default(T);
+    public abstract class ImmortalSingleton<T> : SingletonBase<T> where T : Component {
         public static T Instance {
             get {
-                if(_instance == null)
+                if(_instance == null) {
                     _instance = FindObjectOfType<T>();
+
+                    if(_instance == null) {
+                        GameObject go = new GameObject() { name = typeof(T).Name };
+                        _instance = go.AddComponent<T>();
+                    }
+                }
 
                 return _instance;
             }
         }
 
-        protected virtual void Awake() {
+        protected override void Awake() {
             if(_instance != null) {
                 Destroy(gameObject);
                 return;
             }
             else {
                 _instance = gameObject.GetComponent<T>();
+                DontDestroyOnLoad(gameObject);
             }
-        }
-
-        protected virtual void OnDestroy() {
-            _instance = null;
         }
     }
 }
