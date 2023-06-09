@@ -127,7 +127,7 @@ public class Monster : LivingEntity
         }
         if (isAttack && isBoss)
         {
-            Vector3 DashPos = new Vector3(Dir, 0, 0) * 1.75f * MaxSpeed * Time.deltaTime;//�뽬�Ҷ� ������ġ
+            Vector3 DashPos = new Vector3(Dir, 0, 0) * 2f * MaxSpeed * Time.deltaTime;//�뽬�Ҷ� ������ġ
             transform.position = curPos + DashPos;//���ؼ� ��ġ����
         }
     }
@@ -425,7 +425,6 @@ public class Monster : LivingEntity
     
     public void BossAppear()
     {
-        ChangeCam.Instance.SwitchCam();
         Invoke("BossDrop", 0.8f);
         
     }
