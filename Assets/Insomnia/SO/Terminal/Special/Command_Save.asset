@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18ffb3e8190cf6e43b0c81d4bda45db8, type: 3}
+  m_Name: Command_Save
+  m_EditorClassIdentifier: 
+  m_command: SAVE
+  m_loadingTime: 5
+  m_Description: "SAVE\t\tCreate Checkpoint from this terminal.\r\n\t\tUsage: SAVE\r\n\t\tExample:
+    SAVE\r\n"
+  onCommandSuccess:
+    m_PersistentCalls:
+      m_Calls: []

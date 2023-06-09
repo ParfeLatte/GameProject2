@@ -40,6 +40,11 @@ namespace Insomnia {
             m_consoleWindow = GetComponentInChildren<TMP_Text>();
         }
 
+        private void Update() {
+            if(Input.GetKeyDown(KeyCode.Tab))
+                OnKeyDown_Tab();
+        }
+
         public void SetTerminal(Terminal terminal) {
             if(terminal == null)
                 return;
@@ -62,6 +67,36 @@ namespace Insomnia {
             if(success == CommandError.Failed     ) commandContainer.Add($"<color=red>Command Failed: ^%!$@#!^%@$#%^!$@#</color>");
 
             DisplayCommand();
+        }
+
+        private void OnKeyDown_Tab() {
+            string[] leakedKey = m_consoleInput.text.ToUpper().Split(' ');
+            if(leakedKey.Length <= 0)
+                return;
+
+            string result = "";
+
+            if(leakedKey.Length >= 1) {
+                TerminalCommand command = m_commands.SingleOrDefault(x => x.ContainsKeyword(leakedKey[0]));
+                if(command != null) 
+                    result += command.Command.ToUpper() + ' ';
+            }
+
+            if(leakedKey.Length >= 2) {
+                string itemIDFormat = ItemManager.Instance.GetItemID(leakedKey[1]);
+
+                if(itemIDFormat != string.Empty)
+                    result += itemIDFormat.ToUpper() + '_';
+            }
+
+            //TerminalCommand result = m_commands.SingleOrDefault(x => x.ContainsKeyword(leakedKey));
+
+            //if(result == null)
+            //    return;
+
+            //string completedKey = result.Command.ToUpper() + ' ';
+            m_consoleInput.text = result.ToUpper();
+            m_consoleInput.MoveTextEnd(false);
         }
 
         /// <summary>
