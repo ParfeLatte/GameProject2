@@ -17,6 +17,10 @@ public class MainUI : MonoBehaviour
             m_loadButton.interactable = true;
     }
 
+    public void OnClick_CheckTutorial()
+    {
+        TutorialCheckPanel.SetActive(true);
+    }
     public void OnClick_NewGame() {
         PlayerPrefs.DeleteAll();
         SceneController.Instance.ChangeSceneTo("Lab");
@@ -31,6 +35,8 @@ public class MainUI : MonoBehaviour
     }
 
     public void OnClick_TutorialStart() {
+
+        PlayerPrefs.DeleteAll();
         SceneController.Instance.ChangeSceneTo("Tutorial");
     }
 

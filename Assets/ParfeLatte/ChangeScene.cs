@@ -9,7 +9,6 @@ public class ChangeScene : MonoBehaviour
     
     public void changeToGame()
     {
-        //SceneManager.LoadScene("Lab");
         SceneController.Instance.ChangeSceneTo("Lab");
     }
 
@@ -22,5 +21,13 @@ public class ChangeScene : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("Main");
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            changeToGame();
+        }
     }
 }

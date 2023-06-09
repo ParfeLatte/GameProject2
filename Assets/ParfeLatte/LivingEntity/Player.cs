@@ -280,8 +280,12 @@ public class Player : LivingEntity, IDataIO
 
     public override void damaged(float damage)
     {
-        base.damaged(damage);
-        Debug.Log(damage);
+        if (!isDash)
+        {
+            base.damaged(damage);
+            Debug.Log(damage);
+        }
+        Debug.Log("데미지 받음");
         HealthCheck();
     }
 

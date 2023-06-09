@@ -9,7 +9,7 @@ public class LiftTest : MonoBehaviour
     public bool Reverse;//true일때 아래로, false일때 위로
     public bool isMove;//움직이는지 안움직이는지
     public List<GameObject> Objects = new List<GameObject>();
-    Vector3 nextpos = new Vector3(0, 4f, 0);
+    Vector3 nextpos = new Vector3(0, 5.5f, 0);
 
     private ElevatorSound Sound;
 
