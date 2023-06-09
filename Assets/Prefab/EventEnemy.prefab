@@ -15,8 +15,6 @@ GameObject:
   - component: {fileID: 3947306826808562805}
   - component: {fileID: 3947306826808562809}
   - component: {fileID: 8641154581951065992}
-  - component: {fileID: 6058502505485639951}
-  - component: {fileID: 3744262853047663358}
   m_Layer: 6
   m_Name: EventEnemy
   m_TagString: enemy
@@ -37,6 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3947306826951480239}
+  - {fileID: 2332742338119536}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -187,6 +186,7 @@ MonoBehaviour:
   dirVec: {x: 0, y: 0, z: 0}
   player: {fileID: 0}
   Gate: {fileID: 0}
+  Gatehp: {fileID: 0}
   isPlayerDash: 0
   isPlayerStop: 0
   isAttack: 0
@@ -196,6 +196,8 @@ MonoBehaviour:
   HammerHitEffect: {fileID: 7885817439666112809}
   BloodEffect: {fileID: 7638672502958849059}
   lastPlayerPosition: {x: 0, y: 0, z: 0}
+  m_speaker: {fileID: 0}
+  AttackPlayer: {fileID: 0}
 --- !u!114 &8641154581951065992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,43 +212,100 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Mob: {fileID: 3947306826808562809}
   isDead: 0
---- !u!114 &6058502505485639951
+--- !u!1 &3947306826951480238
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3947306826951480239}
+  - component: {fileID: 3947306826951480236}
+  m_Layer: 6
+  m_Name: Attack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3947306826951480239
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3947306826951480238}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.22, y: 2.57, z: 0}
+  m_LocalScale: {x: 1.025, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7885817439666112814}
+  - {fileID: 4024438756663079179}
+  m_Father: {fileID: 3947306826808562808}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3947306826951480236
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3947306826808562810}
+  m_GameObject: {fileID: 3947306826951480238}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa075072ecacf8541b37aaee21312d6f, type: 3}
+  m_Script: {fileID: 11500000, guid: ee4eb5687e035ec4bb2a92abd5951415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NormalMobSleep: {fileID: 8300000, guid: 38fed403a7c0706419e1e0307fd7c00f, type: 3}
-  GiantMobSleep: {fileID: 0}
-  NormalMobAttack: {fileID: 8300000, guid: eefcedb63059c2644a9a911341eae6c3, type: 3}
-  GiantMobAttack: {fileID: 0}
-  BossMobAttack: {fileID: 0}
-  NormalMobWalk: {fileID: 8300000, guid: ed7dab0cf8e3b384fbdf92422fc7977e, type: 3}
-  GiantMobWalk: {fileID: 0}
-  BossMobWalk: {fileID: 0}
-  NormalMobDead: {fileID: 8300000, guid: 9994c7546d433994597c9b55c6d5e86a, type: 3}
-  GiantMobDead1: {fileID: 0}
-  GiantMobDead2: {fileID: 0}
-  Damaged: {fileID: 8300000, guid: 4ffdef64e605a5e4ca92e4c680c0ad01, type: 3}
---- !u!82 &3744262853047663358
+  monster: {fileID: 3947306826808562809}
+  curPos: {x: 0, y: 0, z: 0}
+--- !u!1 &4851486435308838938
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2332742338119536}
+  - component: {fileID: 957679592067774139}
+  - component: {fileID: 5906637268847220295}
+  m_Layer: 6
+  m_Name: Speaker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2332742338119536
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4851486435308838938}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3947306826808562808}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &957679592067774139
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3947306826808562810}
+  m_GameObject: {fileID: 4851486435308838938}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 0.4
+  m_PlayOnAwake: 0
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -330,54 +389,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &3947306826951480238
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3947306826951480239}
-  - component: {fileID: 3947306826951480236}
-  m_Layer: 6
-  m_Name: Attack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3947306826951480239
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3947306826951480238}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.22, y: 2.57, z: 0}
-  m_LocalScale: {x: 1.025, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7885817439666112814}
-  - {fileID: 4024438756663079179}
-  m_Father: {fileID: 3947306826808562808}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3947306826951480236
+--- !u!114 &5906637268847220295
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3947306826951480238}
+  m_GameObject: {fileID: 4851486435308838938}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee4eb5687e035ec4bb2a92abd5951415, type: 3}
+  m_Script: {fileID: 11500000, guid: 31ac0d021cb915845bf42f92491d0819, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monster: {fileID: 3947306826808562809}
-  curPos: {x: 0, y: 0, z: 0}
+  m_audio: {fileID: 0}
+  m_type: 2
+  m_clips:
+  - {fileID: 8300000, guid: 38fed403a7c0706419e1e0307fd7c00f, type: 3}
+  - {fileID: 8300000, guid: ed7dab0cf8e3b384fbdf92422fc7977e, type: 3}
+  - {fileID: 8300000, guid: eefcedb63059c2644a9a911341eae6c3, type: 3}
+  - {fileID: 8300000, guid: 4ffdef64e605a5e4ca92e4c680c0ad01, type: 3}
+  - {fileID: 8300000, guid: 9994c7546d433994597c9b55c6d5e86a, type: 3}
 --- !u!1001 &1632336622715752998
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Insomnia {
     [RequireComponent(typeof(BoxCollider2D))]
     public class Interactable : MonoBehaviour {
         private Collider _trigArea = null;  //Interactor와 충돌을 감지할 Trigger Collider
-        private Interactor _interactor = null;
+        protected Interactor _interactor = null;
+
+        public UnityEvent onInteractStart = null;
+        public UnityEvent onInteractEnd = null;
 
         protected virtual void Awake() {
             _trigArea = GetComponent<Collider>();
@@ -42,7 +46,7 @@ namespace Insomnia {
         /// <summary>
         /// 플레이어가 상호작용을 시작했을 때 실행되는 함수
         /// </summary>
-        public virtual void OnInteractStart() { }
+        public virtual bool OnInteractStart() { return true; }
 
         /// <summary>
         /// 플레이어가 상호작용을 종료했을 때 실행되는 함수

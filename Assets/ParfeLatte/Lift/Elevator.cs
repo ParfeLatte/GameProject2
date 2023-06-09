@@ -1,6 +1,8 @@
-    using System.Collections;
+using Insomnia;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Insomnia.ElevatorSpeaker;
 
 public class Elevator : MonoBehaviour
 {
@@ -16,11 +18,14 @@ public class Elevator : MonoBehaviour
     public Transform StopPos;
     Vector3 nextpos = new Vector3(0, 8f, 0);
 
-    private ElevatorSound Sound;
+    //private ElevatorSound Sound;
+    [SerializeField] private ElevatorSpeaker m_speaker = null;
+
     // Start is called before the first frame update
     void Awake()
     {
-        Sound = GetComponent<ElevatorSound>();
+        //Sound = GetComponent<ElevatorSound>();
+        m_speaker = GetComponentInChildren<ElevatorSpeaker>();
         elevatorDoor.SetActive(false);
         elevAnim.SetBool("isOpen", true);
     }
@@ -42,8 +47,10 @@ public class Elevator : MonoBehaviour
     {
         isMove = true;
         UI.HideInteractUI();
-        Sound.CloseSound();
-        Sound.MoveSound();
+        //Sound.CloseSound();
+        //Sound.MoveSound();
+        m_speaker.PlayOneShot((int)ElevatorSounds.Close);
+        m_speaker.Play((int)ElevatorSounds.Move);
         elevatorDoor.SetActive(true);
         elevAnim.SetBool("isOpen", false);
     }
@@ -55,8 +62,11 @@ public class Elevator : MonoBehaviour
             if (transform.position.y >= StopPos.position.y)
             {
                 isMove = false;
-                Sound.StopSound();
-                Sound.OpenSound();
+                m_speaker.Stop();
+                m_speaker.Play((int)ElevatorSounds.Stop);
+                m_speaker.PlayOneShot((int)ElevatorSounds.Open);
+                //Sound.StopSound();
+                //Sound.OpenSound();
                 elevatorDoor.SetActive(false);
                 elevAnim.SetBool("isOpen", true);
                 UI.ShowInteractUI();
@@ -67,8 +77,11 @@ public class Elevator : MonoBehaviour
             if(transform.position.y <= StopPos.position.y)
             {
                 isMove = false;
-                Sound.StopSound();
-                Sound.OpenSound();
+                m_speaker.Stop();
+                m_speaker.Play((int) ElevatorSounds.Stop);
+                m_speaker.PlayOneShot((int) ElevatorSounds.Open);
+                //Sound.StopSound();
+                //Sound.OpenSound();
                 elevatorDoor.SetActive(false);
                 elevAnim.SetBool("isOpen", true);
                 UI.ShowInteractUI();

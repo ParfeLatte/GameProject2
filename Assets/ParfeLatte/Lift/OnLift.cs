@@ -5,7 +5,7 @@ using Insomnia;
 public class OnLift : Interactable
 {
     public LiftTest Lift;
-    public override void OnInteractStart()
+    public override bool OnInteractStart()
     {
         if (!Lift.isMove)
         {
@@ -20,6 +20,8 @@ public class OnLift : Interactable
                 Lift.Down();
             }
         }
+
+        return true;
     }
 
 }

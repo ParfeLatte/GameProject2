@@ -8,8 +8,9 @@ public class ElevatorCall : Interactable
     public Elevator elevator;
     public int floor;
 
-    public override void OnInteractStart()
-    {
+    public override bool OnInteractStart() { 
         elevator.Call(floor);
+
+        return true;
     }
 }

@@ -7,7 +7,7 @@ namespace Insomnia {
     public class Command_Exit : TerminalCommand {
 
         public override IEnumerator<KeyValuePair<float, List<string>>> RunCommand(Terminal terminal, string command) {
-            terminal.UI.CloseTerminal();
+            terminal.Interactable.OnInteractEnd();
 
             yield return default;
         }

@@ -7,19 +7,21 @@ using UnityEngine.SceneManagement;
 namespace Insomnia {
     public abstract class Observer : MonoBehaviour{
 
-        protected virtual void Start() { OnActivate(); }
+        private void Start() => OnStart();
 
-        protected virtual void OnDestroy() { OnDeactivate(); }
+        private void OnDisable() => OnEnd();
+
+        private void OnApplicationQuit() => OnEnd();
 
         /// <summary>
         /// Subscribe Subject.
         /// </summary>
-        public abstract void OnActivate();
+        public abstract void OnStart();
 
         /// <summary>
         /// Unsubscribe Subject.
         /// </summary>
-        public abstract void OnDeactivate();
+        public abstract void OnEnd();
 
         /// <summary>
         /// Get Notify from Subject

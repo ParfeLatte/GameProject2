@@ -34,6 +34,7 @@ namespace Insomnia {
 
             _curInteract = interactable;
             _curInteract.StandbyInteract();
+            _curInteract.onInteractEnd.AddListener(OnInteractEnd);
             onInteractStandby?.Invoke();
         }
 
@@ -44,6 +45,7 @@ namespace Insomnia {
             if(_curInteract != interactable)
                 return;
 
+            _curInteract.onInteractEnd.RemoveListener(OnInteractEnd);
             _curInteract.ReleaseInteract();
             _curInteract = null;
             onInteractRelease?.Invoke();
@@ -53,16 +55,19 @@ namespace Insomnia {
             if(_curInteract == null)
                 return;
 
-            _curInteract.OnInteractStart();
             onInteractStart?.Invoke();
+            bool isOneshot = _curInteract.OnInteractStart();
+
+            if(isOneshot)
+                OnInteractEnd();
         }
 
         public virtual void OnInteractEnd() {
             if(_curInteract == null)
                 return;
 
-            _curInteract.OnInteractEnd();
             onInteractEnd?.Invoke();
+            //_curInteract.OnInteractEnd();
         }
     }
 }

@@ -20,12 +20,15 @@ namespace Insomnia {
             _lapTop.sprite = _lapTopSprites[0];
         }
 
-        public override void OnInteractStart() {
+        public override bool OnInteractStart() {
             m_terminalUI.OpenTerminal();
+            onInteractStart?.Invoke();
+            return false;
         }
 
         public override void OnInteractEnd() {
             m_terminalUI.CloseTerminal();
+            onInteractEnd?.Invoke();
         }
     }
 }

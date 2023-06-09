@@ -1,6 +1,8 @@
+using Insomnia;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Insomnia.NormalMobSpeaker;
 
 public class Monster : LivingEntity
 {
@@ -56,7 +58,8 @@ public class Monster : LivingEntity
     private SpriteRenderer Hammer;
     private SpriteRenderer Blood;
     private EventMonster CheckEvent;
-    private MonsterSound Sound;
+    //private MonsterSound Sound;
+    [SerializeField] private NormalMobSpeaker m_speaker = null;
 
     private Vector3 curPos;//현재위치
     private Vector2 AddPos = new Vector2(0, 3f);//pivot을 아래로 고정했으므로 레이 검사때 위로
@@ -72,12 +75,13 @@ public class Monster : LivingEntity
         MonsterRenderer = GetComponent<SpriteRenderer>();
         Hammer = HammerHitEffect.GetComponent<SpriteRenderer>();
         Blood = BloodEffect.GetComponent<SpriteRenderer>();
-        Sound = GetComponent<MonsterSound>();
+        //Sound = GetComponent<MonsterSound>();
         CheckEventMob();
         Player = GameObject.Find("Player");
         SleepState = 0;//깊은수면 상태로 스폰
         SetStatus(SetHealth, SetDamage, SetSpeed);//일단 일반몹기준
         Health = MaxHealth;//체력을 최대체력으로 설정
+        m_speaker = GetComponentInChildren<NormalMobSpeaker>();
     }
 
     private void OnEnable()
@@ -166,7 +170,7 @@ public class Monster : LivingEntity
 
     private void DoAttack()
     {
-        Sound.StopSound();
+        m_speaker.Stop();
         isMobMove = false;//잠시 움직임을 멈추고
         animator.SetBool("isMove", false);//애니메이션 파라미터에서 isMove를 false로 바꾸고
         animator.SetTrigger("Attack");//attack Trigger를 발동해서 공격 애니메이션 재생
@@ -183,7 +187,8 @@ public class Monster : LivingEntity
             if (player != null && collider.tag == "Player")//오버랩박스로 검사한 오브젝트 중에서 플레이어가 있으면
             {
                 player.damaged(damage);//플레이어의 damaged 함수 호출해서 데미지를 줌
-                Sound.PlayAttackSound(MobType);
+                //Sound.PlayAttackSound(MobType);
+                m_speaker.PlayOneShot((int)NormalMobSounds.MormalMob_Attack);
             }
             else if (Gate != null && collider.tag == "Wall")
             {
@@ -279,11 +284,13 @@ public class Monster : LivingEntity
     {
         if (!isMobMove)
         {
-            Sound.StopSound(); 
+            //Sound.StopSound(); 
+            m_speaker.Stop();
         }
         else if (isMobMove)
         {
-            Sound.PlayWalkSound(MobType);
+            //Sound.PlayWalkSound(MobType);
+            m_speaker.Play((int)NormalMobSounds.NormalMob_Walk, true);
         }
     }
 
@@ -336,7 +343,8 @@ public class Monster : LivingEntity
             case 0://깊은수면 상태일때 검사
                 if (Dist <= 20)
                 {
-                    Sound.PlaySleepSound(MobType);
+                    //Sound.PlaySleepSound(MobType);
+                    m_speaker.PlayOneShot((int)NormalMobSounds.NormalMob_Sleep);
                     SleepState = 1;//중간수면으로
                     animator.SetInteger("SleepState", 1);
                 }
@@ -412,7 +420,8 @@ public class Monster : LivingEntity
     public override void damaged(float damage)
     {
         Health -= damage;//체력에서 데미지만큼 깎음
-        Sound.PlayDamagedSound();
+        //Sound.PlayDamagedSound();
+        m_speaker.PlayOneShot((int)NormalMobSounds.MormalMob_Damaged);
         HammerHitEffect.SetActive(true);
         BloodEffect.SetActive(true);
         Invoke("ReadyEffect", 0.2f);
@@ -441,7 +450,8 @@ public class Monster : LivingEntity
     {
         isMobMove = false;//움직임 멈춤
         isDead = true;//사망했음
-        Sound.PlayDeadSound(MobType);
+        //Sound.PlayDeadSound(MobType);
+        m_speaker.PlayOneShot((int)NormalMobSounds.MormalMob_Dead);
         animator.SetTrigger("Die");//애니메이터에 Die 트리거를 전달해서 사망 애니메이션 재생
         Invoke("Destroy", DyingTime);//잠시후에 오브젝트 비활성화
     }

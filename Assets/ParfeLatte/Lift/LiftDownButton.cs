@@ -6,16 +6,17 @@ public class LiftDownButton : Interactable
 {
     public LiftTest Lift;
 
-    public override void OnInteractStart()
+    public override bool OnInteractStart()
     {
         if(!Lift.Reverse)
         {
-            return;
+            return true;
         }
         else
         {
             Lift.Move();
             Lift.Down();
+            return true;
         }
     }
 }

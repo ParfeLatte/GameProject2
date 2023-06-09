@@ -2,6 +2,7 @@ using Insomnia;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Insomnia.DoorSpeaker;
 
 public class GateCheck : SearchableBase
 {
@@ -16,7 +17,8 @@ public class GateCheck : SearchableBase
     public bool GateStat;// false�� ����, true�� ����
     public int GateLv;//������ ���ٷ���
 
-    private DoorSound Sound;
+    //private DoorSound Sound;
+    [SerializeField] private DoorSpeaker m_speaker = null;
     private Animator animator;
 
     protected override void Awake() {
@@ -24,7 +26,8 @@ public class GateCheck : SearchableBase
         animator = GetComponent<Animator>();
         col = GetComponent<BoxCollider2D>();
         interactobj = GetComponent<InteractObj>();
-        Sound = GetComponent<DoorSound>();
+        //Sound = GetComponent<DoorSound>();
+        m_speaker = GetComponentInChildren<DoorSpeaker>();
         animator.enabled = true;//�ִϸ����͸� �Ѽ� �� �ִϸ��̼� �������
         Gate.SetActive(true);//������������ �ݶ��̴� ������Ʈ�� ���� ��
         isOpen = false;//����
@@ -72,7 +75,8 @@ public class GateCheck : SearchableBase
     private void GateOpen()
     {
         animator.SetBool("isOpen", true);//������
-        Sound.OpenSound();
+        //Sound.OpenSound();
+        m_speaker.PlayOneShot((int)DoorSounds.DoorOpen);
         Gate.SetActive(false);//�ݶ��̴��� �ִ� ������Ʈ�� ���� ��Ȱ��ȭ �ؼ� ������ �� ����
         GateStat = true;
         Debug.Log(GateLv + "Lv ����Ʈ ���� ����, ���� �����ϴ�.");
@@ -81,7 +85,8 @@ public class GateCheck : SearchableBase
     private void GateClose()
     {
         Gate.SetActive(true);//������������ �ٽ� Ȱ��ȭ
-        Sound.CloseSound();
+        //Sound.CloseSound();
+        m_speaker.PlayOneShot((int)DoorSounds.DoorClose);
         animator.SetBool("isOpen", false);//��������� ���ݴ� �ִϸ��̼� ���
         GateStat = false;
     }
