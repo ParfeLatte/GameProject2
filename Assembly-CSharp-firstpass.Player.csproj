@@ -672,6 +672,10 @@
       <Project>{3DB39C1A-F671-91DA-C7AD-49C4F860C443}</Project>
       <Name>Unity.2D.IK.Runtime.Player</Name>
     </ProjectReference>
+    <ProjectReference Include="Cinemachine.Player.csproj">
+      <Project>{C9A40935-716A-34A9-B96B-F22FF401A509}</Project>
+      <Name>Cinemachine.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.RenderPipeline.Universal.ShaderLibrary.Player.csproj">
       <Project>{D4DED405-05BE-22ED-B090-7DE11F4E2313}</Project>
       <Name>Unity.RenderPipeline.Universal.ShaderLibrary.Player</Name>
@@ -743,10 +747,6 @@
     <ProjectReference Include="Unity.VisualScripting.State.Player.csproj">
       <Project>{EC5F59A6-FA89-1902-3AD4-E39C903959FA}</Project>
       <Name>Unity.VisualScripting.State.Player</Name>
-    </ProjectReference>
-    <ProjectReference Include="Cinemachine.Player.csproj">
-      <Project>{C9A40935-716A-34A9-B96B-F22FF401A509}</Project>
-      <Name>Cinemachine.Player</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

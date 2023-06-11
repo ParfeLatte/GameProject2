@@ -63,6 +63,7 @@
     <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_Clear.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Special\Command_Rundown_Contract.cs" />
     <Compile Include="Assets\Insomnia\Scripts\SceneHandler\FailedSceneAction.cs" />
+    <Compile Include="Assets\ParfeLatte\AwakeBoss.cs" />
     <Compile Include="Assets\ParfeLatte\Lift\LiftUpButton.cs" />
     <Compile Include="Assets\ParfeLatte\MobSpawner.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Managers\UIManager.cs" />
@@ -70,22 +71,30 @@
     <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_List.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Input\Base\AnalogInputActor.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\TerminalUI.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Utils\DesignPattern\Observer\Subject\Subject.cs" />
     <Compile Include="Assets\ParfeLatte\TargetObject.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Input\Base\InputActor.cs" />
     <Compile Include="Assets\ParfeLatte\LivingEntity\PlayerAttack.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Utils\DesignPattern\Singleton\SingletonBase.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Managers\ItemManager.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Character\UI\Health.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Scanner\SO\SimpleIncrease.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_Command.cs" />
     <Compile Include="Assets\ParfeLatte\GameManager.cs" />
     <Compile Include="Assets\ParfeLatte\InteractObj.cs" />
+    <Compile Include="Assets\ParfeLatte\ChangeCam.cs" />
     <Compile Include="Assets\ParfeLatte\GamePause.cs" />
     <Compile Include="Assets\ParfeLatte\ShowTutorial.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Utils\Defines.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\VolumeControl\VolumeController.cs" />
     <Compile Include="Assets\Insomnia\Scripts\UI\Fade\FadeUI.cs" />
     <Compile Include="Assets\ParfeLatte\EndTutorial.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Input\PlayerInput\Mouse\MouseButtonActor.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Scanner\SO\ContinuousIncrease.cs" />
     <Compile Include="Assets\ParfeLatte\Door\DoorSound.cs" />
     <Compile Include="Assets\ParfeLatte\BloodParticle.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Scanner\SO\ScanAction.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Scanner\SO\SignedIncrease.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\TerminalCommand.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_Help.cs" />
     <Compile Include="Assets\ParfeLatte\Lift\Elevator.cs" />
@@ -98,12 +107,13 @@
     <Compile Include="Assets\ParfeLatte\ChangeScene.cs" />
     <Compile Include="Assets\Insomnia\Scripts\SceneHandler\SceneChangeEffect.cs" />
     <Compile Include="Assets\ParfeLatte\AccessEvent\AccessPoint.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Utils\DesignPattern\Observer\Observer\Observer.cs" />
     <Compile Include="Assets\ParfeLatte\AccessEvent\EventMonster.cs" />
     <Compile Include="Assets\ParfeLatte\AccessEvent\KeyCardEvent.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_Exit.cs" />
     <Compile Include="Assets\ParfeLatte\AccessEvent\TutorialKeyGet.cs" />
     <Compile Include="Assets\ParfeLatte\AccessEvent\KeyCard.cs" />
-    <Compile Include="Assets\Insomnia\Scripts\Utils\MortalSingleton.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Utils\DesignPattern\Singleton\MortalSingleton.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Item\Item.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Item\SearchableBase.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Input\PlayerInput\Keyboard\KeyboardButtonActor.cs" />
@@ -116,12 +126,15 @@
     <Compile Include="Assets\ParfeLatte\Lift\OnLift.cs" />
     <Compile Include="Assets\ParfeLatte\LivingEntity.cs" />
     <Compile Include="Assets\ParfeLatte\LivingEntity\Monster.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Scanner\ScannerGizmo.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Managers\Managers.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\VolumeControl\Speaker.cs" />
     <Compile Include="Assets\ParfeLatte\LivingEntity\MonsterSound.cs" />
     <Compile Include="Assets\ParfeLatte\Door\GateHP.cs" />
     <Compile Include="Assets\ParfeLatte\Lift\ElevatorCall.cs" />
     <Compile Include="Assets\ParfeLatte\Lift\ElevatorSound.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\Terminal.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Scanner\Scanner.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Input\Base\InputListener.cs" />
     <Compile Include="Assets\ParfeLatte\Door\GateCheck.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\Terminal_Interactable.cs" />
@@ -129,12 +142,10 @@
     <Compile Include="Assets\ParfeLatte\MainUI.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Input\PlayerInput\Mouse\MouseAxisActor.cs" />
     <Compile Include="Assets\Assetss\Effect_Vol.5\Script\SpriteAnimation.cs" />
-    <Compile Include="Assets\Insomnia\Scripts\Utils\ImmortalSingleton.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Utils\DesignPattern\Singleton\ImmortalSingleton.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_Query.cs" />
     <Compile Include="Assets\ParfeLatte\LivingEntity\PlayerSound.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Character\Object\PlayerLocomotion.cs" />
-    <Compile Include="Assets\ParfeLatte\ChangeCam.cs" />
-    <Compile Include="Assets\ParfeLatte\AwakeBoss.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -778,6 +789,10 @@
       <Project>{3DB39C1A-F671-91DA-C7AD-49C4F860C443}</Project>
       <Name>Unity.2D.IK.Runtime.Player</Name>
     </ProjectReference>
+    <ProjectReference Include="Cinemachine.Player.csproj">
+      <Project>{C9A40935-716A-34A9-B96B-F22FF401A509}</Project>
+      <Name>Cinemachine.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.RenderPipeline.Universal.ShaderLibrary.Player.csproj">
       <Project>{D4DED405-05BE-22ED-B090-7DE11F4E2313}</Project>
       <Name>Unity.RenderPipeline.Universal.ShaderLibrary.Player</Name>
@@ -849,10 +864,6 @@
     <ProjectReference Include="Unity.VisualScripting.State.Player.csproj">
       <Project>{EC5F59A6-FA89-1902-3AD4-E39C903959FA}</Project>
       <Name>Unity.VisualScripting.State.Player</Name>
-    </ProjectReference>
-    <ProjectReference Include="Cinemachine.Player.csproj">
-      <Project>{C9A40935-716A-34A9-B96B-F22FF401A509}</Project>
-      <Name>Cinemachine.Player</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
