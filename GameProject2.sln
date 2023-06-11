@@ -147,9 +147,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Mathematics.Editor", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.2D.Tilemap.Extras.Editor", "Unity.2D.Tilemap.Extras.Editor.csproj", "{77745848-DB71-5C8D-C8EC-4286FBA2E4F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.InternalAPIEditorBridge.001", "Unity.InternalAPIEditorBridge.001.csproj", "{D476311F-A5C3-88D0-A486-0C51EDF2BFD8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{8B7DF33E-C046-FE8F-1AA6-7FA6EC57DEBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.InternalAPIEditorBridge.001", "Unity.InternalAPIEditorBridge.001.csproj", "{D476311F-A5C3-88D0-A486-0C51EDF2BFD8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.VisualScripting.Shared.Editor", "Unity.VisualScripting.Shared.Editor.csproj", "{33E7752A-89F2-6E4C-AD4E-BAE40C424971}"
 EndProject
@@ -527,14 +527,14 @@ Global
 		{77745848-DB71-5C8D-C8EC-4286FBA2E4F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77745848-DB71-5C8D-C8EC-4286FBA2E4F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77745848-DB71-5C8D-C8EC-4286FBA2E4F1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D476311F-A5C3-88D0-A486-0C51EDF2BFD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D476311F-A5C3-88D0-A486-0C51EDF2BFD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D476311F-A5C3-88D0-A486-0C51EDF2BFD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D476311F-A5C3-88D0-A486-0C51EDF2BFD8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8B7DF33E-C046-FE8F-1AA6-7FA6EC57DEBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8B7DF33E-C046-FE8F-1AA6-7FA6EC57DEBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B7DF33E-C046-FE8F-1AA6-7FA6EC57DEBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B7DF33E-C046-FE8F-1AA6-7FA6EC57DEBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D476311F-A5C3-88D0-A486-0C51EDF2BFD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D476311F-A5C3-88D0-A486-0C51EDF2BFD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D476311F-A5C3-88D0-A486-0C51EDF2BFD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D476311F-A5C3-88D0-A486-0C51EDF2BFD8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{33E7752A-89F2-6E4C-AD4E-BAE40C424971}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{33E7752A-89F2-6E4C-AD4E-BAE40C424971}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33E7752A-89F2-6E4C-AD4E-BAE40C424971}.Release|Any CPU.ActiveCfg = Release|Any CPU
