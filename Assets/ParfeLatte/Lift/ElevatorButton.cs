@@ -28,7 +28,7 @@ public class ElevatorButton : Interactable
         }
     }
 
-    public override void OnInteractStart()
+    public override bool OnInteractStart()
     {
         if (!elevator.isMove && !isKey)
         {
@@ -36,6 +36,8 @@ public class ElevatorButton : Interactable
             Fkey.HideInteractUI();
             MoveInform.SetActive(true);
         }
+
+        return true;
     }
 
     private void ElevUp()

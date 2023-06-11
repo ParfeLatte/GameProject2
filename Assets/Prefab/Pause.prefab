@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7845131371081021587}
   - component: {fileID: 7845131371081021588}
   m_Layer: 5
-  m_Name: Resume
+  m_Name: Button_Resume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 7845131371499485646}
   - component: {fileID: 7845131371499485647}
   m_Layer: 5
-  m_Name: Panel (1)
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -500,7 +500,7 @@ GameObject:
   - component: {fileID: 7845131372189367304}
   - component: {fileID: 7845131372189367305}
   m_Layer: 5
-  m_Name: Option
+  m_Name: Button_Option
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -634,7 +634,7 @@ GameObject:
   - component: {fileID: 7845131372226338413}
   - component: {fileID: 7845131372226338414}
   m_Layer: 5
-  m_Name: Quit
+  m_Name: Button_Quit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -766,6 +766,7 @@ GameObject:
   - component: {fileID: 7845131372251517427}
   - component: {fileID: 7845131372251517428}
   - component: {fileID: 7845131372251517429}
+  - component: {fileID: 6488933070736051581}
   m_Layer: 5
   m_Name: Pause
   m_TagString: Untagged
@@ -832,6 +833,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6488933070736051581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7845131372251517430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b81ed06c4dc417749a7d361c57177d6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_optionUI: {fileID: 0}
 --- !u!1 &7845131372338701272
 GameObject:
   m_ObjectHideFlags: 0

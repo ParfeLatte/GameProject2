@@ -1,12 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Insomnia {
     [RequireComponent(typeof(BoxCollider2D))]
     public class Interactable : MonoBehaviour {
+        [Header("Interactable: Components")]
         private Collider _trigArea = null;  //Interactor와 충돌을 감지할 Trigger Collider
-        private Interactor _interactor = null;
+        protected Interactor _interactor = null;
+
+        [Header("Interactable: Status")]
+        [SerializeField] protected bool m_canInteract = true;
+
+        [Header("Interactable: Settings")]
+        public KeyCode m_interactKey = KeyCode.F;
+
+        [Header("Interactable: Events")]
+        public UnityEvent<Interactable> onInteractStart = null;
+        public UnityEvent<Interactable> onInteractEnd = null;
+
+        #region Properties
+        public KeyCode InteractKey { get => m_interactKey; }
+        public bool CanInteract { get => m_canInteract; }
+        
+        #endregion
 
         protected virtual void Awake() {
             _trigArea = GetComponent<Collider>();
@@ -40,13 +58,17 @@ namespace Insomnia {
         public virtual void ReleaseInteract() { }
 
         /// <summary>
-        /// 플레이어가 상호작용을 시작했을 때 실행되는 함수
+        /// 플레이어가 상호작용을 시작했을 때 실행되는 함수.
+        /// <seealso cref="m_canInteract"/>가 true일 때 실행되며, false일 때는 기능을 수행하지 않고 종료한다.
         /// </summary>
-        public virtual void OnInteractStart() { }
+        /// <returns>return true if Interaction should be finished Immediately. else false.</returns>
+        public virtual bool OnInteractStart() { return true; }
 
         /// <summary>
         /// 플레이어가 상호작용을 종료했을 때 실행되는 함수
         /// </summary>
         public virtual void OnInteractEnd() { }
+
+        public virtual void ConditionSolved(object condition) { m_canInteract = true; }
     }
 }

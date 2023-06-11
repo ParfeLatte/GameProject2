@@ -672,7 +672,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 11
   m_TargetDisplay: 0
 --- !u!114 &2490827058179742331
 MonoBehaviour:
@@ -781,6 +781,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec86c66818f2cdf43a0cddb977350e30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onInteractStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onInteractEnd:
+    m_PersistentCalls:
+      m_Calls: []
   _lapTop: {fileID: 2490827059315692378}
   _lapTopSprites:
   - {fileID: 21300000, guid: a26762c28fa8672498292e30ebb90d68, type: 3}
@@ -806,6 +812,7 @@ MonoBehaviour:
   m_ObjectType: 1
   m_Status: 1
   m_terminalUI: {fileID: 2490827058179742329}
+  m_interactable: {fileID: 2490827058457085150}
 --- !u!61 &2490827058457085137
 BoxCollider2D:
   m_ObjectHideFlags: 0

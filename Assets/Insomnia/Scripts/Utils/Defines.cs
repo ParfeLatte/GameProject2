@@ -48,6 +48,8 @@ namespace Insomnia {
             SFX,
         }
 
+        public enum ControllerSignResult : int { Negative = -1, Positive = 1 }
+
         #endregion
 
         #region Structs

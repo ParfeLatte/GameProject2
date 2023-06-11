@@ -8,6 +8,7 @@ public class MainUI : MonoBehaviour
 {
     public GameObject TutorialCheckPanel;
     [SerializeField] private Button m_loadButton = null;
+    [SerializeField] private GameObject m_optionUI = null;
 
     private void Awake() {
         if(m_loadButton == null)
@@ -31,7 +32,10 @@ public class MainUI : MonoBehaviour
     }
 
     public void OnClick_Option() {
+        if(m_optionUI == null)
+            return;
 
+        m_optionUI.SetActive(!m_optionUI.activeSelf);
     }
 
     public void OnClick_TutorialStart() {

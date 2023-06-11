@@ -7,7 +7,7 @@ namespace Insomnia {
     public abstract class ImmortalSubject<SingletonType, ObserverType> : ImmortalSingleton<SingletonType>
             where SingletonType : Component
             where ObserverType : Observer {
-        protected List<ObserverType> m_observers = new List<ObserverType>();
+        private List<ObserverType> m_observers = new List<ObserverType>();
 
         public bool Subscribe(ObserverType observer) {
             if(observer == null)

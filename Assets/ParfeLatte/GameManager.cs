@@ -104,7 +104,7 @@ public class GameManager : ImmortalSingleton<GameManager>, IDataIO
 
     public void RemoveData() {
         //PlayerPrefs.DeleteKey("GameManager");
-        PlayerPrefs.DeleteAll();
+        PlayerPrefs.DeleteKey("GameManager");
         PlayerPrefs.Save();
     }
 }
