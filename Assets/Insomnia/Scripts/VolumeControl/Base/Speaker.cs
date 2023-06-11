@@ -20,6 +20,13 @@ namespace Insomnia {
             m_audio = GetComponent<AudioSource>();
         }
 
+        protected virtual void OnValidate() {
+            if(m_audio == null)
+                return;
+
+            m_audio.loop = false;
+        }
+
         #region Observer Functions
         public sealed override void Notify(object noti) {
             SoundNotiData data = (SoundNotiData)noti;
@@ -71,6 +78,8 @@ namespace Insomnia {
             m_audio.loop = isLoop;
             m_audio.clip = m_clips[clipIndex];
 
+            Debug.Log($"[{Time.time}]Now Playing: {m_clips[clipIndex].name}");
+
             if(delay < 0f)
                 m_audio.Play();
             else
@@ -88,6 +97,7 @@ namespace Insomnia {
             if(m_audio.isPlaying == false)
                 return;
 
+            Debug.Log($"[{Time.time}]Playing Stopped");
             m_audio.loop = false;
             m_audio.Stop();
         }

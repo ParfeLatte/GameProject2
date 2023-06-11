@@ -12,7 +12,9 @@ namespace Insomnia {
 
         }
 
-        private void OnValidate() {
+        protected override void OnValidate() {
+            base.OnValidate();
+
             if(m_clips == null) {
                 m_clips = new AudioClip[Enum.GetNames(typeof(DoorSounds)).Length];
                 return;

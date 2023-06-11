@@ -7,13 +7,15 @@ using static Insomnia.PlayerSpeaker;
 namespace Insomnia {
     public class ElevatorSpeaker : Speaker {
         public enum ElevatorSounds {
-            Open = 0,
-            Close,
+            Close = 0,
+            Open,
             Move,
             Stop,
         }
 
-        private void OnValidate() {
+        protected override void OnValidate() {
+            base.OnValidate();
+
             if(m_clips == null) {
                 m_clips = new AudioClip[Enum.GetNames(typeof(ElevatorSounds)).Length];
                 return;

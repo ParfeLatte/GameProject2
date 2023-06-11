@@ -14,7 +14,9 @@ namespace Insomnia {
             MormalMob_Dead,
         }
 
-        private void OnValidate() {
+        protected override void OnValidate() {
+            base.OnValidate();
+
             if(m_clips == null) {
                 m_clips = new AudioClip[Enum.GetNames(typeof(NormalMobSounds)).Length];
                 return;
