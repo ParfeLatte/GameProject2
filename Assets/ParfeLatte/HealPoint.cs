@@ -102,4 +102,8 @@ public class HealPoint : SearchableBase, IDataIO {
     public void RemoveData() {
 
     }
+
+    protected override void Reset() {
+        
+    }
 }

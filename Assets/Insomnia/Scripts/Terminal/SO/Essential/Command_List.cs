@@ -14,7 +14,7 @@ namespace Insomnia {
         private static string m_listInvalidIDError = "<color=red>Command Error: Invalid ID</color>";
         #endregion
 
-        public override IEnumerator<KeyValuePair<float, List<string>>> RunCommand(Terminal terminal, string command) {
+        public override IEnumerator<KeyValuePair<float, List<string>>> RunCommand(Terminal_Searchable terminal, string command) {
             m_commandResult.Clear();
             string[] keys = command.Split(' ');
             if(keys.Length > 3 || keys.Length <= 1) {

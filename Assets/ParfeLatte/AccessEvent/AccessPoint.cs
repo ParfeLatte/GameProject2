@@ -5,8 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Insomnia.Defines;
 
-public class AccessPoint : SearchableBase, IDataIO
-{
+public class AccessPoint : SearchableBase, IDataIO {
     public KeyCard keycard;
     public GameManager gameManager;
     public KeyCardEvent Event;
@@ -165,5 +164,9 @@ public void LoadData() {
     public void RemoveData() {
         PlayerPrefs.DeleteKey(gameObject.name);
         PlayerPrefs.Save();
+    }
+
+    protected override void Reset() {
+        
     }
 }

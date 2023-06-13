@@ -384,7 +384,7 @@ MonoBehaviour:
   onInteractEnd:
     m_PersistentCalls:
       m_Calls: []
-  m_controlee: {fileID: 0}
+  m_controlee: {fileID: 8179813940412315539}
   m_tutorialUI: {fileID: 0}
   m_targetDirection: 1
 --- !u!1 &4099976361915383637
@@ -720,7 +720,7 @@ MonoBehaviour:
   onInteractEnd:
     m_PersistentCalls:
       m_Calls: []
-  m_controlee: {fileID: 0}
+  m_controlee: {fileID: 8179813940412315539}
   m_tutorialUI: {fileID: 0}
   m_targetDirection: -1
 --- !u!1 &7938929447754118102

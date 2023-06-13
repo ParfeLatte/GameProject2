@@ -9,7 +9,7 @@ namespace Insomnia {
         private static string m_saveSaving = "Saveing Data...";
         private static string m_saveSaveCompleted = "Save Completed!";
 
-        public override IEnumerator<KeyValuePair<float, List<string>>> RunCommand(Terminal terminal, string command) {
+        public override IEnumerator<KeyValuePair<float, List<string>>> RunCommand(Terminal_Searchable terminal, string command) {
             m_commandResult.Clear();
             m_commandResult.Add(m_saveSaving);
 

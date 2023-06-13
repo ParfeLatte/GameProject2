@@ -8,7 +8,7 @@ namespace Insomnia {
     [RequireComponent(typeof(AudioSource))]
     public class Speaker : Observer {
         [Header("Components")]
-        [SerializeField] private AudioSource m_audio = null;
+        [HideInInspector] private AudioSource m_audio = null;
 
         [Header("Settings")]
         [SerializeField] private SoundType m_type = SoundType.Master;

@@ -10,7 +10,7 @@ using static Insomnia.Defines;
 namespace Insomnia {
     public class TerminalUI : MonoBehaviour {
         #region Components
-        private Terminal m_parentTerminal = null;
+        private Terminal_Searchable m_parentTerminal = null;
 
         #endregion
 
@@ -45,7 +45,7 @@ namespace Insomnia {
                 OnKeyDown_Tab();
         }
 
-        public void SetTerminal(Terminal terminal) {
+        public void SetTerminal(Terminal_Searchable terminal) {
             if(terminal == null)
                 return;
 

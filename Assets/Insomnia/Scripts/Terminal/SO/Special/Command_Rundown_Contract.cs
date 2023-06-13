@@ -11,7 +11,7 @@ namespace Insomnia {
         private static string m_rundown_lackofKeyError = "<color=red>Error: Lack Of Key.</color>";
         private static string m_rundown_Loading = "Loading for {0}...";
 
-        public override IEnumerator<KeyValuePair<float, List<string>>> RunCommand(Terminal terminal, string command) {
+        public override IEnumerator<KeyValuePair<float, List<string>>> RunCommand(Terminal_Searchable terminal, string command) {
             m_commandResult.Clear();
 
             string[] keys = command.Split(' ');
