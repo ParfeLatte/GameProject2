@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Insomnia {
-    public class InputManager : MonoBehaviour{
+    public class InputManager : MortalSingleton<InputManager>{
 
         [SerializeField] private ushort _curPriority = 0;
         [SerializeField] private List<InputListener> _listeners = new List<InputListener>();
