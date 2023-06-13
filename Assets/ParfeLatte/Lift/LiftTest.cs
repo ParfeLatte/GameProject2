@@ -2,7 +2,7 @@ using Insomnia;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Insomnia.ElevatorSpeaker;
+using static Insomnia.Elevator_Speaker;
 
 public class LiftTest : MonoBehaviour
 {
@@ -14,13 +14,13 @@ public class LiftTest : MonoBehaviour
     Vector3 nextpos = new Vector3(0, 5.5f, 0);
 
     private ElevatorSound Sound;
-    [SerializeField] private ElevatorSpeaker m_speaker = null;
+    [SerializeField] private Elevator_Speaker m_speaker = null;
 
     // Start is called before the first frame update
     void Awake()
     {
         //Sound = GetComponent<ElevatorSound>();
-        m_speaker = GetComponentInChildren<ElevatorSpeaker>();
+        m_speaker = GetComponentInChildren<Elevator_Speaker>();
     }
 
     // Update is called once per frame

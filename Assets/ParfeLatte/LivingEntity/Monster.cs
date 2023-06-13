@@ -2,7 +2,7 @@ using Insomnia;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Insomnia.NormalMobSpeaker;
+using static Insomnia.NormalMob_Speaker;
 
 public class Monster : LivingEntity
 {
@@ -63,7 +63,7 @@ public class Monster : LivingEntity
     private SpriteRenderer Blood;
     private EventMonster CheckEvent;
     //private MonsterSound Sound;
-    [SerializeField] private NormalMobSpeaker m_speaker = null;
+    [SerializeField] private NormalMob_Speaker m_speaker = null;
 
     private Vector3 curPos;//현재위치
     private Vector2 AddPos = new Vector2(0, 3f);//pivot을 아래로 고정했으므로 레이 검사때 위로
@@ -87,7 +87,7 @@ public class Monster : LivingEntity
         SleepState = 0;//깊은수면 상태로 스폰
         SetStatus(SetHealth, SetDamage, SetSpeed);//일단 일반몹기준
         Health = MaxHealth;//체력을 최대체력으로 설정
-        m_speaker = GetComponentInChildren<NormalMobSpeaker>();
+        m_speaker = GetComponentInChildren<NormalMob_Speaker>();
         if (isBoss)
         {
             BossAppear();

@@ -808,9 +808,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IDFormat: TERMINAL
   m_ID: 
-  m_Location: AREA_
+  m_Location: ZONE_
   m_Description: 
-  m_position: {x: 10, y: 10, z: 10}
+  m_position: {x: 0, y: 0, z: 0}
   m_ObjectType: 1
   m_Status: 1
   m_terminalUI: {fileID: 2490827058179742329}

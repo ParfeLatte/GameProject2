@@ -40,6 +40,7 @@ namespace Insomnia {
 
         public override void OnInteractEnd() {
             m_terminalUI.CloseTerminal();
+            User.OnInteractEnd(this);
             onInteractEnd?.Invoke(this);
         }
     }

@@ -17,7 +17,7 @@ namespace Insomnia {
         private static string m_queryEmptyFormatWithArea = "There is no item ID: {0} in Area: {1}";
         private static string m_queryInvalidIDError = "<color=red>Command Error: Invalid ID</color>";
         #endregion
-        public override IEnumerator<KeyValuePair<float, List<string>>> RunCommand(Terminal terminal, string command) {
+        public override IEnumerator<KeyValuePair<float, List<string>>> RunCommand(Terminal_Searchable terminal, string command) {
             m_commandResult.Clear();
             string[] keys = command.Split(' ');
 

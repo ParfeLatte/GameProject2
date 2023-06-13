@@ -2,7 +2,7 @@ using Insomnia;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Insomnia.DoorSpeaker;
+using static Insomnia.Door_Speaker;
 
 public class GateCheck : SearchableBase
 {
@@ -18,7 +18,7 @@ public class GateCheck : SearchableBase
     public int GateLv;//������ ���ٷ���
 
     //private DoorSound Sound;
-    [SerializeField] private DoorSpeaker m_speaker = null;
+    [SerializeField] private Door_Speaker m_speaker = null;
     private Animator animator;
 
     protected override void Awake() {
@@ -27,7 +27,7 @@ public class GateCheck : SearchableBase
         col = GetComponent<BoxCollider2D>();
         interactobj = GetComponent<InteractObj>();
         //Sound = GetComponent<DoorSound>();
-        m_speaker = GetComponentInChildren<DoorSpeaker>();
+        m_speaker = GetComponentInChildren<Door_Speaker>();
         animator.enabled = true;//�ִϸ����͸� �Ѽ� �� �ִϸ��̼� �������
         Gate.SetActive(true);//������������ �ݶ��̴� ������Ʈ�� ���� ��
         isOpen = false;//����
@@ -106,5 +106,9 @@ public class GateCheck : SearchableBase
         {
             isOpen = false;//���� ������ ����� ���� ����
         }
+    }
+
+    protected override void Reset() {
+        
     }
 }

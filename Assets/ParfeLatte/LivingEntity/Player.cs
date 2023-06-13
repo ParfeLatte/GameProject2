@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static Insomnia.Defines;
-using static Insomnia.PlayerSpeaker;
+using static Insomnia.Player_Speaker;
 
 public class Player : LivingEntity, IDataIO {
     public float AttackTime;//�����ѽð�
@@ -34,7 +34,7 @@ public class Player : LivingEntity, IDataIO {
 
     //public PlayerAttack Attack;
     public PlayerAttack Attack;//������ �������ִ� ��ũ��Ʈ(���� ���� ������Ʈ�� �Ҵ�Ǿ� ������ ���⼭ ������ ������)
-    [SerializeField] private PlayerSpeaker m_speaker = null;
+    [SerializeField] private Player_Speaker m_speaker = null;
 
     private GameObject Enemy;//����
 
@@ -52,7 +52,6 @@ public class Player : LivingEntity, IDataIO {
     public bool CanMove { get => m_canMove;
         set {
             m_canMove = value;
-            Debug.Log($"Player Can Move: {m_canMove}");
         }
     }
 
@@ -61,7 +60,7 @@ public class Player : LivingEntity, IDataIO {
         animator = GetComponent<Animator>();//�Ҵ�
         PlayerRenderer = GetComponent<SpriteRenderer>();//�Ҵ�
         //SoundEffect = GetComponent<PlayerSound>();
-        m_speaker = GetComponentInChildren<PlayerSpeaker>();
+        m_speaker = GetComponentInChildren<Player_Speaker>();
         SetStatus(100, 10, 8);//������ ������ ü��, ������, �̵��ӵ�
         Health = MaxHealth;//�����Ҷ� ���� ü���� �ִ� ü������ ��������
         gameObject.SetActive(true);
