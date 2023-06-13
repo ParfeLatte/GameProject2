@@ -78,7 +78,11 @@
     <Compile Include="Assets\Insomnia\Scripts\Utils\DesignPattern\Singleton\SingletonBase.cs" />
     <Compile Include="Assets\Insomnia\Scripts\VolumeControl\Derived\NormalMobSpeaker.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Managers\ItemManager.cs" />
+    <Compile Include="Assets\A_ExternalAssets\Plugins\SerializableDictionary\Example\UserSerializableDictionaries.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Character\UI\Health.cs" />
+    <Compile Include="Assets\A_ExternalAssets\Plugins\SerializableDictionary\SerializableDictionary.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Interaction\CallResponse\SecurityDoor\SecurityDoor.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Interaction\CallResponse\SecurityDoor\DoorControlPanel.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Scanner\SO\SimpleIncrease.cs" />
     <Compile Include="Assets\Insomnia\Scripts\UI\GameManagement\EscapeUI.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_Command.cs" />
@@ -99,10 +103,10 @@
     <Compile Include="Assets\Insomnia\Scripts\Scanner\SO\ContinuousIncrease.cs" />
     <Compile Include="Assets\ParfeLatte\Door\DoorSound.cs" />
     <Compile Include="Assets\ParfeLatte\BloodParticle.cs" />
-    <Compile Include="Assets\Insomnia\Scripts\Scanner\SO\ScanAction.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Scanner\SO\ScanActionSO.cs" />
     <Compile Include="Assets\Insomnia\Scripts\UI\GameManagement\VolumeUI.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Scanner\SO\SignedIncrease.cs" />
-    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\TerminalCommand.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\CommandSO.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Interaction\CallResponse\Elevator\Elevator.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_Help.cs" />
     <Compile Include="Assets\ParfeLatte\Lift\Elevator.cs" />
@@ -117,23 +121,28 @@
     <Compile Include="Assets\Insomnia\Scripts\SceneHandler\SceneChangeEffect.cs" />
     <Compile Include="Assets\ParfeLatte\AccessEvent\AccessPoint.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Utils\DesignPattern\Observer\Observer\Observer.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Item\Searchable_SecurityDoor.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Interaction\Collectable\Base\ReceiverBase.cs" />
     <Compile Include="Assets\ParfeLatte\AccessEvent\EventMonster.cs" />
     <Compile Include="Assets\ParfeLatte\AccessEvent\KeyCardEvent.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_Exit.cs" />
     <Compile Include="Assets\ParfeLatte\AccessEvent\TutorialKeyGet.cs" />
     <Compile Include="Assets\ParfeLatte\AccessEvent\KeyCard.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Utils\DesignPattern\Singleton\MortalSingleton.cs" />
-    <Compile Include="Assets\Insomnia\Scripts\Item\Item.cs" />
-    <Compile Include="Assets\Insomnia\Scripts\Item\SearchableBase.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Item\ItemTest.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Item\Base\SearchableBase.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Input\PlayerInput\Keyboard\KeyboardButtonActor.cs" />
     <Compile Include="Assets\ParfeLatte\LivingEntity\Player.cs" />
-    <Compile Include="Assets\Assetss\Effect_Vol.5\Script\SoundEffect.cs" />
+    <Compile Include="Assets\A_ExternalAssets\Effect_Vol.5\Script\SoundEffect.cs" />
     <Compile Include="Assets\ParfeLatte\HealPoint.cs" />
     <Compile Include="Assets\ParfeLatte\ObjectManager.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Managers\InputManager.cs" />
     <Compile Include="Assets\Insomnia\Scripts\UI\GameManagement\EscapeInputActor.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Interaction\Collectable\Cell.cs" />
+    <Compile Include="Assets\A_ExternalAssets\Plugins\SerializableDictionary\Example\SerializableDictionaryExample.cs" />
     <Compile Include="Assets\ParfeLatte\Lift\LiftTest.cs" />
     <Compile Include="Assets\ParfeLatte\Lift\OnLift.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Interaction\Collectable\Base\Collector.cs" />
     <Compile Include="Assets\ParfeLatte\LivingEntity.cs" />
     <Compile Include="Assets\Insomnia\Scripts\VolumeControl\Derived\PlayerSpeaker.cs" />
     <Compile Include="Assets\ParfeLatte\LivingEntity\Monster.cs" />
@@ -141,29 +150,33 @@
     <Compile Include="Assets\Insomnia\Scripts\Managers\Managers.cs" />
     <Compile Include="Assets\Insomnia\Scripts\VolumeControl\Base\Speaker.cs" />
     <Compile Include="Assets\ParfeLatte\LivingEntity\MonsterSound.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Interaction\Collectable\Base\CollectableBase.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Interaction\CallResponse\SecurityDoor\Base\RecvControllerBase.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Interaction\CallResponse\Elevator\InternalElevatorControlPanel.cs" />
     <Compile Include="Assets\ParfeLatte\Door\GateHP.cs" />
     <Compile Include="Assets\ParfeLatte\Lift\ElevatorCall.cs" />
-    <Compile Include="Assets\Insomnia\Scripts\Interaction\CallResponse\Base\ReactorBase.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Interaction\CallResponse\Base\ControleeBase.cs" />
     <Compile Include="Assets\ParfeLatte\Lift\ElevatorSound.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\Terminal.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Scanner\Scanner.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Input\Base\InputListener.cs" />
     <Compile Include="Assets\ParfeLatte\Door\GateCheck.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\Terminal_Interactable.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Interaction\Collectable\AccessKey.cs" />
     <Compile Include="Assets\ParfeLatte\Lift\LiftDownButton.cs" />
     <Compile Include="Assets\ParfeLatte\MainUI.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Input\PlayerInput\Mouse\MouseAxisActor.cs" />
-    <Compile Include="Assets\Assetss\Effect_Vol.5\Script\SpriteAnimation.cs" />
+    <Compile Include="Assets\A_ExternalAssets\Effect_Vol.5\Script\SpriteAnimation.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Utils\DesignPattern\Singleton\ImmortalSingleton.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_Query.cs" />
     <Compile Include="Assets\ParfeLatte\LivingEntity\PlayerSound.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Character\Object\PlayerLocomotion.cs" />
+    <Compile Include="Assets\ParfeLatte\GOAL\GoalText.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
-    <None Include="Assets\DarkPixelRPGUI\Shader\Grayscale.shader" />
+    <None Include="Assets\A_ExternalAssets\DarkPixelRPGUI\Shader\Grayscale.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
@@ -173,12 +186,12 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
-    <None Include="Assets\Assetss\Dark - Complete Horror UI\Read Me.txt" />
+    <None Include="Assets\A_ExternalAssets\Dark - Complete Horror UI\Read Me.txt" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
-    <None Include="Assets\Assetss\METROIDVANIA SFX\WELCOME_METROIDVANIA SFX PACK.txt" />
+    <None Include="Assets\A_ExternalAssets\METROIDVANIA SFX\WELCOME_METROIDVANIA SFX PACK.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
@@ -774,10 +787,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.Player.csproj">
-      <Project>{2FA1E119-6027-BFC7-DFA8-D681CE2954DA}</Project>
-      <Name>Assembly-CSharp-firstpass.Player</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.InternalAPIEngineBridge.001.Player.csproj">
       <Project>{9C600BE0-7011-5EC0-545D-255315C28BE4}</Project>
       <Name>Unity.InternalAPIEngineBridge.001.Player</Name>

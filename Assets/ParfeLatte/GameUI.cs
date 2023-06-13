@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
+    public GoalText StageGoal;
+    public TMP_Text MainGoal;
     public GameObject PausePanel;
     public GameObject AlertPanel;
     public Image alert;
@@ -14,7 +17,8 @@ public class GameUI : MonoBehaviour
     private void Awake()
     {
         Alpha = 0.5f;
-
+        if (MainGoal == null) return;
+        MainGoal.text = StageGoal.Goal;
     }
 
     private void Update()
