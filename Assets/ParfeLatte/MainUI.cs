@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class MainUI : MonoBehaviour
 {
     public GameObject TutorialCheckPanel;
+    public GameObject SelectRundown;
     [SerializeField] private Button m_loadButton = null;
     [SerializeField] private GameObject m_optionUI = null;
 
@@ -22,15 +23,40 @@ public class MainUI : MonoBehaviour
     {
         TutorialCheckPanel.SetActive(true);
     }
+
+    public void OnClick_SelectRundown()
+    {
+        SelectRundown.SetActive(true);
+    }
+
     public void OnClick_NewGame() {
         PlayerPrefs.DeleteAll();
-        SceneController.Instance.ChangeSceneTo("Lab");
+        SceneController.Instance.ChangeSceneTo("Rundown_1");
     }
 
     public void OnClick_Load() {
         SceneController.Instance.ChangeSceneTo("Lab");
     }
 
+    public void OnClick_Rundown1()
+    {
+        SceneController.Instance.ChangeSceneTo("Rundown_1");
+    }
+
+    public void OnClick_Rundown2()
+    {
+        SceneController.Instance.ChangeSceneTo("Rundown_2");
+    }
+
+    public void OnClick_Rundown3()
+    {
+        SceneController.Instance.ChangeSceneTo("Rundown_3");
+    }
+
+    public void OnClick_Rundown4()
+    {
+        SceneController.Instance.ChangeSceneTo("Rundown_4");
+    }
     public void OnClick_Option() {
         if(m_optionUI == null)
             return;
@@ -40,7 +66,7 @@ public class MainUI : MonoBehaviour
 
     public void OnClick_TutorialStart() {
 
-        PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteAll();
         SceneController.Instance.ChangeSceneTo("Tutorial");
     }
 
