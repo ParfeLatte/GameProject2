@@ -13,7 +13,7 @@ namespace Insomnia {
             }
         }
 
-        protected virtual void OnDestroy() {
+        protected void OnDestroy() {
             _instance = null;
         }
     }

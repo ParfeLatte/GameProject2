@@ -6,21 +6,24 @@ using static Insomnia.Defines;
 namespace Insomnia {
 
     [RequireComponent(typeof(AudioSource))]
-    public class Speaker : Observer {
-        [Header("Components")]
-        [HideInInspector] private AudioSource m_audio = null;
+    public abstract class Speaker : Observer {
+        [Header("Speaker: Components")]
+        [HideInInspector] protected AudioSource m_audio = null;
 
-        [Header("Settings")]
-        [SerializeField] private SoundType m_type = SoundType.Master;
+        [Header("Speaker: Settings")]
+        [SerializeField] protected SoundType m_type = SoundType.Master;
 
-        [Header("Audio Clips")]
+        [Header("Speaker: Audio Clips")]
         [SerializeField] protected AudioClip[] m_clips;
 
-        private void Awake() {
+        protected virtual void Awake() {
             m_audio = GetComponent<AudioSource>();
         }
 
+        protected abstract void Reset();
+
         protected virtual void OnValidate() {
+            m_audio = GetComponent<AudioSource>();
             if(m_audio == null)
                 return;
 
@@ -28,7 +31,7 @@ namespace Insomnia {
         }
 
         #region Observer Functions
-        public sealed override void Notify(object noti) {
+        public override void Notify(object noti) {
             SoundNotiData data = (SoundNotiData)noti;
             if(default(SoundNotiData).Equals(data))
                 return;
@@ -62,7 +65,7 @@ namespace Insomnia {
         public virtual void OnSpeakerStart() { }
         public virtual void OnSpeakerEnd() { }
 
-        public void Play(int clipIndex, bool isLoop = false, float delay = -1f) {
+        public virtual void Play(int clipIndex, bool isLoop = false, float delay = -1f) {
             if(m_clips.Length <= clipIndex)
                 return;
 
@@ -87,14 +90,14 @@ namespace Insomnia {
                 m_audio.PlayDelayed(delay);
         }
 
-        public void PlayOneShot(int clipIndex) {
+        public virtual void PlayOneShot(int clipIndex) {
             if(m_clips.Length <= clipIndex)
                 return;
 
             m_audio.PlayOneShot(m_clips[clipIndex]);
         }
 
-        public void Stop() {
+        public virtual void Stop() {
             if(m_audio.isPlaying == false)
                 return;
 

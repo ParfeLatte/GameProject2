@@ -23,8 +23,7 @@ namespace Insomnia {
         #region Properties
         public KeyCode InteractKey { get => m_interactKey; }
         public bool CanInteract { get => m_canInteract; }
-
-        protected Interactor User { get => m_interactor; }
+        public Interactor User { get => m_interactor; }
         
         #endregion
 

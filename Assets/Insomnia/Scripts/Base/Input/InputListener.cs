@@ -19,7 +19,7 @@ namespace Insomnia {
         }
 
         private void Start() {
-            Managers.Input.AddListener(this);
+            InputManager.Instance.AddListener(this);
         }
 
         private void OnEnable() {
@@ -29,7 +29,9 @@ namespace Insomnia {
         protected virtual void AfterOnEnableCalled() { }
 
         private void OnDisable() {
-            Managers.Input.RemoveListener(this);
+            InputManager manager= InputManager.Instance;
+            if(manager != null)
+                manager.RemoveListener(this);
             AfterOnDisableCalled();
         }
 

@@ -69,10 +69,24 @@ namespace Insomnia {
         #endregion
 
         #region Subject Functions
-        protected override void Notify(Speaker speaker) {
+
+        public override void OnUpdate() {
+            if(m_observers == null)
+                return;
+
             SaveData();
             SoundNotiData noti = new SoundNotiData(){volumes = m_volumes};
-            speaker.Notify(noti);
+
+            for(int i = 0; i < m_observers.Count; i++) {
+                if(m_observers[i] == null)
+                    continue;
+
+                m_observers[i].Notify(noti);
+            }
+        }
+
+        protected override void Notify(Speaker observer) {
+            
         }
 
         #endregion

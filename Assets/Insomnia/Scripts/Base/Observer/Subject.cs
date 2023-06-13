@@ -7,7 +7,7 @@ namespace Insomnia {
     public abstract class ImmortalSubject<SingletonType, ObserverType> : ImmortalSingleton<SingletonType>
             where SingletonType : Component
             where ObserverType : Observer {
-        private List<ObserverType> m_observers = new List<ObserverType>();
+        [SerializeField] protected List<ObserverType> m_observers = new List<ObserverType>();
 
         public bool Subscribe(ObserverType observer) {
             if(observer == null)
@@ -32,11 +32,8 @@ namespace Insomnia {
             return true;
         }
 
-        public void OnUpdate() {
+        public virtual void OnUpdate() {
             if(m_observers == null)
-                return;
-
-            if(m_observers.Count <= 0)
                 return;
 
             for(int i = 0; i < m_observers.Count; i++) {
