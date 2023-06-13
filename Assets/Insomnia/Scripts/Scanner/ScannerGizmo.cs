@@ -27,8 +27,10 @@ public class ScannerGizmo : MonoBehaviour {
                 return;
 
             m_rotate = value;
-            if(m_rotate) 
+            if(m_rotate)
                 StartCoroutine(CoStartRotate());
+            else
+                StopCoroutine(CoStartRotate());
         }
     }
 
@@ -89,13 +91,13 @@ public class ScannerGizmo : MonoBehaviour {
     private IEnumerator CoStartRotate() {
         while(m_rotate) {
             for(int i = 0; i < m_rotGizmos.Length; i++) {
-                if(Mathf.Abs(m_rotGizmos[i].transform.position.x - m_basePosition.x) >= m_baseNormalDistance - 0.1f)
+                if(Mathf.Abs(m_rotGizmos[i].transform.position.x - m_basePosition.x) >= m_baseNormalDistance)
                     m_rotDirection[i] *= -1;
 
                 float speed  = Mathf.Clamp((1 - (Mathf.Abs(m_rotGizmos[i].transform.position.x - m_basePosition.x) / m_baseNormalDistance)) * m_maxRotSpeed, m_minRotSpeed, m_maxRotSpeed);
 
                 Vector3 nextPos = m_rotGizmos[i].transform.position + new Vector3(m_rotDirection[i] * speed * Time.deltaTime, 0f);
-                nextPos.x = Mathf.Clamp(nextPos.x, m_basePosition.x - m_baseNormalDistance + 0.1f, m_basePosition.x + m_baseNormalDistance - 0.1f);
+                nextPos.x = Mathf.Clamp(nextPos.x, m_basePosition.x - m_baseNormalDistance, m_basePosition.x + m_baseNormalDistance);
                 m_rotGizmos[i].transform.position = nextPos;
                 yield return null;
             }
