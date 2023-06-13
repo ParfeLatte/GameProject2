@@ -8,7 +8,7 @@ using static Insomnia.Defines;
 namespace Insomnia {
     public class ControllerBase : Interactable {
         [Header("ControllerBase: References")]
-        [SerializeField] protected ReactorBase m_reactor = null;
+        [SerializeField] protected ControleeBase m_controlee = null;
 
         [Header("ControllerBase: Settings")]
         [SerializeField] protected object m_controlResult = 0;
@@ -22,21 +22,21 @@ namespace Insomnia {
             if(m_canInteract == false)
                 return;
 
-            m_reactor.StandbyInteract();
+            m_controlee.StandbyInteract();
         }
 
         public override void ReleaseInteract() {
             if(m_canInteract == false)
                 return;
 
-            m_reactor.ReleaseInteract();
+            m_controlee.ReleaseInteract();
         }
 
         public override bool OnInteractStart() {
             if(m_canInteract == false)
                 return true;
 
-            m_reactor.OnInteractStart(m_controlResult);
+            m_controlee.OnInteractStart(m_controlResult);
             return true;
         }
 
@@ -44,7 +44,7 @@ namespace Insomnia {
             if(m_canInteract == false)
                 return;
 
-            m_reactor.OnInteractEnd();
+            m_controlee.OnInteractEnd();
         }
     }
 }

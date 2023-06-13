@@ -9,7 +9,7 @@ namespace Insomnia {
     [RequireComponent(typeof(ScannerGizmo))]
     public class Scanner : MonoBehaviour {
         [Header("Components")]
-        [SerializeField] private ScanAction m_action = null;
+        [SerializeField] private ScanActionSO m_action = null;
         [SerializeField]private Canvas m_scanCanvas = null;
         [SerializeField]private Slider m_scanSlider = null;
         private ScannerGizmo m_gizmo = null;

@@ -7,7 +7,7 @@ using static Insomnia.ElevatorSpeaker;
 
 namespace Insomnia {
     [RequireComponent(typeof(BoxCollider2D))]
-    public class Elevator : ReactorBase {
+    public class Elevator : ControleeBase {
         [Header("Elevator: Components")]
         [SerializeField] private SpriteRenderer m_renderer = null;
         [SerializeField] private Animator m_animator = null;
@@ -154,10 +154,6 @@ namespace Insomnia {
                 m_currentFloorIndex = m_targetFloorIndex;
                 m_speaker.Stop();
             }
-
-            ////Validation Check for Elevator Door Opened
-            //if(SetDoorStatus(true) == false)
-            //    return;
         }
 
 
@@ -207,7 +203,6 @@ namespace Insomnia {
                     m_speaker.Play((int)ElevatorSounds.Move, true);
                 }
                     
-
                 return true;
             }
 

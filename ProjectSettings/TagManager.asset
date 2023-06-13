@@ -51,12 +51,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Door
-    uniqueID: 197525895
+  - name: Map
+    uniqueID: 699681495
     locked: 0
-  - name: Monster
-    uniqueID: 4227523247
+  - name: Environments
+    uniqueID: 2178294545
+    locked: 0
+  - name: Collectable
+    uniqueID: 3310028657
     locked: 0
   - name: Player
-    uniqueID: 3508731223
+    uniqueID: 2047008779
+    locked: 0
+  - name: Monster
+    uniqueID: 1011499239
     locked: 0

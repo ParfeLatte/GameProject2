@@ -8,7 +8,7 @@ namespace Insomnia {
     public class Interactable : MonoBehaviour {
         [Header("Interactable: Components")]
         private Collider _trigArea = null;  //Interactor와 충돌을 감지할 Trigger Collider
-        protected Interactor _interactor = null;
+        private Interactor m_interactor = null;
 
         [Header("Interactable: Status")]
         [SerializeField] protected bool m_canInteract = true;
@@ -23,6 +23,8 @@ namespace Insomnia {
         #region Properties
         public KeyCode InteractKey { get => m_interactKey; }
         public bool CanInteract { get => m_canInteract; }
+
+        protected Interactor User { get => m_interactor; }
         
         #endregion
 
@@ -32,19 +34,19 @@ namespace Insomnia {
 
         private void OnTriggerEnter2D(Collider2D collision) {
             if(collision.gameObject.TryGetComponent(out Interactor interactor)) {
-                _interactor = interactor;
-                _interactor.StandbyInteract(this);
+                m_interactor = interactor;
+                m_interactor.StandbyInteract(this);
             }
         }
 
         private void OnTriggerExit2D(Collider2D collision) {
-            if(_interactor == null)
+            if(m_interactor == null)
                 return;
 
-            if(_interactor.gameObject != collision.gameObject)
+            if(m_interactor.gameObject != collision.gameObject)
                 return;
 
-            _interactor.ReleaseInteract(this);
+            m_interactor.ReleaseInteract(this);
         }
 
         /// <summary>
@@ -61,14 +63,15 @@ namespace Insomnia {
         /// 플레이어가 상호작용을 시작했을 때 실행되는 함수.
         /// <seealso cref="m_canInteract"/>가 true일 때 실행되며, false일 때는 기능을 수행하지 않고 종료한다.
         /// </summary>
-        /// <returns>return true if Interaction should be finished Immediately. else false.</returns>
+        /// <returns>isOneShot : return true if Interaction should be finished Immediately. else false.</returns>
         public virtual bool OnInteractStart() { return true; }
 
         /// <summary>
-        /// 플레이어가 상호작용을 종료했을 때 실행되는 함수
+        /// 플레이어가 상호작용을 종료했을 때 실행되는 함수. 
+        /// 만약 종료 과정 없이 시작하자마자 true를 return할 경우 override 불필요.
         /// </summary>
         public virtual void OnInteractEnd() { }
 
-        public virtual void ConditionSolved(object condition) { m_canInteract = true; }
+        public virtual void InteractConditionSolved(object condition) { m_canInteract = true; }
     }
 }

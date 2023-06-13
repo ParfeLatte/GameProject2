@@ -7,11 +7,18 @@ using UnityEngine.SceneManagement;
 
 namespace Insomnia {
     public abstract class SceneChangeEffect : MonoBehaviour {
+        [Header("SceneChangeEffect: External References")]
         protected static SceneController m_controller = null;
+
+
+        [Header("SceneChangeEffect: Settings")]
+        [SerializeField, Tooltip("씬 전환 효과가 최초로 생성되었을 때 스킵의 여부")] 
+        protected bool m_skipFirst = false;
+        [SerializeField, Tooltip("씬 전환 효과가 최초로 생성되었을 때 SceneController로의 등록 여부")] 
+        private bool m_autoRegister = true;
+        [SerializeField, Tooltip("씬 전환 효과가 전부 종료되었을 때 존폐의 여부")] 
+        private bool m_isTemporal = true;
         protected bool m_curEffectFinished = true;
-        [SerializeField] protected bool m_skipFirst = false;
-        [SerializeField] private bool m_autoRegister = true;
-        [SerializeField] private bool m_isTemporal = true;
 
         public bool EffectFinished { get {
                 if(m_curEffectFinished) {

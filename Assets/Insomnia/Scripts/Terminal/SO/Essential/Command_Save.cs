@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Insomnia {
     [CreateAssetMenu(menuName ="Command/SaveLoad/Save", fileName ="Command_Save")]
-    public class Command_Save : TerminalCommand {
+    public class Command_Save : CommandSO {
         private static string m_saveSaving = "Saveing Data...";
         private static string m_saveSaveCompleted = "Save Completed!";
 

@@ -6,7 +6,7 @@ using static Insomnia.Defines;
 
 namespace Insomnia {
     [CreateAssetMenu(menuName = "Command/Search/Query", fileName = "Command_Query")]
-    public class Command_Query : TerminalCommand {
+    public class Command_Query : CommandSO {
         #region Formats
         private static string m_queryStartFormat =
             "--------------------------------------------------------------------------------\n{0}\n--------------------------------------------------------------------------------";

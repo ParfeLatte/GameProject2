@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Insomnia {
     [CreateAssetMenu(menuName ="Command/Special/Rundown_Contract", fileName ="Command_Rundown_Contract")]
-    public class Command_Rundown_Contract : TerminalCommand {
+    public class Command_Rundown_Contract : CommandSO {
         private static string m_rundown_invalidRundownError = "<color=red>Error: Invalid Rundown - There is no Rundown /{{0}/}.</color>";
         private static string m_rundown_toomuchKeyError = "<color=red>Error: Too Much Key - Key should be one.</color>";
         private static string m_rundown_lackofKeyError = "<color=red>Error: Lack Of Key.</color>";

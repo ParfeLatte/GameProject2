@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Insomnia {
     [CreateAssetMenu(menuName = "Scanner/Action/ContinuousIncrease", fileName = "ContinuousIncrease")]
-    public class ContinuousIncrease : ScanAction {
+    public class ContinuousIncrease : ScanActionSO {
         public override void Calculate(Scanner scanner, float amountPerSec) {
             if(scanner.IsTriggered == false)
                 scanner.Progress = 0;

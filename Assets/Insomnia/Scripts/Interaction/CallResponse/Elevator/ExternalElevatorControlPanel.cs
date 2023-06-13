@@ -14,7 +14,7 @@ namespace Insomnia {
             if(m_canInteract == false)
                 return;
 
-            m_reactor.StandbyInteract();
+            m_controlee.StandbyInteract();
             //m_tutorialUI?.SetActive(true);
         }
 
@@ -22,7 +22,7 @@ namespace Insomnia {
             if(m_canInteract == false)
                 return;
 
-            m_reactor.ReleaseInteract();
+            m_controlee.ReleaseInteract();
             //m_tutorialUI?.SetActive(false);
         }
 
@@ -30,7 +30,7 @@ namespace Insomnia {
             if(m_canInteract == false)
                 return true;
 
-            m_reactor.OnInteractStart(m_targetFloor);
+            m_controlee.OnInteractStart(m_targetFloor);
             //m_tutorialUI?.SetActive(false);
             return true;
         }
@@ -39,7 +39,7 @@ namespace Insomnia {
             if(m_canInteract == false)
                 return;
 
-            m_reactor.OnInteractEnd();
+            m_controlee.OnInteractEnd();
         }
     }
 }

@@ -72,13 +72,14 @@ namespace Insomnia {
             if(m_audio == null)
                 return;
 
-            if(isLoop && m_audio.clip == m_clips[clipIndex] && m_audio.isPlaying)
+            //if(isLoop && m_audio.clip == m_clips[clipIndex] && m_audio.isPlaying)
+            //    return;
+
+            if(m_audio.clip == m_clips[clipIndex] && m_audio.isPlaying)
                 return;
 
             m_audio.loop = isLoop;
             m_audio.clip = m_clips[clipIndex];
-
-            Debug.Log($"[{Time.time}]Now Playing: {m_clips[clipIndex].name}");
 
             if(delay < 0f)
                 m_audio.Play();
@@ -97,7 +98,6 @@ namespace Insomnia {
             if(m_audio.isPlaying == false)
                 return;
 
-            Debug.Log($"[{Time.time}]Playing Stopped");
             m_audio.loop = false;
             m_audio.Stop();
         }

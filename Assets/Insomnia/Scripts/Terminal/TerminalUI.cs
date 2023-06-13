@@ -21,7 +21,7 @@ namespace Insomnia {
         #endregion
 
         #region Variables
-        [SerializeField] private List<TerminalCommand> m_commands = new List<TerminalCommand>();
+        [SerializeField] private List<CommandSO> m_commands = new List<CommandSO>();
         private List<string> commandContainer = new List<string>();
         private readonly int MaxCommandLines = 32;
         private int m_selectedIndex = 0;
@@ -30,7 +30,7 @@ namespace Insomnia {
         #endregion
 
         #region Properties
-        public List<TerminalCommand> Commands { get => m_commands; }
+        public List<CommandSO> Commands { get => m_commands; }
         public List<string> Container { get => commandContainer; }
 
         #endregion
@@ -77,7 +77,7 @@ namespace Insomnia {
             string result = "";
 
             if(leakedKey.Length >= 1) {
-                TerminalCommand command = m_commands.SingleOrDefault(x => x.ContainsKeyword(leakedKey[0]));
+                CommandSO command = m_commands.SingleOrDefault(x => x.ContainsKeyword(leakedKey[0]));
                 if(command != null) 
                     result += command.Command.ToUpper() + ' ';
             }
@@ -148,7 +148,7 @@ namespace Insomnia {
             if(m_loading && splitted[0].Equals("EXIT") == false)
                 return CommandError.Loading;
 
-            TerminalCommand validCommand = m_commands.SingleOrDefault(x => x.CheckCommand(splitted[0]));
+            CommandSO validCommand = m_commands.SingleOrDefault(x => x.CheckCommand(splitted[0]));
             //Single은 무조건 하나가 있어야 되지만 SingleOrDefault는 하나만 있거나 없을 수 있다. 없을 경우 null을 return;
 
             if(command == string.Empty) 

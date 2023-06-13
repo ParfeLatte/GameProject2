@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Insomnia {
     [CreateAssetMenu(menuName = "Scanner/Action/SimpleIncrease", fileName = "SimpleIncrease")]
-    public class SimpleIncrease : ScanAction {
+    public class SimpleIncrease : ScanActionSO {
         public override void Calculate(Scanner scanner, float amountPerSec) {
             if(scanner.IsTriggered == false)
                 return;

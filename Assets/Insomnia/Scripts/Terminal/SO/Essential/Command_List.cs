@@ -5,7 +5,7 @@ using static Insomnia.Defines;
 
 namespace Insomnia {
     [CreateAssetMenu(menuName = "Command/Search/List", fileName = "Command_List")]
-    public class Command_List : TerminalCommand {
+    public class Command_List : CommandSO {
         #region Formats
         private static string m_listStartFormat = "ID\t\tObjectType\t\tSTATUS";
         private static string m_listFormat = "{0, -12}\t{1, -23}\t{2}";

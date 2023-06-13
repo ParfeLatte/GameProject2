@@ -50,9 +50,20 @@ namespace Insomnia {
 
         public enum ControllerSignResult : int { Negative = -1, Positive = 1 }
 
+        public enum CollectableType {
+            None,
+            KeyCard_Blue,
+            KeyCard_Green,
+            KeyCard_Red,
+            KeyCard_Yellow,
+            KeyCard_Purple,
+            Target
+        }
+
         #endregion
 
         #region Structs
+        [Serializable]
         public struct ObjectData {
             public string ID;
             public string Location;
@@ -62,8 +73,15 @@ namespace Insomnia {
             public StatusType Status;
         }
 
+        [Serializable]
         public struct SoundNotiData{
             public float[] volumes;
+        }
+
+        [Serializable]
+        public struct CollectableData {
+            public CollectableType Type;
+            [HideInInspector] public CollectableBase BelongedTo;
         }
 
         #endregion

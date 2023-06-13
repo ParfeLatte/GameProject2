@@ -14,7 +14,7 @@ namespace Insomnia {
             if(m_canInteract == false)
                 return;
 
-            m_reactor.StandbyInteract();
+            m_controlee.StandbyInteract();
             //m_tutorialUI?.SetActive(true);
         }
 
@@ -22,7 +22,7 @@ namespace Insomnia {
             if(m_canInteract == false)
                 return;
 
-            m_reactor.ReleaseInteract();
+            m_controlee.ReleaseInteract();
             //m_tutorialUI?.SetActive(false);
         }
 
@@ -30,14 +30,14 @@ namespace Insomnia {
             if(m_canInteract == false)
                 return true;
 
-            Elevator elevator = m_reactor as Elevator;
+            Elevator elevator = m_controlee as Elevator;
             if(elevator == null)
                 return true;
 
             if(elevator.IsReacting)
                 return true;
 
-            bool success = m_reactor.OnInteractStart(elevator.CurrentFloor + m_targetDirection);
+            bool success = m_controlee.OnInteractStart(elevator.CurrentFloor + m_targetDirection);
             if(success) {
                 //m_tutorialUI?.SetActive(false);
             }
@@ -49,7 +49,7 @@ namespace Insomnia {
             if(m_canInteract == false)
                 return;
 
-            bool success = m_reactor.OnInteractEnd();
+            bool success = m_controlee.OnInteractEnd();
             if(success) {
 
             }

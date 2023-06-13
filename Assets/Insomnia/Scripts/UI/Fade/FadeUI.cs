@@ -12,10 +12,14 @@ using UnityEngine.UI;
 
 namespace Insomnia {
     public class FadeUI : SceneChangeEffect {
+        [Header("FadeUI: Components")]
         [SerializeField] private Image m_fadeImage = null;
+
+        [Header("FadeUI: Settings")]
         [SerializeField] private Color m_fadeInColor;
         [SerializeField] private Color m_fadeOutColor;
-        [SerializeField, Range(0.1f, 10f)] private float m_fadeDuration = 0.1f;
+        [SerializeField, Range(0.1f, 10f), Tooltip("효과의 초당 변화량")] 
+        private float m_fadeDuration = 0.1f;
 
         protected override void Awake_Child() {
             m_fadeImage = GetComponentInChildren<Image>();
