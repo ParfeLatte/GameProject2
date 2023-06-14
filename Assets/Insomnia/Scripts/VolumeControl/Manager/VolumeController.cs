@@ -86,7 +86,8 @@ namespace Insomnia {
         }
 
         protected override void Notify(Speaker observer) {
-            
+            SoundNotiData noti = new SoundNotiData(){volumes = m_volumes};
+            observer.Notify(noti);
         }
 
         #endregion

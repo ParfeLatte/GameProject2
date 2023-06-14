@@ -685,6 +685,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4800244736197069514, guid: d7256a2929a6d824b8952d1c4a52b67f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4800244736197070130, guid: d7256a2929a6d824b8952d1c4a52b67f, type: 3}
       propertyPath: onInteractEnd.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -958,15 +962,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_type: 1
   m_clips:
-  - {fileID: 8300000, guid: 2fb4cc884ca81834999232423ef74c43, type: 3}
-  - {fileID: 8300000, guid: 8b0480e40635a2a4d9899064cca0e62a, type: 3}
-  - {fileID: 8300000, guid: cf9d00264dbfeb0479e1c822e75ffdf3, type: 3}
-  - {fileID: 8300000, guid: 56a13d1c5fb8c4e4a92421f41c4643ee, type: 3}
-  - {fileID: 8300000, guid: e3c315ed9ddd77a42a8911c47eaf379e, type: 3}
-  - {fileID: 8300000, guid: 2d6cbc7e53ebbab4e9689a3b812b5d56, type: 3}
-  - {fileID: 8300000, guid: 8b0480e40635a2a4d9899064cca0e62a, type: 3}
+  - {fileID: 8300000, guid: 575e28ff719fae4419d5649c079475bc, type: 3}
+  - {fileID: 8300000, guid: d941e77accb897f459aae8bacfd5aeff, type: 3}
+  - {fileID: 8300000, guid: b646726a19948b04a9ea53941f6860ae, type: 3}
   m_maxVolume: 0
-  m_volumeFluctuationTime: 3
+  m_isSwitching: 0
+  m_volumeFluctuationTime: 1
 --- !u!82 &531015756
 AudioSource:
   m_ObjectHideFlags: 0
@@ -978,7 +979,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0
   m_Pitch: 1
   Loop: 0
@@ -2411,7 +2412,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

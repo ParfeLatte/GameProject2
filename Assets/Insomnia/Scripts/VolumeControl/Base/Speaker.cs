@@ -27,6 +27,7 @@ namespace Insomnia {
             if(m_audio == null)
                 return;
 
+            m_audio.playOnAwake = false;
             m_audio.loop = false;
         }
 
@@ -52,15 +53,17 @@ namespace Insomnia {
         }
 
         public sealed override void OnEnd() {
+#if UNITY_EDITOR == false
             VolumeController subject = VolumeController.Instance;
             if(subject == null)
                 return;
 
             subject.Unsubscribe(this);
             OnSpeakerEnd();
+#endif
         }
 
-        #endregion
+#endregion
 
         public virtual void OnSpeakerStart() { }
         public virtual void OnSpeakerEnd() { }
