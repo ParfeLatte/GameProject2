@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using static Insomnia.Siren_Speaker;
+using static Insomnia.BGM_Speaker;
 
 namespace Insomnia {
     public class Siren : MonoBehaviour {
         [Header("Siren: Internal References")]
-        [SerializeField] private BoxCollider2D m_sirenRange = null;
         [SerializeField] private Siren_Speaker m_speaker = null;
 
         [Header("Siren: External References")]
         [SerializeField] private Interactable m_caller = null;
-        private List<Monster> m_monstersInArea = new List<Monster>();
-        private List<Monster> m_monstersSpawn = new List<Monster>();
-        private Player m_target = null;
+        [SerializeField] private List<Monster> m_monstersInArea = new List<Monster>();
+        [SerializeField] private List<Monster> m_monstersSpawn = new List<Monster>();
+        private Player m_player = null;
+        private static AlertUI m_alertUI = null;
+
+        [Header("Siren: Status")]
+        [SerializeField] private bool m_onAlarmed = false;
 
         [Header("Siren: Settings")]
         [SerializeField] private Transform m_spawnArea = null;
@@ -26,23 +30,21 @@ namespace Insomnia {
 
         private void Awake() {
             m_speaker = GetComponentInChildren<Siren_Speaker>();
+            m_player = FindObjectOfType<Player>();
         }
 
-        private void OnTriggerEnter2D(Collider2D collision) {
-            Monster monster = collision.gameObject.GetComponent<Monster>();
-            if(monster == null)
-                return;
+        private void Start() {
+            for(int i = 0; i < m_monstersSpawn.Count; i++) {
+                m_monstersSpawn[i].Player = m_player.gameObject;
+                m_monstersSpawn[i].player = m_player;
+            }
 
-            if(monster.isDead)
-                return;
+            if(AlertUI.Instance == null) {
+                GameObject go = new GameObject("AlertUI");
+                go.AddComponent<AlertUI>();
+            }
 
-            if(m_monstersInArea.Contains(monster))
-                return;
-
-            if(m_monstersSpawn.Contains(monster)) 
-                return;
-
-            m_monstersInArea.Add(monster);
+            m_alertUI = AlertUI.Instance;
         }
 
         public void OnAlarmed(Interactable caller) {
@@ -52,34 +54,43 @@ namespace Insomnia {
             if(caller.User == null)
                 return;
 
+            m_onAlarmed = true;
             m_caller = caller;
 
             StartCoroutine(CoStartSpawnMonster());
 
             for(int i = 0; i < m_monstersInArea.Count; i++) {
                 m_monstersInArea[i].MonsterAwake();
-                //TODO: 몬스터에게 플레이어 전달하기
             }
 
             m_speaker.Play((int)SirenSounds.Alarm, true);
-            //TODO: 배경음악 점진적 시작 요청하기
+            BGM_Speaker.Instance.Play((int)BGMSounds.Wave, true);
+            if(m_alertUI != null)
+                m_alertUI.TriggerAlert(gameObject);
+
             StartCoroutine(CoStartCheckAllDead());
         }
 
         private IEnumerator CoStartCheckAllDead() {
             while(true) {
                 bool allDead = m_monstersInArea.All(x => x.isDead);
-                yield return null;
                 allDead &= m_monstersSpawn.All(x => x.isDead);
-
+                
                 if(allDead)
                     break;
 
                 yield return null;
             }
+
+            m_onAlarmed = false;
             m_speaker.Stop();
             m_caller.InteractConditionSolved(null);
-            //TODO: 배경음악 점진적종료 요청하기
+            BGM_Speaker.Instance.Play((int)BGMSounds.BGM, true);
+
+            Invoke("SetActiveFalseAllMonsters", 1.5f);
+
+            if(m_alertUI != null)
+                m_alertUI.TriggerAlert(gameObject);
             yield break;
         }
 
@@ -102,11 +113,27 @@ namespace Insomnia {
 
                 m_monstersSpawn[i].transform.position = m_spawnArea.position;
                 m_monstersSpawn[i].gameObject.SetActive(true);
+                m_monstersSpawn[i].Player = m_player.gameObject;
+                m_monstersSpawn[i].player = m_player;
                 m_monstersSpawn[i].MonsterAwake();
                 yield return null;
             }
 
             yield break;
+        }
+
+        private void SetActiveFalseAllMonsters() {
+            if(m_monstersInArea != null) {
+                for(int i = 0; i < m_monstersInArea.Count; i++) {
+                    m_monstersInArea[i].gameObject.SetActive(false);
+                }
+            }
+
+            if(m_monstersSpawn != null) {
+                for(int i = 0; i < m_monstersSpawn.Count; i++) {
+                    m_monstersSpawn[i].gameObject.SetActive(false);
+                }
+            }
         }
     }
 }

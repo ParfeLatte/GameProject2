@@ -29,6 +29,7 @@ namespace Insomnia{
                 return;
 
             player.RestoreHealth(m_healAmount);
+            m_healLimit--;
             return;
         }
 

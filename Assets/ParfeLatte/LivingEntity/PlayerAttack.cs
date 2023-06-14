@@ -1,3 +1,4 @@
+using Insomnia;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,7 +51,6 @@ public class PlayerAttack : MonoBehaviour
         {
             Monster enemy = TargetList[i].GetComponent<Monster>();//대상에게서 몬스터 스크립트를  받아옴
             enemy.damaged(Damage);//공격받을때 부르는 함수
-            //Debug.Log("Monster[" + i + "]에게 데미지!");//확인용
         }
         isAttack = false;
     }//공격 대상으로 들어왔있는 모든 몬스터에게 데미지가 들어감
@@ -60,8 +60,6 @@ public class PlayerAttack : MonoBehaviour
         
         if(col.tag == "enemy" && !TargetList.Contains(col))
         {
-            //Debug.Log("몬스터가 범위내에 들어왔습니다. 리스트에 삽입합니다.");
-            //Debug.Log("리스트에 삽입됐습니다.");
             if (TargetList.Count < 5)
             {
                 TargetList.Add(col);//몬스터가 공격범위 내에 들어오면 공격대상에 추가
@@ -69,20 +67,18 @@ public class PlayerAttack : MonoBehaviour
         }
         else
         {
-            //Debug.Log("이미 리스트에 있습니다");//예외처리
+
         }
     }
     private void OnTriggerExit2D(Collider2D col)
     {
-        //Debug.Log("몬스터가 범위에서 벗어났습니다. 리스트에서 삭제합니다.");
         if (TargetList.Contains(col))
         {
             TargetList.Remove(col);//범위를 벗어나면 리스트에 있던 몬스터를 제거함(공격대상X)
-            //Debug.Log("제거했습니다");
         }
         else
         {
-            //Debug.Log("이미 제거됐습니다");//예외처리
+
         }
     }
 }
@@ -92,7 +88,6 @@ public class PlayerAttack : MonoBehaviour
 //{
 //    //if (col.tag == "enemy")
 //    //{
-//    //    Debug.Log("몬스터가 범위내에 있습니다");
 //    //    if (isAttack)
 //    //    {
 //    //        Monster enemy = col.GetComponent<Monster>();

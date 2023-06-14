@@ -26,6 +26,6 @@ public class EscapeUI : MonoBehaviour {
     }
 
     public void OnClick_Quit() {
-        //TODO: 게임 바로 종료?
+        Application.Quit();
     }
 }

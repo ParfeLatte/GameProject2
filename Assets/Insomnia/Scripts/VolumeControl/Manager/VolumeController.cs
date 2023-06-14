@@ -4,7 +4,7 @@ using UnityEngine;
 using static Insomnia.Defines;
 
 namespace Insomnia {
-    public class VolumeController : ImmortalSubject<VolumeController, Speaker>, IDataIO {
+    public class VolumeController : ImmortalSubject<VolumeController, Speaker> {
         [SerializeField, Range(0f, 1f)] private float[] m_volumes= new float[3]{ 1f, 1f, 1f };
 
         #region Properties

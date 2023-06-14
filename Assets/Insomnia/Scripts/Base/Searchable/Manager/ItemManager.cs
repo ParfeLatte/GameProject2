@@ -84,7 +84,7 @@ namespace Insomnia {
         public string GetItemID(string leakedKey) {
             if(leakedKey == null || leakedKey == string.Empty)
                 return string.Empty;
-            SearchableBase item = m_itemDatas.SingleOrDefault(x => x.Contains(leakedKey));
+            SearchableBase item = m_itemDatas.FirstOrDefault(x => x.Contains(leakedKey));
 
             if(item == null)
                 return string.Empty;

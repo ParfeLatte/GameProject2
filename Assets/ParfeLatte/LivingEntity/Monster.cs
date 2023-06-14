@@ -2,6 +2,7 @@ using Insomnia;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Insomnia.GiantMob_Speaker;
 using static Insomnia.NormalMob_Speaker;
 
 public class Monster : LivingEntity
@@ -45,6 +46,7 @@ public class Monster : LivingEntity
     public bool isAttack;//공격중인가?
     public bool isFall;//넘어졋나?  
     public bool isWall;//벽에 부딪혔는가?
+    public bool isGiant;
     public bool isBoss;//보스몹인가?
     public bool isEventMob;//이벤트 몬스터가 아니라면 false
 
@@ -63,7 +65,7 @@ public class Monster : LivingEntity
     private SpriteRenderer Blood;
     private EventMonster CheckEvent;
     //private MonsterSound Sound;
-    [SerializeField] private NormalMob_Speaker m_speaker = null;
+    [SerializeField] private Speaker m_speaker = null;
 
     private Vector3 curPos;//현재위치
     private Vector2 AddPos = new Vector2(0, 3f);//pivot을 아래로 고정했으므로 레이 검사때 위로
@@ -87,7 +89,7 @@ public class Monster : LivingEntity
         SleepState = 0;//깊은수면 상태로 스폰
         SetStatus(SetHealth, SetDamage, SetSpeed);//일단 일반몹기준
         Health = MaxHealth;//체력을 최대체력으로 설정
-        m_speaker = GetComponentInChildren<NormalMob_Speaker>();
+        m_speaker = GetComponentInChildren<Speaker>();
         if (isBoss)
         {
             BossAppear();
@@ -149,12 +151,10 @@ public class Monster : LivingEntity
         {
             Player player = rayHit.collider.GetComponent<Player>();//플레이어 컴포넌트 할당
             AttackPlayer = rayHit.collider.gameObject;//공격할 플레이어 대상 할당
-            //Debug.Log("플레이어가 사정거리내에 있음");
             if (AttackPlayer != null && AttackTime >= CoolTime)//공격 쿨타임이 돌았고, 플레이어가 할당되어있다면
             {
                 DoAttack();
             }
-            //Debug.Log("공격합니다.");
         }
         else
         {
@@ -178,8 +178,6 @@ public class Monster : LivingEntity
         else
         {
             Gate = null;
-            //Debug.Log("사정거리내에 아무도 없음");
-            //Debug.Log("계속 추적합니다");
         }//예외처리
     }//공격
 
@@ -204,7 +202,11 @@ public class Monster : LivingEntity
             {
                 player.damaged(damage);//�÷��̾��� damaged �Լ� ȣ���ؼ� �������� ��
                 //Sound.PlayAttackSound(MobType);
-                m_speaker.PlayOneShot((int)NormalMobSounds.MormalMob_Attack);
+                if(isGiant)
+                    m_speaker.PlayOneShot((int)GiantMobSounds.GiantMob_Attack);
+                else if(isBoss) { }
+                else
+                    m_speaker.PlayOneShot((int)NormalMobSounds.MormalMob_Attack);
             }
             else if (Gate != null && collider.tag == "Wall")
             {
@@ -245,7 +247,7 @@ public class Monster : LivingEntity
         float xdistance = player.transform.position.x - gameObject.transform.position.x;
         if (isMobMove == true)
         {
-            if (YDist > 5 && !isEventMob)
+            if (YDist > 40 && !isEventMob)
             {
                 ThinkTime += Time.deltaTime;
                 if (ThinkTime >= 5f)
@@ -271,7 +273,6 @@ public class Monster : LivingEntity
                     SpriteSwapLeft();
                     animator.SetBool("isIdle", false);
                 }
-                Debug.Log("떠돌아다니는중");
             }
             else if(!isAttack)
             {
@@ -320,7 +321,11 @@ public class Monster : LivingEntity
         else if (isMobMove)
         {
             //Sound.PlayWalkSound(MobType);
-            m_speaker.Play((int)NormalMobSounds.NormalMob_Walk, true);
+            if(isGiant)
+                m_speaker.Play((int)GiantMobSounds.GiantMob_Walk, true);
+            else if(isBoss) { }
+            else
+                m_speaker.Play((int)NormalMobSounds.NormalMob_Walk, true);
         }
     }
 
@@ -366,17 +371,15 @@ public class Monster : LivingEntity
         lastPlayerPosition.x = Player.transform.position.x;
 
         yield return new WaitForSeconds(0.1f);
-        //Debug.Log("검사합니다.");
         if (lastPlayerPosition.x == Player.transform.position.x)
         {
-            //Debug.Log("멈췄습니다.");
             moveTimeOne = 0;//플레이어가 움직인 시간 초기화
             //moveTimeTwo = 0;//플레이어가 움직인 시간 초기화
             isPlayerStop = true;//플레이어가 멈췄습니다.
         }//멈췃으므로 검사하던 시간들 초기화
         else
         {
-            //Debug.Log("계속 움직이는 중입니다.");
+
         }//계속 움직임을 확인
     }//멈췄는지를 확인함 0.4초간 움직이지 않아야 멈춘걸로 임시판정 
 
@@ -388,7 +391,11 @@ public class Monster : LivingEntity
                 if (Dist <= 20)
                 {
                     //Sound.PlaySleepSound(MobType);
-                    m_speaker.PlayOneShot((int)NormalMobSounds.NormalMob_Sleep);
+                    if(isGiant)
+                        m_speaker.PlayOneShot((int)GiantMobSounds.GiantMob_Sleep);
+                    else if(isBoss) { }
+                    else
+                        m_speaker.PlayOneShot((int)NormalMobSounds.NormalMob_Sleep);
                     SleepState = 1;//중간수면으로
                     animator.SetInteger("SleepState", 1);
                 }
@@ -428,7 +435,6 @@ public class Monster : LivingEntity
         //MonsterRenderer.color = new Color(1, 0f, 0f, 1f);
         animator.SetBool("isMove", true);//플레이어를 추적해오기 때문에 isMove 파라미터값을 true로 변경
         isMobMove = true;//몬스터는 움직인다.
-        //Debug.Log("깨어났습니다.");
     }
     
     public void BossAppear()
@@ -483,7 +489,11 @@ public class Monster : LivingEntity
     {
         Health -= damage;//ü�¿��� ��������ŭ ����
         //Sound.PlayDamagedSound();
-        m_speaker.PlayOneShot((int)NormalMobSounds.MormalMob_Damaged);
+        if(isGiant)
+            m_speaker.PlayOneShot((int)GiantMobSounds.GiantMob_Damaged);
+        else if(isBoss) { }
+        else
+            m_speaker.PlayOneShot((int)NormalMobSounds.MormalMob_Damaged);
         HammerHitEffect.SetActive(true);
         BloodEffect.SetActive(true);
         Invoke("ReadyEffect", 0.2f);
@@ -513,7 +523,11 @@ public class Monster : LivingEntity
         isMobMove = false;//������ ����
         isDead = true;//�������
         //Sound.PlayDeadSound(MobType);
-        m_speaker.PlayOneShot((int)NormalMobSounds.MormalMob_Dead);
+        if(isGiant)
+            m_speaker.PlayOneShot((int)NormalMobSounds.MormalMob_Dead);
+        else if (isBoss) { }
+        else
+            m_speaker.PlayOneShot((int)NormalMobSounds.MormalMob_Dead);
         animator.SetTrigger("Die");//�ִϸ����Ϳ� Die Ʈ���Ÿ� �����ؼ� ��� �ִϸ��̼� ���
         Invoke("Destroy", DyingTime);//����Ŀ� ������Ʈ ��Ȱ��ȭ
     }
@@ -597,14 +611,12 @@ public class Monster : LivingEntity
 //            SleepState = 2;//얕은 수면 상태로 들어감
 //            moveTimeTwo = 0;//2차 검사시간 초기화
 //            animator.SetInteger("SleepState", 2);//얕은 수면 애니메이션으로 변경
-//            //Debug.Log("얕은수면 상태로 들어갑니다.");
 //        }
 //        else if(isPlayerStop)//만약 멈췄다면
 //        {
 //            SleepState = 0;//다시 깊은 수면 상태로 들어감
 //            //MonsterRenderer.color = new Color(1, 1, 1, 1);
 //            animator.SetInteger("SleepState", 0);//깊은 수면 상태로 애니메이션 전환
-//            //Debug.Log("깊은 수면 상태로 돌아갑니다.");
 //        }
 //    }//중간수면 상태이고 15안에서 0.8초간 움직였나?
 //    break;
@@ -620,6 +632,5 @@ public class Monster : LivingEntity
 //            SleepState = 1;//중간 수면 상태로 돌아감
 //            //MonsterRenderer.color = new Color(1, 0.92f, 0.016f, 1);
 //            animator.SetInteger("SleepState", 1);//중간 수면 상태로 애니메이션 변경
-//            //Debug.Log("중간 수면 상태로 돌아갑니다.");
 //        }
 //    }//얕은 수면 상태 이 상태에 플레이어가 걸으면 바로 기상

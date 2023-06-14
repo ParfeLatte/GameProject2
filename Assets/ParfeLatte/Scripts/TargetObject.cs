@@ -5,16 +5,15 @@ using UnityEngine;
 using static Insomnia.Defines;
 
 public class TargetObject : SearchableBase {
-    public GameManager GameMgr;
 
     protected override void Awake() {
         base.Awake();
-        if(GameMgr.isTarget) {
-            gameObject.SetActive(false);
-        }
-        else {
-            gameObject.SetActive(true);
-        }
+        //if(GameMgr.isTarget) {
+        //    gameObject.SetActive(false);
+        //}
+        //else {
+        //    gameObject.SetActive(true);
+        //}
     }
 
     protected override void Start() {
@@ -22,10 +21,10 @@ public class TargetObject : SearchableBase {
     }
 
     private void OnTriggerEnter2D(Collider2D col) {
-        if(col.tag == "Player") {
-            GameMgr.GetTarget();
-            gameObject.SetActive(false);
-        }
+        //if(col.tag == "Player") {
+        //    GameMgr.GetTarget();
+        //    gameObject.SetActive(false);
+        //}
     }
 
     protected override void Reset() {

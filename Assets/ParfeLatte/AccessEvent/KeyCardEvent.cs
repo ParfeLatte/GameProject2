@@ -1,11 +1,13 @@
+using Insomnia;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Obsolete("No Use Anymore", true)]
 public class KeyCardEvent : MonoBehaviour
 {
-    public AccessPoint AP;//엑세스 포인트
+    //public AccessPoint AP;//엑세스 포인트
     public GameUI Alert;//배경 빨갛게 
 
     public MobSpawner Spawner;//몬스터 생성
@@ -55,7 +57,6 @@ public class KeyCardEvent : MonoBehaviour
         DeadCheck.Add(MobList[i].GetComponent<EventMonster>());//이벤트몹 스크립트 가져옴
         SpawnTimer = 0;
         MobIndex++;
-        Debug.Log("몬스터들이 몰려옵니다.");
     }
 
     private void ChangePos()
@@ -67,7 +68,7 @@ public class KeyCardEvent : MonoBehaviour
     public void ClearEvent()
     {
         SirenOff();//사이렌 정지
-        AP.EndEvent();//이벤트 끝냄
+        //AP.EndEvent();//이벤트 끝냄
     }
 
     public void CheckMob()
@@ -93,17 +94,17 @@ public class KeyCardEvent : MonoBehaviour
 
     void Update()
     {
-        if(GameManager.IsPause)
-            return;
+        //if(GameManager.IsPause)
+        //    return;
 
-        SpawnTimer += Time.deltaTime;
-        if (AP.isEvent)
-        {
-            if (SpawnTimer >= 0.8f && MobIndex < HowMuch)
-            {
-                MobSpawn(MobIndex);
-            }
-            CheckMob();
-        }//이벤트 중일때 이벤트 몹의 생사 확인
+        //SpawnTimer += Time.deltaTime;
+        //if (AP.isEvent)
+        //{
+        //    if (SpawnTimer >= 0.8f && MobIndex < HowMuch)
+        //    {
+        //        MobSpawn(MobIndex);
+        //    }
+        //    CheckMob();
+        //}//이벤트 중일때 이벤트 몹의 생사 확인
     }
 }
