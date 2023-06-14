@@ -32,7 +32,6 @@ namespace Insomnia{
         }
 
         public override void InteractConditionSolved(object condition) {
-            //TODO: 조건 추가할거 있는지 생각해보기
             m_canCollect = true;
         }
 

@@ -15,7 +15,7 @@ namespace Insomnia {
 
             yield return new KeyValuePair<float, List<string>>(0f, m_commandResult);
             m_commandResult.Clear();
-            GameManager.Instance.Save();
+            //GameManager.Instance.Save();
             m_commandResult.Add(m_saveSaveCompleted);
             yield return new KeyValuePair<float, List<string>>(3f, m_commandResult);
         }

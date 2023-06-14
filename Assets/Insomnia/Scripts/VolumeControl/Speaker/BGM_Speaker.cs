@@ -50,8 +50,8 @@ namespace Insomnia{
             if(m_audio == null)
                 return;
 
-            m_audio.loop = false;
-            m_audio.playOnAwake = false;
+            m_audio.loop = true;
+            m_audio.playOnAwake = true;
             m_audio.volume = 0f;
         }
 
@@ -69,7 +69,6 @@ namespace Insomnia{
         }
 
         public override void Play(int bgmType, bool isLoop = false, float delay = -1f) {
-            //TODO: 랜덤으로 수정하기
             int startIndex = 0;
             int lastIndex = bgmType;
 

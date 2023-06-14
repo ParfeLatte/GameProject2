@@ -12,12 +12,26 @@ namespace Insomnia {
 
         [Header("Speaker: Settings")]
         [SerializeField] protected SoundType m_type = SoundType.Master;
+        [SerializeField] private bool m_isGlobal = false;
+        [SerializeField] private int m_cameraWidth = -1;
 
         [Header("Speaker: Audio Clips")]
         [SerializeField] protected AudioClip[] m_clips;
 
         protected virtual void Awake() {
             m_audio = GetComponent<AudioSource>();
+        }
+
+        private void Update() {
+            if(m_isGlobal)
+                return;
+
+            if(m_cameraWidth <= 0)
+                return;
+
+            float xPosInCam = Camera.main.WorldToScreenPoint(transform.position).x;
+            float panStereoValue = (xPosInCam - (m_cameraWidth / 2)) / (m_cameraWidth / 2);
+            m_audio.panStereo = Mathf.Clamp(panStereoValue, -1f, 1f);
         }
 
         protected abstract void Reset();
@@ -50,6 +64,7 @@ namespace Insomnia {
 
             subject.Subscribe(this);
             OnSpeakerStart();
+            m_cameraWidth = Camera.main.pixelWidth;
         }
 
         public sealed override void OnEnd() {

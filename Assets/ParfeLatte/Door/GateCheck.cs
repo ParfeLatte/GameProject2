@@ -6,18 +6,16 @@ using static Insomnia.Door_Speaker;
 
 public class GateCheck : SearchableBase
 {
-    public GameObject Gate;//��
-    public GameManager Manager;//���ӸŴ���
+    public GameObject Gate;
 
     private InteractObj interactobj;
     private BoxCollider2D col;
 
-    public bool isOpen;//���ȴ���
-    public bool isDestroy;//�ı��Ǿ�����
-    public bool GateStat;// false�� ����, true�� ����
-    public int GateLv;//������ ���ٷ���
+    public bool isOpen;
+    public bool isDestroy;
+    public bool GateStat;
+    public int GateLv;
 
-    //private DoorSound Sound;
     [SerializeField] private Door_Speaker m_speaker = null;
     private Animator animator;
 
@@ -26,11 +24,10 @@ public class GateCheck : SearchableBase
         animator = GetComponent<Animator>();
         col = GetComponent<BoxCollider2D>();
         interactobj = GetComponent<InteractObj>();
-        //Sound = GetComponent<DoorSound>();
         m_speaker = GetComponentInChildren<Door_Speaker>();
-        animator.enabled = true;//�ִϸ����͸� �Ѽ� �� �ִϸ��̼� �������
-        Gate.SetActive(true);//������������ �ݶ��̴� ������Ʈ�� ���� ��
-        isOpen = false;//����
+        animator.enabled = true;
+        Gate.SetActive(true);
+        isOpen = false;
         isDestroy = false;
     }
 
@@ -61,15 +58,15 @@ public class GateCheck : SearchableBase
         if(isDestroy)
             return;
 
-        OpenClose();//���������� Ȯ����
+        OpenClose();
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == "Player")
-        {
-            isOpen = Manager.CheckGateOpen(GateLv);//�÷��̾� �±��� ������Ʈ�� ������ ���������� Ȯ��
-        }
+        //if (col.tag == "Player")
+        //{
+        //    isOpen = Manager.CheckGateOpen(GateLv);//�÷��̾� �±��� ������Ʈ�� ������ ���������� Ȯ��
+        //}
     }
 
     private void GateOpen()
@@ -79,7 +76,6 @@ public class GateCheck : SearchableBase
         m_speaker.PlayOneShot((int)DoorSounds.DoorOpen);
         Gate.SetActive(false);//�ݶ��̴��� �ִ� ������Ʈ�� ���� ��Ȱ��ȭ �ؼ� ������ �� ����
         GateStat = true;
-        Debug.Log(GateLv + "Lv ����Ʈ ���� ����, ���� �����ϴ�.");
     }
 
     private void GateClose()

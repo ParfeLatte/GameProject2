@@ -5,12 +5,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Insomnia {
-    public class FailedSceneAction : MonoBehaviour {
+    public class FailedSceneAction : MortalSingleton<FailedSceneAction> {
+        public string PrevSceneName = "";
+
+        private void Awake() {
+            PrevSceneName = PlayerPrefs.GetString("Failed");
+        }
+
         public void OnClick_MainMenu() {
             if(SceneController.Instance.IsLoading) 
                 return;
 
-            SceneController.LoadSceneCompleted.Enqueue(() => GameManager.Instance.RemoveData());
             SceneController.Instance.ChangeSceneTo("Main");
         }
 
@@ -18,8 +23,12 @@ namespace Insomnia {
             if(SceneController.Instance.IsLoading)
                 return;
 
-            SceneController.LoadSceneCompleted.Enqueue(() => GameManager.Instance.LoadData());
-            SceneController.Instance.ChangeSceneTo("Lab");
+            if(PrevSceneName == string.Empty)
+                PrevSceneName = "Main";
+            else 
+                PlayerPrefs.DeleteKey("Failed");
+
+            SceneController.Instance.ChangeSceneTo(PrevSceneName);
         }
     }
 }

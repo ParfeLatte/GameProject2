@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Insomnia.Defines;
 
-public class HealPoint : SearchableBase, IDataIO {
+public class HealPoint : SearchableBase {
     public Player player;
 
     public float Heal;
@@ -20,7 +20,6 @@ public class HealPoint : SearchableBase, IDataIO {
         base.Awake();
         m_canHeal = false;
         m_healCount = 2;
-        LoadData();
     }
 
     protected override void Start() {
@@ -33,7 +32,7 @@ public class HealPoint : SearchableBase, IDataIO {
         if(GameManager.IsPause)
             return;
 
-        if (m_healCount > 0)
+        if(m_healCount > 0)
         {
             if (m_canHeal && Input.GetKeyDown(KeyCode.F))
             {
@@ -42,11 +41,10 @@ public class HealPoint : SearchableBase, IDataIO {
                     player.RestoreHealth(Heal);
 
                     m_healCount--;
-                    SaveData();
                 }
                 else
                 {
-                    Debug.Log("최대체력이므로 회복하지 않습니다.");
+
                 }
             }
         }
@@ -77,30 +75,6 @@ public class HealPoint : SearchableBase, IDataIO {
         {
             m_canHeal = false;
         }
-    }
-
-    private void OnApplicationQuit() {
-        RemoveData();
-    }
-
-    public void SaveData() {
-        PlayerPrefs.SetInt(gameObject.name, 1);
-        PlayerPrefs.SetInt(gameObject.name + "_CanHeal", CanHeal ? 1 : 0);
-        PlayerPrefs.SetInt(gameObject.name + "_HealCount", HealCount);
-
-        PlayerPrefs.Save();
-    }
-
-    public void LoadData() {
-        if(PlayerPrefs.HasKey(gameObject.name) == false)
-            return;
-
-        m_canHeal = PlayerPrefs.GetInt(gameObject.name + "_CanHeal") == 1 ? true : false;
-        m_healCount = PlayerPrefs.GetInt(gameObject.name + "_HealCount");
-    }
-
-    public void RemoveData() {
-
     }
 
     protected override void Reset() {

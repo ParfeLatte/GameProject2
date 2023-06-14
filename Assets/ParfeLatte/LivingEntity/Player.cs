@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using static Insomnia.Defines;
 using static Insomnia.Player_Speaker;
 
-public class Player : LivingEntity, IDataIO {
+public class Player : LivingEntity {
     public float AttackTime;//�����ѽð�
     public float CoolTime;//��Ÿ��
     public float movetime;//�̵��� �ð� üũ
@@ -20,6 +20,7 @@ public class Player : LivingEntity, IDataIO {
     public float lastYpos;//������ ������ �������� �� ������ y��
     public float CurYpos;//���� �ÿ� ���� y��
     public float Falltime;
+    public float m_playerAttackDamage = 10f;
 
     public bool isDash;//�뽬�ߴ��� üũ
     public bool isMove;//���������� üũ
@@ -61,8 +62,8 @@ public class Player : LivingEntity, IDataIO {
         PlayerRenderer = GetComponent<SpriteRenderer>();//�Ҵ�
         //SoundEffect = GetComponent<PlayerSound>();
         m_speaker = GetComponentInChildren<Player_Speaker>();
-        SetStatus(100, 10, 8);//������ ������ ü��, ������, �̵��ӵ�
-        Health = MaxHealth;//�����Ҷ� ���� ü���� �ִ� ü������ ��������
+        SetStatus(100, m_playerAttackDamage, 8);
+        Health = MaxHealth;
         gameObject.SetActive(true);
         stamina = 100f;
         HealthSlider.value = Health;
@@ -70,7 +71,7 @@ public class Player : LivingEntity, IDataIO {
     }
 
     private void Start() {
-        GameManager.Instance.AddPlayer(this);
+        
     }
 
     // Update is called once per frame
@@ -82,7 +83,7 @@ public class Player : LivingEntity, IDataIO {
             return;
 
         h = Input.GetAxisRaw("Horizontal");
-        curPos = transform.position;//������ġ
+        curPos = transform.position;
         if(h != 0 && !isDash && !isJump) {
             Dir = h;
             dirVec = new Vector3(h, 0f, 0f);
@@ -99,12 +100,12 @@ public class Player : LivingEntity, IDataIO {
         if(isFall) {
             Falltime += Time.deltaTime;
         }
-        flipSpr();//�¿����
+        flipSpr();
         if(!isDead) {
-            AttackCheck();//����
-            Jump();//����
-            Dash();//�뽬
-            Move();//�̵�
+            AttackCheck();
+            Jump();
+            Dash();
+            Move();
             StaminaCheck();
             CheckFallDamage();
             CheckSoundEffect();
@@ -124,93 +125,87 @@ public class Player : LivingEntity, IDataIO {
         if(Input.GetKeyDown(KeyCode.J) && AttackTime >= CoolTime && !isCharge) {
             animator.SetBool("isCharge", true);
         }
-        if(Input.GetKey(KeyCode.J) && AttackTime >= CoolTime)//Ű�� �ӽ��� J�� ������ ���϶�
+        if(Input.GetKey(KeyCode.J) && AttackTime >= CoolTime)
         {
             ChargeTime += Time.deltaTime;
             h = 0;
 
             isCharge = true;
-            //Debug.Log("���� ��¡��");
         }
-        if(Input.GetKeyUp(KeyCode.J) && isCharge && AttackTime >= CoolTime)//Ű�� ������
+        if(Input.GetKeyUp(KeyCode.J) && isCharge && AttackTime >= CoolTime)
         {
             isCharge = false;
             animator.SetBool("isCharge", false);
-            if(ChargeTime < 1f)//��¡ �ð��� 1�� �����̸� �⺻����
+            if(ChargeTime < 1f)
             {
-                //Debug.Log("�⺻ ����");
-                Attack.GetAttack(damage);//PlayerAttack ��ũ��Ʈ�� �������� �������ְ� PlayerAttack������ ������ ������
-                animator.SetTrigger("Attack");//���� �ִϸ��̼� ���
+                Attack.GetAttack(damage);
+                animator.SetTrigger("Attack");
                 AttackTime = 0;
             }
-            else if(ChargeTime >= 1.0f)//��¡ �ð��� 1�� �̻��̸� ����
+            else if(ChargeTime >= 1.0f)
             {
-                //Debug.Log("��ȭ ����");
-                Attack.GetAttack(damage * 3.0f);//���� ������ 3���� �������� ����
-                animator.SetTrigger("Attack");//���� �ִϸ��̼� ���
+                Attack.GetAttack(damage * 3.0f);
+                animator.SetTrigger("Attack");
                 AttackTime = 0;
-                //���� ���
             }
-            ChargeTime = 0;//��¡ Ÿ�� �ʱ�ȭ
+            ChargeTime = 0;
             m_speaker.PlayOneShot((int)PlayerSounds.PlayerAttack_Normal);
         }
-    }//���� üũ, ���ݹ�ư�� ������ ������ ��¡��!
-
+    }
     private void flipSpr() {
         if(!isDash && !isJump) {
             if(h == 1) {
-                PlayerRenderer.flipX = false;//�������� �ٶ󺸵���
+                PlayerRenderer.flipX = false;
 
             }
             else if(h == -1) {
-                PlayerRenderer.flipX = true;//������ �ٶ󺸵���
+                PlayerRenderer.flipX = true;
             }
         }
-    }//���⿡ �°� ��������Ʈ ������
+    }
     private void Jump() {
         if(Input.GetKeyDown(KeyCode.W) && !isJump) {
-            isJump = true;//�����ߴ�
-            PR.velocity = Vector2.up * JumpForce;//���� �ӷ��� ���� �����¸�ŭ ��
-            SetDirection(Dir);//������ �̵������� ����(�ݴ�� ���� ���� ���ϰ�)
+            isJump = true;
+            PR.velocity = Vector2.up * JumpForce;
+            SetDirection(Dir);
             animator.SetBool("isJump", true);
-            //Invoke("JumpReset", 0.8f);//1�� �ڿ� ��������(�����Ҽ�������)
-            //Debug.Log("�����̽��� ����");
+            //Invoke("JumpReset", 0.8f);
         }
         else if(isJump) {
             if(h == Dir) {
-                h = Dir;//������ �̵������� ����
+                h = Dir;
             }
             else {
-                h = 0;//������ ���� ��ȯ�� ���ϰԲ�
+                h = 0;
             }
         }
-    }//������ ó���ϴ� �Լ�
+    }
 
     private void Move() {
         if(!isDash || !isWall || !isCharge) {
-            Vector2 newVel = new Vector2(h * MaxSpeed, PR.velocity.y);//�÷��̾� �̵��ӵ�
-            PR.velocity = newVel;//������ٵ� �ӵ� ���
+            Vector2 newVel = new Vector2(h * MaxSpeed, PR.velocity.y);
+            PR.velocity = newVel;
 
             if(newVel.magnitude >= 0.1f)
                 m_speaker.Play((int)PlayerSounds.PlayerWalk, true);
             else
                 m_speaker.Stop();
-        }//�뽬���� �ƴҶ� �̵��ӵ��� �̰ɷ� ������
-    }//�������� ó���ϴ� �Լ�
+        }
+    }
 
     private void Dash() {
         if(Input.GetKeyDown(KeyCode.LeftShift) && !isDash && stamina >= 25f) {
-            isDash = true;//�뽬�ߴٸ� üũ
+            isDash = true;
             animator.SetBool("isDash", true);
             stamina -= 25f;
             dashtime = 0f;
             Invoke("DashReset", 0.25f);
         }
         else if(isDash) {
-            Vector3 DashPos = new Vector3(Dir, 0, 0) * 2 * MaxSpeed * Time.deltaTime;//�뽬�Ҷ� ������ġ
-            transform.position = curPos + DashPos;//���ؼ� ��ġ����
+            Vector3 DashPos = new Vector3(Dir, 0, 0) * 2 * MaxSpeed * Time.deltaTime;
+            transform.position = curPos + DashPos;
         }
-    }//�뽬 �Լ�
+    }
 
     private void StaminaCheck() {
         if(dashtime >= 1.25f && stamina <= 100f) {
@@ -220,10 +215,10 @@ public class Player : LivingEntity, IDataIO {
             }
         }
         StaminaSlider.value = stamina;
-    }//���׹̳� ȸ���˻� 
+    }
 
     public void SetDirection(float h) {
-        Dir = h;//������ ���� ����(üũ�Ҷ� ���)
+        Dir = h;
     }
 
     public bool GetMoveCheck() {
@@ -232,23 +227,17 @@ public class Player : LivingEntity, IDataIO {
 
     public bool GetDashCheck() {
         return isDash;
-    }//�뽬������ üũ�ؼ� ������
+    }
 
     private void DashReset() {
         isDash = false;
         animator.SetBool("isDash", false);
-    }//�뽬���� �ʱ�ȭ
-
-    //private void JumpReset()
-    //{
-    //    isJump = false;
-    //}//���� ���� �ʱ�ȭ
-
+    }
     public override void Die() {
 
         base.Die();
-        animator.SetTrigger("Die");//�ִϸ����Ϳ� Die Ʈ���Ÿ� �����ؼ� ��� �ִϸ��̼� ���
-        Invoke("Dead", 0.8f);//����Ŀ� ������Ʈ ��Ȱ��ȭ
+        animator.SetTrigger("Die");
+        Invoke("Dead", 0.5f);
     }
 
     public override void RestoreHealth(float newHealth) {
@@ -261,15 +250,17 @@ public class Player : LivingEntity, IDataIO {
         if (!isDash)
         {
             base.damaged(damage);
-            Debug.Log(damage);
         }
-        Debug.Log("데미지 받음");
         HealthCheck();
     }
 
     private void Dead() {
-        //gameObject.SetActive(false);//������Ʈ ��Ȱ��ȭ
+        //gameObject.SetActive(false);
+        BGM_Speaker.Instance.Stop();
         ItemManager.Instance.RemoveAllItemDatas(this);
+        PlayerPrefs.SetString("Failed", SceneManager.GetActiveScene().name);
+        PlayerPrefs.Save();
+
         SceneController.Instance.ChangeSceneTo("EscapeFailed", true);
     }
 
@@ -281,7 +272,6 @@ public class Player : LivingEntity, IDataIO {
     //{
     //    lastYpos = transform.position.y;
     //    isFallDamage = false;
-    //    Debug.Log("������");
     //}
 
     private void FallDamage(float time) {
@@ -297,13 +287,11 @@ public class Player : LivingEntity, IDataIO {
     private void CheckFallDamage() {
         Collider2D col = Physics2D.OverlapBox(transform.position, boxsize, 0, LayerMask.GetMask("Floor"));
         if(col != null) {
-            Debug.Log("���鿡 �ֽ��ϴ�");
             FallDamage(Falltime);
             Falltime = 0f;
             isFall = false;
         }
         else if(col == null) {
-            Debug.Log("���߿� ��");
             isFall = true;
         }
     }
@@ -336,42 +324,6 @@ public class Player : LivingEntity, IDataIO {
             isWall = false;
         }
     }
-
-    private void OnApplicationQuit() {
-        RemoveData();
-    }
-
-    public void SaveData() {
-        string jsonData = JsonUtility.ToJson(transform.position);
-        PlayerPrefs.SetString("PlayerPosition", jsonData);
-        PlayerPrefs.SetFloat("PlayerHealth", Health);
-        PlayerPrefs.SetFloat("PlayerStamina", stamina);
-    }
-
-    public void LoadData() {
-        if(( PlayerPrefs.HasKey("PlayerPosition") && PlayerPrefs.HasKey("PlayerHealth") && PlayerPrefs.HasKey("PlayerStamina") ) == false)
-            return;
-
-        string positionData = PlayerPrefs.GetString("PlayerPosition");
-        if(positionData == string.Empty || positionData == "")
-            return;
-
-        Vector3 position = JsonUtility.FromJson<Vector3>(positionData);
-        if(position == null)
-            return;
-
-        transform.position = position;
-
-        Health = PlayerPrefs.GetFloat("PlayerHealth");
-        stamina = PlayerPrefs.GetFloat("PlayerStamina");
-    }
-
-    public void RemoveData() {
-        PlayerPrefs.DeleteKey("PlayerPosition");
-        PlayerPrefs.DeleteKey("PlayerHealth");
-        PlayerPrefs.DeleteKey("PlayerStamina");
-        PlayerPrefs.Save();
-    }
 }
-//Vector3 nextPos = new Vector3(h, 0, 0) * Speed * Time.deltaTime;//Ű�Է¿� ���� ���� ��ġ
-//transform.position = curPos + nextPos;//������ġ�� ������ġ�� �������ν� �̵�(���� ���� ������ ������)
+//Vector3 nextPos = new Vector3(h, 0, 0) * Speed * Time.deltaTime;
+//transform.position = curPos + nextPos;

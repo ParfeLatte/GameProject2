@@ -57,7 +57,6 @@ namespace Insomnia {
             m_consoleInput.text = null;
             m_consoleInput.ActivateInputField();
 
-            //TODO: 텍스트 리스트에 넣어주기
             commandContainer.Add(command);
             CalculateLastIndex();
 

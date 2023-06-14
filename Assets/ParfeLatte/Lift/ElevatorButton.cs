@@ -69,6 +69,5 @@ public class ElevatorButton : Interactable
             elevator.Down();
             MoveInform.SetActive(false);
         }
-        Debug.Log("W키를 눌러 위로, S키를 눌러 아래로 이동하세요");
     }
 }

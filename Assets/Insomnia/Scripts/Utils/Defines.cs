@@ -92,11 +92,11 @@ namespace Insomnia {
             void OnSceneChangeFinish();
         }
 
-        public interface IDataIO {
-            public void SaveData();
-            public void LoadData();
-            public void RemoveData();
-        }
+        //public interface IDataIO {
+        //    public void SaveData();
+        //    public void LoadData();
+        //    public void RemoveData();
+        //}
 
         #endregion
 

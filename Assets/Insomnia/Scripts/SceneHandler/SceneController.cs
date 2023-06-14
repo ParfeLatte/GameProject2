@@ -156,13 +156,15 @@ namespace Insomnia {
 
             m_loadNextScene.allowSceneActivation = true;
 
-            //ÀÌÀü ¾À Á¦°Å
-            AsyncOperation unloadLoading = SceneManager.UnloadSceneAsync(prevScene);
+            if(prevScene != default(Scene)) {
+                //ÀÌÀü ¾À Á¦°Å
+                AsyncOperation unloadLoading = SceneManager.UnloadSceneAsync(prevScene);
 
-            if(unloadLoading != null) {
-                while(unloadLoading.isDone == false) {
-                    if(unloadLoading.progress >= 0.9f)
-                        break;
+                if(unloadLoading != null) {
+                    while(unloadLoading.isDone == false) {
+                        if(unloadLoading.progress >= 0.9f)
+                            break;
+                    }
                 }
             }
 
@@ -195,6 +197,10 @@ namespace Insomnia {
             yield break;
             #endregion
         }
+
+        public void ChangeSceneToSuccess() { ChangeSceneTo("EscapeSuccess", true); }
+
+        public void ChangeSceneToFailed() { ChangeSceneTo("EscapeFailed", true); }
     }
 }
 
