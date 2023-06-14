@@ -76,7 +76,19 @@ MonoBehaviour:
   m_interactKey: 102
   onInteractStart:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   onInteractEnd:
     m_PersistentCalls:
       m_Calls: []
@@ -92,6 +104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4969762057258628670}
   - component: {fileID: 4969762057258628671}
+  - component: {fileID: 7983657663936217769}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Untagged
@@ -140,6 +153,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &7983657663936217769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4969762057258628668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 0
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 1
+  m_ApplyToSortingLayers: 8ba2551c00000000d74ab4291123d68171074bc50be0027ae7404a3c
+  m_ShapePath:
+  - {x: -0.23340209, y: -0.5019747, z: 0}
+  - {x: -0.27289185, y: 0.49802512, z: 0}
+  - {x: 0.31194705, y: 0.5003481, z: 0}
+  - {x: 0.34129274, y: -0.5039498, z: 0}
+  m_ShapePathHash: 1464171995
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -175894
 --- !u!1 &4969762057481677856
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,6 +700,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_type: 2
+  m_isGlobal: 0
+  m_cameraWidth: -1
   m_clips:
   - {fileID: 8300000, guid: 3b61d982585c008418a8c19c84a9a4bb, type: 3}
   - {fileID: 8300000, guid: 5946a48b796eefc43b3a42da59304651, type: 3}
