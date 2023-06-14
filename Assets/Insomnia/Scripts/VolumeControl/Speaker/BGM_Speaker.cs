@@ -14,12 +14,13 @@ namespace Insomnia{
         #endregion
 
         public enum BGMSounds {
-            BGM = 3,
-            Wave = 7,
+            BGM = 1,
+            Wave = 3,
         }
 
         [Header("BGM_Speaker: Status")]
         [SerializeField] private float m_maxVolume = 0f;
+        [SerializeField] private bool m_isSwitching = false;
         private Array m_BgmSoundsValues = Enum.GetValues(typeof(BGMSounds));
 
         [Header("BGM_Speaker: Settings")]
@@ -27,9 +28,18 @@ namespace Insomnia{
 
         [Header("BGM_Speaker: Events")]
         [SerializeField]
-        private Queue<Action> onMusicStop = new Queue<Action>();
+        private Queue<Action> m_playNext = new Queue<Action>();
 
         protected override void Awake() {
+            if(m_instance != null) {
+                Destroy(gameObject);
+                return;
+            }
+            else {
+                m_instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+
             base.Awake();
             m_instance = this;
         }
@@ -41,6 +51,7 @@ namespace Insomnia{
                 return;
 
             m_audio.loop = false;
+            m_audio.playOnAwake = false;
             m_audio.volume = 0f;
         }
 
@@ -80,11 +91,17 @@ namespace Insomnia{
             if(m_audio == null)
                 return;
 
+            if(m_audio.clip == m_clips[randomPlay])
+                randomPlay = UnityEngine.Random.Range(startIndex, lastIndex);
+
             if(m_audio.isPlaying) {
-                if(onMusicStop.Count >= 1)
+                if(m_playNext.Count >= 1)
                     return;
 
-                onMusicStop.Enqueue(() => { Play(bgmType, isLoop, delay); });
+                if(m_isSwitching)
+                    return;
+
+                m_playNext.Enqueue(() => { Play(bgmType, isLoop, delay); });
                 Stop();
                 return;
             }
@@ -108,6 +125,7 @@ namespace Insomnia{
             if(m_audio.isPlaying == false)
                 return;
 
+            StopAllCoroutines();
             StartCoroutine(CoDragVolume(false));
         }
 
@@ -117,6 +135,7 @@ namespace Insomnia{
         /// <param name="onoff">true if procedural volume up, false down</param>
         /// <returns></returns>
         private IEnumerator CoDragVolume(bool onoff, float delay = -1f) {
+            m_isSwitching = true;
             while(true) {
                 if(delay <= 0f)
                     break;
@@ -143,10 +162,11 @@ namespace Insomnia{
             if(onoff == false)
                 m_audio.Stop();
 
-            while(onMusicStop.Count > 0) {
-                onMusicStop.Dequeue().Invoke();
+            while(m_playNext.Count > 0) {
+                m_playNext.Dequeue().Invoke();
             }
 
+            m_isSwitching = false;
             yield break;
         }
 
