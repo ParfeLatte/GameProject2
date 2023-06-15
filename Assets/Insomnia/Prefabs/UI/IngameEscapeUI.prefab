@@ -402,22 +402,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4859523386037229661}
     m_Modifications:
-    - target: {fileID: 3810801349875135441, guid: 87a0bbc46441e6d40976b3efa5368a9d, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3810801349875135441, guid: 87a0bbc46441e6d40976b3efa5368a9d, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3810801350334192348, guid: 87a0bbc46441e6d40976b3efa5368a9d, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3810801350334192348, guid: 87a0bbc46441e6d40976b3efa5368a9d, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3810801350982268418, guid: 87a0bbc46441e6d40976b3efa5368a9d, type: 3}
       propertyPath: m_Name
       value: OptionUI
@@ -504,14 +488,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3810801350982268419, guid: 87a0bbc46441e6d40976b3efa5368a9d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3810801351000519191, guid: 87a0bbc46441e6d40976b3efa5368a9d, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3810801351000519191, guid: 87a0bbc46441e6d40976b3efa5368a9d, type: 3}
-      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
