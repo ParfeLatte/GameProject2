@@ -85,7 +85,7 @@ MonoBehaviour:
   - {x: 3.75, y: -5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: -50030
+  m_InstanceId: -61178
 --- !u!1 &756658167105214182
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,7 +518,7 @@ GameObject:
   - component: {fileID: 9066685846525461120}
   - component: {fileID: 5851230960149750449}
   - component: {fileID: 2154748259150478200}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Ceiling
   m_TagString: Floor
   m_Icon: {fileID: 0}
@@ -592,7 +592,7 @@ MonoBehaviour:
   - {x: 3.75, y: 4.5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: -50038
+  m_InstanceId: -61186
 --- !u!1 &5983932790891156465
 GameObject:
   m_ObjectHideFlags: 0
