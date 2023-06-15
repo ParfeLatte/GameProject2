@@ -82,6 +82,7 @@ namespace Insomnia {
         [Serializable]
         public struct CollectableData {
             public CollectableType Type;
+            public ObjectData ObjData;
             [HideInInspector] public CollectableBase BelongedTo;
         }
 

@@ -6,19 +6,28 @@ using static Insomnia.Defines;
 
 namespace Insomnia{
 	public class CollectableBase : Interactable{
-        [Space]
+        [Header("CollectableBase: Components")]
+        [SerializeField] private SearchableBase m_searchable = null;
+
         [Header("CollectableBase: Status")]
         [SerializeField] protected bool m_canCollect = true;
 
         [Header("CollectableBase: Settings")]
-        [SerializeField] private CollectableData m_itemData;
+        [SerializeField] private CollectableData m_collectableData;
 
         [Header("CollectableBase: Events")]
         [SerializeField] protected UnityEvent<Interactable> onCollectFailed = null;
         [SerializeField] protected UnityEvent<Interactable> onCollectSuccess = null;
 
         #region Properties
-        public CollectableData Data { get => m_itemData; }
+        public CollectableData ColData {
+            get {
+                if(m_collectableData.ObjData.ID == null || m_collectableData.ObjData.ID == string.Empty)
+                    m_collectableData.ObjData = m_searchable.Data;
+
+                return m_collectableData;
+            }
+        }
 
         #endregion
 
@@ -28,7 +37,13 @@ namespace Insomnia{
         #region Interactable Functions
         protected override void Awake() {
             base.Awake();
-            m_itemData.BelongedTo = this;
+            m_collectableData.BelongedTo = this;
+            m_searchable = GetComponent<SearchableBase>();
+
+            if(m_searchable == null)
+                return;
+
+            m_collectableData.ObjData = m_searchable.Data;
         }
 
         public override void InteractConditionSolved(object condition) {

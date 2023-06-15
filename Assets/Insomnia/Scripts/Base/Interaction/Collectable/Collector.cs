@@ -18,8 +18,12 @@ namespace Insomnia{
 			//if(item != null)
 			//	m_collected.Remove(item);
 
-			return m_collected.SingleOrDefault(x => x.Data.Type == m_itemType);
+			return m_collected.SingleOrDefault(x => x.ColData.Type == m_itemType);
         }
+
+		public CollectableBase GetItemContaining(string itemName) {
+			return m_collected.FirstOrDefault(x => x.ColData.ObjData.ID.Contains(itemName));
+		}
 
 		public void AddItem(CollectableBase item) {
 			if(m_collected.Contains(item)) 

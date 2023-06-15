@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6438640028484556507}
   - component: {fileID: 84937004088902873}
-  - component: {fileID: 6444765223672396328}
-  - component: {fileID: -6291834336914812697}
+  - component: {fileID: 728468633405463254}
+  - component: {fileID: 3547605045527305793}
   m_Layer: 0
   m_Name: PunchingCard
   m_TagString: Untagged
@@ -61,7 +61,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4, y: 2.5}
   m_EdgeRadius: 0
---- !u!114 &6444765223672396328
+--- !u!114 &728468633405463254
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -70,7 +70,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5825671748369448384}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d914b175e5bc2d24e916e490c801f6a7, type: 3}
+  m_Script: {fileID: 11500000, guid: 49b16a050b6aacb48b64de095da93fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_canInteract: 1
@@ -81,9 +81,17 @@ MonoBehaviour:
   onInteractEnd:
     m_PersistentCalls:
       m_Calls: []
+  m_searchable: {fileID: 0}
   m_canCollect: 1
-  m_itemData:
+  m_collectableData:
     Type: 6
+    ObjData:
+      ID: 
+      Location: 
+      Description: 
+      Position: {x: 0, y: 0, z: 0}
+      ObjectType: 0
+      Status: 0
     BelongedTo: {fileID: 0}
   onCollectFailed:
     m_PersistentCalls:
@@ -91,7 +99,7 @@ MonoBehaviour:
   onCollectSuccess:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &-6291834336914812697
+--- !u!114 &3547605045527305793
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,7 +108,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5825671748369448384}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0179156a55d3e82469485497f60db1be, type: 3}
+  m_Script: {fileID: 11500000, guid: e6f89d594ae30e84b94831b07876c3fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IDFormat: PUNCHINGCARD

@@ -39,10 +39,8 @@ namespace Insomnia {
                 m_monstersSpawn[i].player = m_player;
             }
 
-            if(AlertUI.Instance == null) {
-                GameObject go = new GameObject("AlertUI");
-                go.AddComponent<AlertUI>();
-            }
+            if(AlertUI.Instance == null) 
+                gameObject.SetActive(false);
 
             m_alertUI = AlertUI.Instance;
         }
