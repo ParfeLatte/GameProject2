@@ -92,6 +92,7 @@
     <Compile Include="Assets\ParfeLatte\Scripts\InteractObj.cs" />
     <Compile Include="Assets\Insomnia\Scripts\SceneHandler\SuccessSceneAction.cs" />
     <Compile Include="Assets\ParfeLatte\Scripts\ChangeCam.cs" />
+    <Compile Include="Assets\ParfeLatte\GOAL\GoalUI.cs" />
     <Compile Include="Assets\ParfeLatte\Scripts\GamePause.cs" />
     <Compile Include="Assets\Insomnia\Scripts\VolumeControl\Speaker\Elevator_Speaker.cs" />
     <Compile Include="Assets\ParfeLatte\Scripts\ShowTutorial.cs" />
@@ -130,7 +131,9 @@
     <Compile Include="Assets\Insomnia\Scripts\Base\ObjectPool\ObjectPooler.cs" />
     <Compile Include="Assets\Insomnia\Scripts\SceneHandler\SceneChangeEffect.cs" />
     <Compile Include="Assets\ParfeLatte\AccessEvent\AccessPoint.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Uplink\Uplink.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Base\Observer\Observer.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\PunchingCard\PunchingCard_Collectable.cs" />
     <Compile Include="Assets\ParfeLatte\GOAL\GoalText.cs" />
     <Compile Include="Assets\Insomnia\Scripts\UI\AlertUI.cs" />
     <Compile Include="Assets\Insomnia\Scripts\SecurityDoor\SecurityDoor_Searchable.cs" />
@@ -138,6 +141,7 @@
     <Compile Include="Assets\Insomnia\Scripts\Base\Interaction\Effectable\EffectorBase.cs" />
     <Compile Include="Assets\ParfeLatte\AccessEvent\EventMonster.cs" />
     <Compile Include="Assets\ParfeLatte\AccessEvent\KeyCardEvent.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_Uplink.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_Exit.cs" />
     <Compile Include="Assets\ParfeLatte\AccessEvent\TutorialKeyGet.cs" />
     <Compile Include="Assets\ParfeLatte\AccessEvent\KeyCard.cs" />
@@ -145,6 +149,7 @@
     <Compile Include="Assets\Insomnia\Scripts\Base\Searchable\ItemTest.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Base\Searchable\SearchableBase.cs" />
     <Compile Include="Assets\Insomnia\Scripts\PlayerInput\Keyboard\KeyboardButtonActor.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Base\Interaction\Collectable\Uplinkable\UplinkableBase.cs" />
     <Compile Include="Assets\ParfeLatte\LivingEntity\Player.cs" />
     <Compile Include="Assets\A_ExternalAssets\Effect_Vol.5\Script\SoundEffect.cs" />
     <Compile Include="Assets\ParfeLatte\Scripts\HealPoint.cs" />
@@ -175,6 +180,7 @@
     <Compile Include="Assets\Insomnia\Scripts\Base\Interaction\CallResponse\ControleeBase.cs" />
     <Compile Include="Assets\ParfeLatte\Lift\ElevatorSound.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\Terminal_Searchable.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\PunchingCard\PunchingCard_Uplinkable.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Scanner\Scanner.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Base\Input\InputListener.cs" />
     <Compile Include="Assets\ParfeLatte\Door\GateCheck.cs" />
@@ -187,7 +193,6 @@
     <Compile Include="Assets\Insomnia\Scripts\Base\Singleton\ImmortalSingleton.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_Query.cs" />
     <Compile Include="Assets\ParfeLatte\LivingEntity\PlayerSound.cs" />
-    <Compile Include="Assets\ParfeLatte\GOAL\GoalUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
