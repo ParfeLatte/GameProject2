@@ -105,6 +105,7 @@
     <Compile Include="Assets\Insomnia\Scripts\PlayerInput\Mouse\MouseButtonActor.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Scanner\SO\ContinuousIncrease.cs" />
     <Compile Include="Assets\ParfeLatte\Door\DoorSound.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\VolumeControl\Speaker\Scanner_Speaker.cs" />
     <Compile Include="Assets\ParfeLatte\Scripts\BloodParticle.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Scanner\SO\ScanActionSO.cs" />
     <Compile Include="Assets\Insomnia\Scripts\UI\GameManagement\VolumeUI.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Assets\ParfeLatte\LivingEntity\Monster.cs" />
     <Compile Include="Assets\Insomnia\Scripts\VolumeControl\Speaker\GiantMob_Speaker.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Scanner\ScannerGizmo.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\VolumeControl\Speaker\Boss_Speaker.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Managers\Managers.cs" />
     <Compile Include="Assets\Insomnia\Scripts\VolumeControl\Base\Speaker.cs" />
     <Compile Include="Assets\ParfeLatte\LivingEntity\MonsterSound.cs" />
