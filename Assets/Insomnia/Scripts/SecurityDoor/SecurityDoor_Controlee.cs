@@ -54,9 +54,11 @@ namespace Insomnia {
         }
 
         public override bool OnInteractStart(object request) {
-            m_targetActivation = !m_Activation;
+            bool targetValue = !m_Activation;
+
+            m_targetActivation = targetValue;
             m_isReacting = true;
-            m_animator.SetTrigger(m_hashUse);
+            m_animator.SetBool(m_hashUse, targetValue);
             return true;
         }
 
