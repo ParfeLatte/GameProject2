@@ -35,6 +35,7 @@ Transform:
   m_Children:
   - {fileID: 3947306826951480239}
   - {fileID: 3743884917277925867}
+  - {fileID: 6054477790819181342}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -77,7 +78,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1011499239
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: -765266556, guid: 1c865038490c75840b11b51468f2b7f4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -138,11 +139,15 @@ MonoBehaviour:
   isGiant: 0
   isBoss: 0
   isEventMob: 0
+  canMove: 1
   HammerHitEffect: {fileID: 4811753173547774764}
   BloodEffect: {fileID: 6763541048588696616}
   lastPlayerPosition: {x: 0, y: 0, z: 0}
   m_speaker: {fileID: 7568743382454282534}
+  Head: {fileID: 6054477790819181342}
   AttackPlayer: {fileID: 0}
+  m_bossCam: {fileID: 0}
+  m_bossBackground: {fileID: 0}
 --- !u!50 &3947306826808562807
 Rigidbody2D:
   serializedVersion: 4
@@ -248,6 +253,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monster: {fileID: 3947306826808562809}
   curPos: {x: 0, y: 0, z: 0}
+--- !u!1 &4685360853459780043
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6054477790819181342}
+  m_Layer: 0
+  m_Name: Head
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6054477790819181342
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4685360853459780043}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.52, y: 3.89, z: -0.12949502}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3947306826808562808}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6216992142958121944
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,7 +487,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6665274456281743553, guid: 8fd57eed680b59b42a3a03b12ef04a32, type: 3}
       propertyPath: m_SortingLayer
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6665274456281743553, guid: 8fd57eed680b59b42a3a03b12ef04a32, type: 3}
       propertyPath: m_SortingLayerID
@@ -546,7 +582,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 795227865972402007, guid: c523acf6a2d9bc04e86c3931f3a1d467, type: 3}
       propertyPath: m_SortingLayer
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 795227865972402007, guid: c523acf6a2d9bc04e86c3931f3a1d467, type: 3}
       propertyPath: m_SortingLayerID

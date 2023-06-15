@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6616575029589046468}
   m_Layer: 10
   m_Name: Floor
-  m_TagString: Floor
+  m_TagString: Elevator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -85,7 +85,7 @@ MonoBehaviour:
   - {x: 3.75, y: -5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: -8806
+  m_InstanceId: -50030
 --- !u!1 &756658167105214182
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,7 +592,7 @@ MonoBehaviour:
   - {x: 3.75, y: 4.5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: -8814
+  m_InstanceId: -50038
 --- !u!1 &5983932790891156465
 GameObject:
   m_ObjectHideFlags: 0

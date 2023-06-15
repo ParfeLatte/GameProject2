@@ -316,6 +316,37 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 7798986074839102130}
+--- !u!1 &6787900154564297286
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6372068614544983129}
+  m_Layer: 0
+  m_Name: Head
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6372068614544983129
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6787900154564297286}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.12, y: 4.18, z: 10.835182}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9134699804812260473}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9134699804444803120
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,6 +460,7 @@ Transform:
   - {fileID: 9134699804444803121}
   - {fileID: 3097089060764958495}
   - {fileID: 4053318134512254378}
+  - {fileID: 6372068614544983129}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -496,7 +528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5efe98ba447099d40971d78f2d890a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 0
+  Health: 100
   isDead: 0
   AttackTime: 0
   CoolTime: 0.5
@@ -505,7 +537,7 @@ MonoBehaviour:
   JumpForce: 18
   Dir: 0
   h: 0
-  stamina: 0
+  stamina: 100
   dashtime: 0
   lastYpos: 0
   CurYpos: 0
@@ -519,6 +551,7 @@ MonoBehaviour:
   isFall: 0
   HealthSlider: {fileID: 6571438015316758094}
   StaminaSlider: {fileID: 6571438015892562696}
+  Head: {fileID: 6372068614544983129}
   Attack: {fileID: 9134699804444803123}
   m_speaker: {fileID: 4658347985607224844}
 --- !u!50 &9134699804812260475

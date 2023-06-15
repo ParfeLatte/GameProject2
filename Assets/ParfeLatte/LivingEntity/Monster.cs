@@ -69,6 +69,9 @@ public class Monster : LivingEntity
     //private MonsterSound Sound;
     [SerializeField] private Speaker m_speaker = null;
 
+    public Transform Head;
+    private Vector2 Headboxsize = new Vector2(1f, 1f);
+
     private Vector3 curPos;//현재위치
     private Vector2 AddPos = new Vector2(0, 3f);//pivot을 아래로 고정했으므로 레이 검사때 위로
     private Vector2 RayPos;//레이 방향
@@ -118,6 +121,8 @@ public class Monster : LivingEntity
         if(canMove == false)
             return;
 
+        CheckCrush();
+
         Dist = Mathf.Abs(Player.transform.position.x - gameObject.transform.position.x);//플레이어와 몬스터 사이 거리
         YDist = Mathf.Abs(Player.transform.position.y - gameObject.transform.position.y);//플레이어와  몬스터의 y축 거리 
         if (YDist < 5)
@@ -151,6 +156,7 @@ public class Monster : LivingEntity
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(AttackPos.position, boxSize);
+        Gizmos.DrawWireCube(Head.position, Headboxsize);
     }
 
     private void AttackCheck()
@@ -400,7 +406,7 @@ public class Monster : LivingEntity
             case 1://중간 수면 상태일때 검사
                 if (Dist <= 20)
                 {
-                    if (moveTimeOne >= 0.8f)//0.8초 이상 움직였다면
+                    if (moveTimeOne >= 0.9f)//0.9초 이상 움직였다면
                     {
                         MonsterAwake();
                     }//거리가 30안에 들어오면 체크(깊은수면상태)
@@ -531,6 +537,8 @@ public class Monster : LivingEntity
         //Sound.PlayDeadSound(MobType);
         m_speaker.PlayOneShot((int)NormalMobSounds.MormalMob_Dead);
         animator.SetTrigger("Die");//�ִϸ����Ϳ� Die Ʈ���Ÿ� �����ؼ� ��� �ִϸ��̼� ���
+        m_Col.isTrigger = true;
+        MR.constraints = RigidbodyConstraints2D.FreezeAll;
         Invoke("Destroy", DyingTime);//����Ŀ� ������Ʈ ��Ȱ��ȭ
     }
 
@@ -538,6 +546,15 @@ public class Monster : LivingEntity
     {
         gameObject.SetActive(false);//오브젝트 비활성화
     }
+    private void CheckCrush()
+    {
+        Collider2D col = Physics2D.OverlapBox(Head.position, Headboxsize, 0);
+        if (col.gameObject.tag == "Elevator")
+        {
+            Die();
+        }
+    }
+
 
     private void OnCollisionEnter2D(Collision2D col)
     {
@@ -546,11 +563,11 @@ public class Monster : LivingEntity
             isWall = true;
             Dir = 0;
         }
-        if(col.gameObject.tag == "Floor" && isFall)
+        if(col.gameObject.layer == 10 && isFall)
         {
             StopFalling();
         }
-        else if(col.gameObject.tag == "Floor")
+        else if(col.gameObject.layer == 10)
         {
             if (isBoss)
             {
@@ -566,7 +583,7 @@ public class Monster : LivingEntity
         {
             Dir = 0;
         }
-        if(col.gameObject.tag == "Floor" && isFall)
+        if(col.gameObject.layer == 10 && isFall)
         {
             StopFalling();
         }
@@ -578,7 +595,7 @@ public class Monster : LivingEntity
         {
             isWall = false;
         }
-        if (col.gameObject.tag == "Floor")
+        if (col.gameObject.layer == 10)
         {
             isFall = true;
         }
@@ -586,7 +603,7 @@ public class Monster : LivingEntity
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-       if (col.gameObject.tag == "Floor")
+       if (col.gameObject.layer == 10)
        {
             if (isBoss)
             {
