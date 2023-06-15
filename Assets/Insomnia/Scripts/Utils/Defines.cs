@@ -54,9 +54,9 @@ namespace Insomnia {
             None,
             KeyCard_Blue,
             KeyCard_Green,
-            KeyCard_Red,
             KeyCard_Yellow,
-            KeyCard_Purple,
+            KeyCard_Orange,
+            KeyCard_Red,
             Target
         }
 

@@ -17,9 +17,6 @@ public class MainUI : MonoBehaviour
 
     public void OnClick_Rundown(int index) {
         BGM_Speaker.Instance.Stop();
-        SceneController.LoadSceneCompleted.Enqueue(() => {
-            BGM_Speaker.Instance.Play((int)BGMSounds.BGM, true);
-        });
         SceneController.Instance.ChangeSceneTo($"Rundown_{index}");
     }
 

@@ -348,6 +348,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6129695617730760572, guid: e754e33cea180cb459d9c59dbbfa6c99, type: 3}
+      propertyPath: m_skipFirst
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6129695617730760572, guid: e754e33cea180cb459d9c59dbbfa6c99, type: 3}
+      propertyPath: m_isTemporal
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6129695617730760573, guid: e754e33cea180cb459d9c59dbbfa6c99, type: 3}
       propertyPath: m_Name
       value: FadeUI

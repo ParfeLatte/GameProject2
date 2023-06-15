@@ -35,13 +35,10 @@ namespace Insomnia{
                 Destroy(gameObject);
                 return;
             }
-            else {
+            else 
                 m_instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
 
             base.Awake();
-            m_instance = this;
         }
 
         protected override void OnValidate() {

@@ -45,14 +45,14 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Map-NoLight
-    uniqueID: 475374219
-    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Map-Light
     uniqueID: 699681495
+    locked: 0
+  - name: Map-NoLight
+    uniqueID: 475374219
     locked: 0
   - name: Environments
     uniqueID: 2178294545
