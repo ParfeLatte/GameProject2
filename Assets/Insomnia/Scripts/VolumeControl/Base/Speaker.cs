@@ -12,8 +12,8 @@ namespace Insomnia {
 
         [Header("Speaker: Settings")]
         [SerializeField] protected SoundType m_type = SoundType.Master;
-        [SerializeField] private bool m_isGlobal = false;
-        [SerializeField] private int m_cameraWidth = -1;
+        [SerializeField] protected bool m_isGlobal = false;
+        [SerializeField] protected int m_cameraWidth = -1;
 
         [Header("Speaker: Audio Clips")]
         [SerializeField] protected AudioClip[] m_clips;

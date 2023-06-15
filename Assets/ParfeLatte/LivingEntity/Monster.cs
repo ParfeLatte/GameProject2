@@ -542,7 +542,7 @@ public class Monster : LivingEntity
         Invoke("Destroy", DyingTime);//����Ŀ� ������Ʈ ��Ȱ��ȭ
     }
 
-    private void Destroy()
+    protected virtual void Destroy()
     {
         gameObject.SetActive(false);//오브젝트 비활성화
     }

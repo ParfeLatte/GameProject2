@@ -36,20 +36,18 @@ namespace Insomnia{
         /// <summary>
         /// <seealso cref="m_generateCount"/>의 크기 만큼 pool오브젝트를 생성하는 함수.
         /// </summary>
-        private void Generate() {
+        private void Generate(int count = 5) {
             if(m_poolPrefab == null)
-                return;
-
-            if(m_generateCount == 0)
                 return;
 
             T comp = m_poolPrefab.GetComponent<T>();
             if(comp == null)
                 return;
 
-            for(int i = 0; i < m_generateCount; i++) {
+            for(int i = 0; i < (count > m_generateCount ? count : m_generateCount); i++) {
                 GameObject obj = Instantiate(m_poolPrefab);
                 obj.SetActive(false);
+                obj.transform.SetParent(transform);
 
                 T pool = obj.GetComponent<T>();
                 m_pool.Add(pool);
@@ -80,7 +78,7 @@ namespace Insomnia{
         public List<T> Get(int count) {
             while(true) {
                 if(m_poolableCount <= count)
-                    Generate();
+                    Generate(count);
                 else
                     break;
             }
