@@ -89,6 +89,8 @@ namespace Insomnia {
 
             if(m_alertUI != null)
                 m_alertUI.TriggerAlert(gameObject);
+
+            Debug.Log("CoStartCheckAllDead Finished");
             yield break;
         }
 
@@ -117,6 +119,7 @@ namespace Insomnia {
                 yield return null;
             }
 
+            Debug.Log("CoStartSpawnMonster Finished");
             yield break;
         }
 
