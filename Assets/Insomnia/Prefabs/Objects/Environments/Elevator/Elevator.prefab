@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3435552111203746097}
   - component: {fileID: 1043615746872272864}
   - component: {fileID: 6616575029589046468}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor
   m_TagString: Floor
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ MonoBehaviour:
   - {x: 3.75, y: -5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: -242400
+  m_InstanceId: 207394
 --- !u!1 &756658167105214182
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,7 +330,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   m_targetFloorIndex: -1
-  m_currentFloorIndex: 2
+  m_currentFloorIndex: 1
   m_isOpened: 0
   m_doorReaching: 0
   m_elevatorMoveSpeed: 10
@@ -592,7 +592,7 @@ MonoBehaviour:
   - {x: 3.75, y: 4.5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: -247830
+  m_InstanceId: 207368
 --- !u!1 &5983932790891156465
 GameObject:
   m_ObjectHideFlags: 0
@@ -723,7 +723,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2116672751
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -1958141710, guid: 5ac99607557e9aa4c96a03f7aeebc232, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
