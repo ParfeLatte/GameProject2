@@ -81,9 +81,17 @@ MonoBehaviour:
   onInteractEnd:
     m_PersistentCalls:
       m_Calls: []
+  m_searchable: {fileID: 0}
   m_canCollect: 1
-  m_itemData:
+  m_collectableData:
     Type: 3
+    ObjData:
+      ID: 
+      Location: 
+      Description: 
+      Position: {x: 0, y: 0, z: 0}
+      ObjectType: 0
+      Status: 0
     BelongedTo: {fileID: 0}
   onCollectFailed:
     m_PersistentCalls:

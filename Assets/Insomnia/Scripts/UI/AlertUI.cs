@@ -55,8 +55,8 @@ namespace Insomnia{
 				m_alertCaller = caller;
 
             m_showingAlert = !m_showingAlert;
-			if(m_showingAlert)
-				StartCoroutine(CoStartAlert());
+			if(m_showingAlert) 
+                StartCoroutine(CoStartAlert());
         }
 
 		private IEnumerator CoStartAlert() {
@@ -72,6 +72,7 @@ namespace Insomnia{
 
 			m_alertImage.color = m_alertMin;
 			m_targetValue = 1;
+			m_alertCaller = null;
 			yield break;
 		}
     }
