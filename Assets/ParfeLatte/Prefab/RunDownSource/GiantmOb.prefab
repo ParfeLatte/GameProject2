@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &636829320877148707
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4108628787956352953}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4108628787956352953
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636829320877148707}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.1190967, y: 1.7014275, z: -0.028119158}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8622517491893256335}
+  m_Father: {fileID: 3947306826808562808}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3947306826808562810
 GameObject:
   m_ObjectHideFlags: 0
@@ -39,6 +71,7 @@ Transform:
   - {fileID: 685424148839682419}
   - {fileID: 3947306826951480239}
   - {fileID: 8691411915566565921}
+  - {fileID: 4108628787956352953}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -142,11 +175,15 @@ MonoBehaviour:
   isGiant: 1
   isBoss: 0
   isEventMob: 0
+  canMove: 1
   HammerHitEffect: {fileID: 2770195297993291824}
   BloodEffect: {fileID: 685424148839682430}
   lastPlayerPosition: {x: 0, y: 0, z: 0}
   m_speaker: {fileID: 0}
+  Head: {fileID: 8622517491893256335}
   AttackPlayer: {fileID: 0}
+  m_bossCam: {fileID: 0}
+  m_bossBackground: {fileID: 0}
 --- !u!50 &3947306826808562807
 Rigidbody2D:
   serializedVersion: 4
@@ -370,6 +407,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monster: {fileID: 3947306826808562809}
   curPos: {x: 0, y: 0, z: 0}
+--- !u!1 &5520570907524682679
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8622517491893256335}
+  m_Layer: 0
+  m_Name: Head
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8622517491893256335
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5520570907524682679}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.48, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4108628787956352953}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7379806509100302719
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,14 +600,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 954910219083132784, guid: 64f972ff2377b6947bf4fb1fb1f361c5, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 954910219083132784, guid: 64f972ff2377b6947bf4fb1fb1f361c5, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 954910219083132784, guid: 64f972ff2377b6947bf4fb1fb1f361c5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.34025002
       objectReference: {fileID: 0}
@@ -583,14 +643,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GiantMobBlood
       objectReference: {fileID: 0}
-    - target: {fileID: 954910219083132797, guid: 64f972ff2377b6947bf4fb1fb1f361c5, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 954910219083132799, guid: 64f972ff2377b6947bf4fb1fb1f361c5, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64f972ff2377b6947bf4fb1fb1f361c5, type: 3}
 --- !u!4 &685424148839682419 stripped
@@ -614,21 +666,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: HammerHit
       objectReference: {fileID: 0}
-    - target: {fileID: 795227865972402001, guid: c523acf6a2d9bc04e86c3931f3a1d467, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 795227865972402006, guid: c523acf6a2d9bc04e86c3931f3a1d467, type: 3}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 795227865972402006, guid: c523acf6a2d9bc04e86c3931f3a1d467, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 795227865972402006, guid: c523acf6a2d9bc04e86c3931f3a1d467, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 795227865972402006, guid: c523acf6a2d9bc04e86c3931f3a1d467, type: 3}
       propertyPath: m_LocalPosition.x
@@ -668,18 +708,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 795227865972402006, guid: c523acf6a2d9bc04e86c3931f3a1d467, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 795227865972402007, guid: c523acf6a2d9bc04e86c3931f3a1d467, type: 3}
-      propertyPath: m_FlipX
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 795227865972402007, guid: c523acf6a2d9bc04e86c3931f3a1d467, type: 3}
-      propertyPath: m_SpriteSortPoint
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 795227865972402007, guid: c523acf6a2d9bc04e86c3931f3a1d467, type: 3}
-      propertyPath: m_WasSpriteAssigned
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -32,6 +32,7 @@ public class Player : LivingEntity {
     public Slider HealthSlider;//ü��UI
     public Slider StaminaSlider;//���׹̳�UI
 
+    public Transform Head;
 
     //public PlayerAttack Attack;
     public PlayerAttack Attack;//������ �������ִ� ��ũ��Ʈ(���� ���� ������Ʈ�� �Ҵ�Ǿ� ������ ���⼭ ������ ������)
@@ -43,6 +44,7 @@ public class Player : LivingEntity {
     private Rigidbody2D PR;//�÷��̾� ������ٵ�
     private SpriteRenderer PlayerRenderer;//��������Ʈ �¿� �ٲܶ� �������
     private Animator animator;//�ִϸ�����
+    private CapsuleCollider2D p_col;
 
     private float ChargeTime;//���� ��¡�ð�
     private Vector3 curPos;//���� ��ġ
@@ -60,6 +62,7 @@ public class Player : LivingEntity {
         PR = GetComponent<Rigidbody2D>();//�Ҵ�
         animator = GetComponent<Animator>();//�Ҵ�
         PlayerRenderer = GetComponent<SpriteRenderer>();//�Ҵ�
+        p_col = GetComponent<CapsuleCollider2D>();
         //SoundEffect = GetComponent<PlayerSound>();
         m_speaker = GetComponentInChildren<Player_Speaker>();
         SetStatus(100, m_playerAttackDamage, 8);
@@ -68,6 +71,7 @@ public class Player : LivingEntity {
         stamina = 100f;
         HealthSlider.value = Health;
         StaminaSlider.value = stamina;
+        p_col.enabled = true;
     }
 
     private void Start() {
@@ -109,6 +113,7 @@ public class Player : LivingEntity {
             StaminaCheck();
             CheckFallDamage();
             CheckSoundEffect();
+            CheckCrush();
             dashtime += Time.deltaTime;
         }
     }
@@ -236,6 +241,8 @@ public class Player : LivingEntity {
     public override void Die() {
 
         base.Die();
+        PR.constraints = RigidbodyConstraints2D.FreezeAll;
+        p_col.isTrigger = true;
         animator.SetTrigger("Die");
         Invoke("Dead", 0.5f);
     }
@@ -295,13 +302,25 @@ public class Player : LivingEntity {
             isFall = true;
         }
     }
+    
+    private void CheckCrush()
+    {
+        Collider2D col = Physics2D.OverlapBox(Head.position, boxsize, 0);
+        if(col.gameObject.tag == "Elevator")
+        {
+            PR.constraints = RigidbodyConstraints2D.FreezeAll;
+            p_col.enabled = false;
+            Die();
+        }
+    }
 
     private void OnDrawGizmos() {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(transform.position, boxsize);
+        Gizmos.DrawWireCube(Head.position, boxsize);
     }
     private void OnCollisionEnter2D(Collision2D col) {
-        if(col.gameObject.tag == "Floor") {
+        if(col.gameObject.layer == 10) {
             isJump = false;
             animator.SetBool("isJump", false);
         }
