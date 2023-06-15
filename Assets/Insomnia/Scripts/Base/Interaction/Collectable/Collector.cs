@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static Insomnia.Defines;
-using static UnityEditor.Progress;
 
 namespace Insomnia{
 	public class Collector : MonoBehaviour {
