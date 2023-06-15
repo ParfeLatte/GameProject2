@@ -1,3 +1,4 @@
+using Cinemachine;
 using Insomnia;
 using System.Collections;
 using System.Collections.Generic;
@@ -49,6 +50,7 @@ public class Monster : LivingEntity
     public bool isGiant;
     public bool isBoss;//보스몹인가?
     public bool isEventMob;//이벤트 몬스터가 아니라면 false
+    public bool canMove = true;
 
     public GameObject HammerHitEffect;
     public GameObject BloodEffect;
@@ -74,6 +76,9 @@ public class Monster : LivingEntity
 
     private bool isMobMove = false;//몬스터가 움직이는지
 
+    [SerializeField] private CinemachineVirtualCamera m_bossCam = null;
+    [SerializeField] private GameObject m_bossBackground = null;
+
     void Awake()
     {
         MR = GetComponent<Rigidbody2D>();
@@ -92,6 +97,7 @@ public class Monster : LivingEntity
         m_speaker = GetComponentInChildren<Speaker>();
         if (isBoss)
         {
+            canMove = false;
             BossAppear();
         }
     }
@@ -107,6 +113,9 @@ public class Monster : LivingEntity
     void Update()
     {
         if(GameManager.IsPause)
+            return;
+
+        if(canMove == false)
             return;
 
         Dist = Mathf.Abs(Player.transform.position.x - gameObject.transform.position.x);//플레이어와 몬스터 사이 거리
@@ -202,11 +211,7 @@ public class Monster : LivingEntity
             {
                 player.damaged(damage);//�÷��̾��� damaged �Լ� ȣ���ؼ� �������� ��
                 //Sound.PlayAttackSound(MobType);
-                if(isGiant)
-                    m_speaker.PlayOneShot((int)GiantMobSounds.GiantMob_Attack);
-                else if(isBoss) { }
-                else
-                    m_speaker.PlayOneShot((int)NormalMobSounds.MormalMob_Attack);
+                m_speaker.PlayOneShot((int)GiantMobSounds.GiantMob_Attack);
             }
             else if (Gate != null && collider.tag == "Wall")
             {
@@ -320,12 +325,8 @@ public class Monster : LivingEntity
         }
         else if (isMobMove)
         {
-            //Sound.PlayWalkSound(MobType);
-            if(isGiant)
-                m_speaker.Play((int)GiantMobSounds.GiantMob_Walk, true);
-            else if(isBoss) { }
-            else
-                m_speaker.Play((int)NormalMobSounds.NormalMob_Walk, true);
+            m_speaker.Play((int)NormalMobSounds.NormalMob_Walk, true);
+
         }
     }
 
@@ -391,11 +392,7 @@ public class Monster : LivingEntity
                 if (Dist <= 20)
                 {
                     //Sound.PlaySleepSound(MobType);
-                    if(isGiant)
-                        m_speaker.PlayOneShot((int)GiantMobSounds.GiantMob_Sleep);
-                    else if(isBoss) { }
-                    else
-                        m_speaker.PlayOneShot((int)NormalMobSounds.NormalMob_Sleep);
+                    m_speaker.PlayOneShot((int)GiantMobSounds.GiantMob_Sleep);
                     SleepState = 1;//중간수면으로
                     animator.SetInteger("SleepState", 1);
                 }
@@ -439,19 +436,32 @@ public class Monster : LivingEntity
     
     public void BossAppear()
     {
+        m_bossCam.gameObject.SetActive(true);
         Invoke("BossDrop", 0.8f);
-        
     }
 
     public void ChangeCamToPlayer()
     {
-        ChangeCam.Instance.SwitchCam();
+        if(m_bossCam == null)
+            return;
+
+        if(m_bossBackground == null)
+            return;
+
+        m_bossBackground.SetActive(false);
+        m_bossCam.gameObject.SetActive(false);
+        canMove = true;
     }
     public void BossDrop()
     {
         m_Tr.position = new Vector3(m_Tr.position.x, m_Tr.position.y - 0.5f, m_Tr.position.z);
         MR.constraints = RigidbodyConstraints2D.None;
         MR.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        if(m_bossBackground == null)
+            return;
+
+        m_bossBackground.SetActive(false);
         //m_Col.isTrigger = false;
     }
 
@@ -489,11 +499,7 @@ public class Monster : LivingEntity
     {
         Health -= damage;//ü�¿��� ��������ŭ ����
         //Sound.PlayDamagedSound();
-        if(isGiant)
-            m_speaker.PlayOneShot((int)GiantMobSounds.GiantMob_Damaged);
-        else if(isBoss) { }
-        else
-            m_speaker.PlayOneShot((int)NormalMobSounds.MormalMob_Damaged);
+        m_speaker.PlayOneShot((int)GiantMobSounds.GiantMob_Damaged);
         HammerHitEffect.SetActive(true);
         BloodEffect.SetActive(true);
         Invoke("ReadyEffect", 0.2f);
@@ -523,11 +529,7 @@ public class Monster : LivingEntity
         isMobMove = false;//������ ����
         isDead = true;//�������
         //Sound.PlayDeadSound(MobType);
-        if(isGiant)
-            m_speaker.PlayOneShot((int)NormalMobSounds.MormalMob_Dead);
-        else if (isBoss) { }
-        else
-            m_speaker.PlayOneShot((int)NormalMobSounds.MormalMob_Dead);
+        m_speaker.PlayOneShot((int)NormalMobSounds.MormalMob_Dead);
         animator.SetTrigger("Die");//�ִϸ����Ϳ� Die Ʈ���Ÿ� �����ؼ� ��� �ִϸ��̼� ���
         Invoke("Destroy", DyingTime);//����Ŀ� ������Ʈ ��Ȱ��ȭ
     }

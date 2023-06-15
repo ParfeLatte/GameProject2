@@ -168,6 +168,8 @@ namespace Insomnia {
                 }
             }
 
+            yield return null;
+
             while(m_completed.Count > 0) {
                 Action action = m_completed.Dequeue();
                 action?.Invoke();

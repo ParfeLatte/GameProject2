@@ -16,6 +16,7 @@ namespace Insomnia{
         public enum BGMSounds {
             BGM = 1,
             Wave = 3,
+            Boss = 4,
         }
 
         [Header("BGM_Speaker: Status")]
@@ -24,7 +25,8 @@ namespace Insomnia{
         private Array m_BgmSoundsValues = Enum.GetValues(typeof(BGMSounds));
 
         [Header("BGM_Speaker: Settings")]
-        [SerializeField, Range(0.1f, 10f)] private float m_volumeFluctuationTime = 1f;
+        [SerializeField, Range(0.1f, 10f)] private float m_volumeIncreaseInterval = 1f;
+        [SerializeField, Range(0.1f, 10f)] private float m_volumeDecreaseInterval = 1f;
 
         [Header("BGM_Speaker: Events")]
         [SerializeField]
@@ -73,7 +75,7 @@ namespace Insomnia{
                 if(bgmCount == bgmType)
                     break;
 
-                startIndex += bgmCount;
+                startIndex = bgmCount;
             }
 
             int randomPlay = UnityEngine.Random.Range(startIndex, lastIndex);
@@ -132,6 +134,8 @@ namespace Insomnia{
         /// <returns></returns>
         private IEnumerator CoDragVolume(bool onoff, float delay = -1f) {
             m_isSwitching = true;
+            float fluctuation = onoff ? m_volumeIncreaseInterval : m_volumeDecreaseInterval;
+
             while(true) {
                 if(delay <= 0f)
                     break;
@@ -146,10 +150,10 @@ namespace Insomnia{
 
             while(true) {
                 curTick += Time.deltaTime;
-                m_audio.volume = Mathf.Lerp(curVolume, targetVolume, curTick / m_volumeFluctuationTime);
+                m_audio.volume = Mathf.Lerp(curVolume, targetVolume, curTick / fluctuation);
 
                 yield return null;
-                if(curTick >= m_volumeFluctuationTime && Mathf.Abs(m_audio.volume - targetVolume) <= 0.1f) {
+                if(curTick >= fluctuation && Mathf.Abs(m_audio.volume - targetVolume) <= 0.1f) {
                     m_audio.volume = targetVolume;
                     break;
                 }

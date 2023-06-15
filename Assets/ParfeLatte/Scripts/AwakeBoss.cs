@@ -1,6 +1,8 @@
+using Insomnia;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Insomnia.BGM_Speaker;
 
 public class AwakeBoss : MonoBehaviour
 {
@@ -8,6 +10,7 @@ public class AwakeBoss : MonoBehaviour
 
     public void BossEvent()
     {
+        BGM_Speaker.Instance.Play((int)BGMSounds.Boss, true);
         Boss.SetActive(true);
     }
 
@@ -15,7 +18,6 @@ public class AwakeBoss : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            ChangeCam.Instance.SwitchCam();
             Invoke("BossEvent", 0.4f);
         }
     }

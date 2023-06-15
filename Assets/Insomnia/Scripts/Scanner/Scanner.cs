@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using static Insomnia.Scanner_Speaker;
 
 namespace Insomnia {
     [RequireComponent(typeof(Collider2D))]
     [RequireComponent(typeof(ScannerGizmo))]
     public class Scanner : MonoBehaviour {
         [Header("Components")]
+        [SerializeField] private Scanner_Speaker m_speaker = null;
         [SerializeField] private ScanActionSO m_action = null;
         [SerializeField]private Canvas m_scanCanvas = null;
         [SerializeField]private Slider m_scanSlider = null;
@@ -50,6 +52,7 @@ namespace Insomnia {
 
             if(Progress >= 1f) {
                 onScanCompleted?.Invoke();
+                m_speaker.PlayOneShot((int)ScannerSounds.OnScanFinished);
                 gameObject.SetActive(false);
             }
         }
@@ -62,6 +65,7 @@ namespace Insomnia {
                 return;
 
             m_isTriggered = true;
+            m_speaker.Play((int)ScannerSounds.OnScanning, true);
             onTriggerStartAction();
         }
 
@@ -73,6 +77,7 @@ namespace Insomnia {
                 return;
 
             m_isTriggered = false;
+            m_speaker.Stop();
             onTriggerEndAction();
         }
 
