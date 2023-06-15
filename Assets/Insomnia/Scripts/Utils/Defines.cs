@@ -57,7 +57,8 @@ namespace Insomnia {
             KeyCard_Yellow,
             KeyCard_Orange,
             KeyCard_Red,
-            Target
+            PunchingCard,
+            Target,
         }
 
         #endregion
