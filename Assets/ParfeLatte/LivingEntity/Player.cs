@@ -265,7 +265,7 @@ public class Player : LivingEntity {
         //gameObject.SetActive(false);
         BGM_Speaker.Instance.Stop();
         ItemManager.Instance.RemoveAllItemDatas(this);
-        PlayerPrefs.SetString("Failed", SceneManager.GetActiveScene().name);
+        PlayerPrefs.SetString("Failed".ToUpper(), SceneManager.GetActiveScene().name);
         PlayerPrefs.Save();
 
         SceneController.Instance.ChangeSceneTo("EscapeFailed", true);

@@ -151,5 +151,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d1fccc850b184db4bb2c68e2dc5b00e1, type: 3}
   m_maxVolume: 0
   m_isSwitching: 0
+  m_isLoop: 1
+  m_playOnAwake: 1
   m_volumeIncreaseInterval: 5
   m_volumeDecreaseInterval: 1

@@ -17,7 +17,7 @@ public class MainUI : MonoBehaviour
 
     public void OnClick_Rundown(int index) {
         BGM_Speaker.Instance.Stop();
-        SceneController.Instance.ChangeSceneTo($"Rundown_{index}");
+        SceneController.Instance.ChangeSceneTo($"RunDown_{index}");
     }
 
     public void OnClick_Option() {
@@ -29,7 +29,7 @@ public class MainUI : MonoBehaviour
 
     public void OnClick_Reset() {
         for(int i = 0; i < 5; i++) {
-            PlayerPrefs.SetInt($"RunDown_{i}_Cleared", 0);
+            PlayerPrefs.SetInt($"RunDown_{i}_Cleared".ToUpper(), 0);
         }
     }
 

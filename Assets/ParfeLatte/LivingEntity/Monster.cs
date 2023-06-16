@@ -61,23 +61,23 @@ public class Monster : LivingEntity
     private Rigidbody2D MR;
     private Transform m_Tr;
     private CapsuleCollider2D m_Col;
-    private Animator animator;
+    protected Animator animator;
     private SpriteRenderer MonsterRenderer;
     private SpriteRenderer Hammer;
     private SpriteRenderer Blood;
     private EventMonster CheckEvent;
     //private MonsterSound Sound;
-    [SerializeField] private Speaker m_speaker = null;
+    [SerializeField] protected Speaker m_speaker = null;
 
     public Transform Head;
     private Vector2 Headboxsize = new Vector2(1f, 1f);
 
-    private Vector3 curPos;//현재위치
+    protected Vector3 curPos;//현재위치
     private Vector2 AddPos = new Vector2(0, 3f);//pivot을 아래로 고정했으므로 레이 검사때 위로
-    private Vector2 RayPos;//레이 방향
+    protected Vector2 RayPos;//레이 방향
     public GameObject AttackPlayer;//공격대상
 
-    private bool isMobMove = false;//몬스터가 움직이는지
+    protected bool isMobMove = false;//몬스터가 움직이는지
 
     [SerializeField] private CinemachineVirtualCamera m_bossCam = null;
     [SerializeField] private GameObject m_bossBackground = null;
@@ -252,7 +252,7 @@ public class Monster : LivingEntity
             AreaCheck(SleepState);//수면검사!
         }
     }
-    private void OnWake()
+    protected virtual void OnWake()
     {
         Debug.DrawRay(RayPos, dirVec * AttackDist, new Color(0, 1, 0));//레이캐스트 표시(거리 확인용)
         float xdistance = player.transform.position.x - gameObject.transform.position.x;
@@ -336,28 +336,28 @@ public class Monster : LivingEntity
         }
     }
 
-    private void SpriteSwapRight()
+    protected void SpriteSwapRight()
     {
         MonsterRenderer.flipX = false;//스프라이트 반전x(오른쪽 봄)
         Hammer.flipX = true;
         Blood.flipX = true;
     }
 
-    private void SpriteSwapLeft()
+    protected void SpriteSwapLeft()
     {
         MonsterRenderer.flipX = true;//스프라이트 반전x(오른쪽 봄)
         Hammer.flipX = false;
         Blood.flipX = false;
     }
 
-    private void BossSpriteSwapLeft()
+    protected void BossSpriteSwapLeft()
     {
         MonsterRenderer.flipX = false;//스프라이트 반전x(오른쪽 봄)
         Hammer.flipX = false;
         Blood.flipX = false;
     }
 
-    private void BossSpriteSwapRight()
+    protected void BossSpriteSwapRight()
     {
         MonsterRenderer.flipX = true;//스프라이트 반전x(오른쪽 봄)
         Hammer.flipX = true;
@@ -390,7 +390,7 @@ public class Monster : LivingEntity
         }//계속 움직임을 확인
     }//멈췄는지를 확인함 0.4초간 움직이지 않아야 멈춘걸로 임시판정 
 
-    public void AreaCheck(int state)
+    public virtual void AreaCheck(int state)
     {
         switch (state)
         {

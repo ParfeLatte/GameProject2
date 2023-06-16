@@ -491,6 +491,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BGM_Speaker
       objectReference: {fileID: 0}
+    - target: {fileID: 5614307790321146345, guid: 1bbc3e5542295504eb973330296e49ad, type: 3}
+      propertyPath: m_isLoop
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5614307790321146350, guid: 1bbc3e5542295504eb973330296e49ad, type: 3}
       propertyPath: Loop
       value: 0
@@ -499,6 +503,10 @@ PrefabInstance:
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 8462837729cf762428129b899ba6450c, type: 3}
+    - target: {fileID: 5614307790321146350, guid: 1bbc3e5542295504eb973330296e49ad, type: 3}
+      propertyPath: BypassReverbZones
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5614307790321146351, guid: 1bbc3e5542295504eb973330296e49ad, type: 3}
       propertyPath: m_RootOrder
       value: 5

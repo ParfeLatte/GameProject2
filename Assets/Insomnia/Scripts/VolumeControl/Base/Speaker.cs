@@ -112,6 +112,9 @@ namespace Insomnia {
             if(m_clips.Length <= clipIndex)
                 return;
 
+            if(m_clips[clipIndex] == null)
+                return;
+
             m_audio.PlayOneShot(m_clips[clipIndex]);
         }
 

@@ -13,7 +13,8 @@ namespace Insomnia{
         }
 
         public void OnRundownClear() { 
-            PlayerPrefs.SetInt($"{m_saveRundownName}_Cleared", 1);
+            PlayerPrefs.SetInt($"{m_saveRundownName}_Cleared".ToUpper(), 1);
+            PlayerPrefs.Save();
             SceneController.Instance.ChangeSceneToSuccess();
         }
     }

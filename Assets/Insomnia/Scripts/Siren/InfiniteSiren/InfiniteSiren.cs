@@ -69,6 +69,10 @@ namespace Insomnia{
 			if(m_speaker == null)
 				return;
 
+			if(AlertUI.Instance == null)
+				return;
+
+			AlertUI.Instance.TriggerAlert(gameObject);
 			m_speaker.Play((int)InfiniteSirenSounds.Alarm, true);
 			BGM_Speaker.Instance.Play((int)BGMSounds.Wave, true);
 			StartCoroutine(CoStartInfiniteSiren());

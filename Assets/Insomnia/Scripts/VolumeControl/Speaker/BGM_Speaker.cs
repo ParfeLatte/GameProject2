@@ -25,6 +25,8 @@ namespace Insomnia{
         private Array m_BgmSoundsValues = Enum.GetValues(typeof(BGMSounds));
 
         [Header("BGM_Speaker: Settings")]
+        [SerializeField] private bool m_isLoop = true;
+        [SerializeField] private bool m_playOnAwake = true;
         [SerializeField, Range(0.1f, 10f)] private float m_volumeIncreaseInterval = 1f;
         [SerializeField, Range(0.1f, 10f)] private float m_volumeDecreaseInterval = 1f;
 
@@ -49,8 +51,9 @@ namespace Insomnia{
             if(m_audio == null)
                 return;
 
-            m_audio.loop = true;
-            m_audio.playOnAwake = true;
+            m_type = SoundType.BGM;
+            m_audio.loop = m_isLoop;
+            m_audio.playOnAwake = m_playOnAwake;
             m_audio.volume = 0f;
         }
 
@@ -184,6 +187,16 @@ namespace Insomnia{
                 m_clips = new AudioClip[(int)m_BgmSoundsValues.GetValue(m_BgmSoundsValues.Length - 1)];
                 return;
             }
+
+            m_audio = GetComponent<AudioSource>();
+
+            if(m_audio == null)
+                return;
+
+            m_type = SoundType.BGM;
+            m_audio.loop = m_isLoop;
+            m_audio.playOnAwake = m_playOnAwake;
+            m_audio.volume = 0f;
         }
     }
 }

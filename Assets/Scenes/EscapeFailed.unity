@@ -1236,17 +1236,33 @@ PrefabInstance:
       value: BGM_Speaker
       objectReference: {fileID: 0}
     - target: {fileID: 5614307790321146345, guid: 1bbc3e5542295504eb973330296e49ad, type: 3}
-      propertyPath: m_clips.Array.size
+      propertyPath: m_isLoop
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614307790321146345, guid: 1bbc3e5542295504eb973330296e49ad, type: 3}
+      propertyPath: m_isGlobal
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614307790321146345, guid: 1bbc3e5542295504eb973330296e49ad, type: 3}
+      propertyPath: m_volumeIncreaseInterval
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5614307790321146350, guid: 1bbc3e5542295504eb973330296e49ad, type: 3}
       propertyPath: Loop
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5614307790321146350, guid: 1bbc3e5542295504eb973330296e49ad, type: 3}
+      propertyPath: m_Volume
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614307790321146350, guid: 1bbc3e5542295504eb973330296e49ad, type: 3}
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 980a862deb9486b4eb80d6b2bbcf6e78, type: 3}
+    - target: {fileID: 5614307790321146350, guid: 1bbc3e5542295504eb973330296e49ad, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5614307790321146351, guid: 1bbc3e5542295504eb973330296e49ad, type: 3}
       propertyPath: m_RootOrder
       value: 6

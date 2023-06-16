@@ -9,7 +9,7 @@ namespace Insomnia {
         public string PrevSceneName = "";
 
         private void Awake() {
-            PrevSceneName = PlayerPrefs.GetString("Failed");
+            PrevSceneName = PlayerPrefs.GetString("Failed".ToUpper());
         }
 
         public void OnClick_MainMenu() {
@@ -26,7 +26,7 @@ namespace Insomnia {
             if(PrevSceneName == string.Empty)
                 PrevSceneName = "Main";
             else 
-                PlayerPrefs.DeleteKey("Failed");
+                PlayerPrefs.DeleteKey("Failed".ToUpper());
 
             SceneController.Instance.ChangeSceneTo(PrevSceneName);
         }

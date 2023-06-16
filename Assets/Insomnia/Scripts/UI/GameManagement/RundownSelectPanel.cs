@@ -22,7 +22,7 @@ namespace Insomnia{
             m_rundownButtons[0].interactable = true;
 
             for(int i = 1; i < 5; i++) {
-                if(PlayerPrefs.GetInt($"{m_rundownButtons[i - 1].name}_Cleared") == 1)
+                if(PlayerPrefs.GetInt($"{m_rundownButtons[i - 1].name}_Cleared".ToUpper()) == 1)
                     m_rundownButtons[i].interactable = true;
                 else
                     m_rundownButtons[i].interactable = false;
