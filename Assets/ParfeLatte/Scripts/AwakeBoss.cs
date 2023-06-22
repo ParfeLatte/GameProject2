@@ -13,7 +13,6 @@ public class AwakeBoss : MonoBehaviour
         BGM_Speaker.Instance.Play((int)BGMSounds.Boss, true);
         Boss.SetActive(true);
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Player")

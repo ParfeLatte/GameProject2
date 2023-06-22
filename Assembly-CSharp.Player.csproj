@@ -68,8 +68,9 @@
     <Compile Include="Assets\ParfeLatte\Scripts\MobSpawner.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Managers\UIManager.cs" />
     <Compile Include="Assets\Insomnia\Scripts\UI\Loading\ProgressBar.cs" />
-    <Compile Include="Assets\Insomnia\Scripts\Pooler\MonsterPooler.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Pooler\Monster\MonsterPooler.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_List.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Siren\InfiniteSiren\Snitcher.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Base\Input\AnalogInputActor.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\TerminalUI.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Base\Observer\Subject.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Assets\ParfeLatte\Lift\Elevator.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Base\Input\TriggerInputActor.cs" />
     <Compile Include="Assets\Insomnia\Scripts\HealPoint\HealPoint_Effector.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\VolumeControl\Speaker\InfiniteSiren_Speaker.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Base\Interaction\Interactor.cs" />
     <Compile Include="Assets\ParfeLatte\Lift\ElevatorButton.cs" />
     <Compile Include="Assets\ParfeLatte\Scripts\GameUI.cs" />
@@ -140,6 +142,7 @@
     <Compile Include="Assets\Insomnia\Scripts\Base\Interaction\Collectable\ReceiverBase.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Base\Interaction\Effectable\EffectorBase.cs" />
     <Compile Include="Assets\ParfeLatte\AccessEvent\EventMonster.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Pooler\Monster\PoolMonster.cs" />
     <Compile Include="Assets\ParfeLatte\AccessEvent\KeyCardEvent.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_Uplink.cs" />
     <Compile Include="Assets\Insomnia\Scripts\Terminal\SO\Essential\Command_Exit.cs" />
@@ -187,6 +190,7 @@
     <Compile Include="Assets\Insomnia\Scripts\Terminal\Terminal_Interactable.cs" />
     <Compile Include="Assets\Insomnia\Scripts\AccessKey\AccessKey_Collectable.cs" />
     <Compile Include="Assets\ParfeLatte\Lift\LiftDownButton.cs" />
+    <Compile Include="Assets\Insomnia\Scripts\Siren\InfiniteSiren\InfiniteSiren.cs" />
     <Compile Include="Assets\ParfeLatte\Scripts\MainUI.cs" />
     <Compile Include="Assets\Insomnia\Scripts\PlayerInput\Mouse\MouseAxisActor.cs" />
     <Compile Include="Assets\A_ExternalAssets\Effect_Vol.5\Script\SpriteAnimation.cs" />
